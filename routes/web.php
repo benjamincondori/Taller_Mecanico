@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\DefaultController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LoginController::class, 'index'])->name('index');
+Route::get('/dashboard', [DefaultController::class, 'index'])->name('default.index');
