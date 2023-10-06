@@ -1,28 +1,50 @@
-<div class="content">
-    <div class="container-fluid">
+<div id="wrapper">
+    @include('components.plantillas.navbar')
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Panel Admin</a></li>
-                            @if(!empty($subtitle))
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">{{$title}}</a></li>
-                                <li class="breadcrumb-item active">{{$subtitle}}</li>
-                            @else
-                                <li class="breadcrumb-item active">{{$title}}</li>
-                            @endif
-                        </ol>
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left-side-menu">
+        @include('components.plantillas.sidebar')
+    </div>
+
+
+    <!-- ========== Start Page Content here ========== -->
+    <div class="content-page">
+        <div id="content">
+
+
+            <div class="content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Panel Admin</a></li>
+                                        @if(!empty( $subtitle ))
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">{{ $title }}</a></li>
+                                        <li class="breadcrumb-item active">{{ $subtitle }}</li>
+                                        @else
+                                        <li class="breadcrumb-item active">{{ $title }}</li>
+                                        @endif
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">{{ $name }}</h4>
+                            </div>
+                        </div>
                     </div>
-                    <h4 class="page-title">{{$name}}</h4>
+                    <!-- end page title -->
+
+                    {{ $slot }}
+
                 </div>
             </div>
-        </div>
-        <!-- end page title -->
 
-        {{$slot}}
+
+        </div>
+
+        @include('components.plantillas.footer')
 
     </div>
 </div>

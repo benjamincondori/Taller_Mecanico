@@ -11,7 +11,7 @@ class DefaultController extends Controller
      */
     public function index()
     {
-        return view('dashboard.default.default');
+        return view('dashboard.default.index');
     }
 
     /**

@@ -11,7 +11,7 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        return view('index');
+        return view('dashboard.clientes.index');
     }
 
     /**

@@ -8,8 +8,8 @@
                     <div class="card-body p-4">
 
                         <div class="text-center w-75 m-auto">
-                            <a href="{{ route('index') }}">
-                                <span><img src="{{ asset('assets/images/logo-login.png') }}" alt="" height="220"></span>
+                            <a href="{{ route('auth.index') }}">
+                                <span><img src="{{ asset('assets/images/logo-login.png') }}" alt="" height="150"></span>
                             </a>
                             <h2 class="mb-4 mt-0 text-uppercase font-weight-bold"
                                 style="color: #1A1A1A; user-select: none;"><span style="color: #780001">Taller</span>
@@ -18,7 +18,10 @@
 
                         <h5 class="auth-title">Iniciar Sesión</h5>
 
-                        <form method="POST">
+                        @if(session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
+                        <form method="POST" action="{{ route('auth.login') }}">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="email">Correo Electrónico:</label>

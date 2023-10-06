@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\DefaultController;
-use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('index');
-Route::get('/dashboard', [DefaultController::class, 'index'])->name('default.index');
+Route::get('/', [AuthController::class, 'index'])->name('auth.index');
+Route::post('/', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/dashboard', [DefaultController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
