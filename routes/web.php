@@ -25,5 +25,5 @@ Route::get('/dashboard', [DefaultController::class, 'index'])->name('dashboard')
 Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
 Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('personal.index');
 Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
-Route::get('/dashboard/vehiculos', [CargoController::class, 'index'])->name('vehiculos.index');
+Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
 
