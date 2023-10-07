@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                2023 &copy; Sistemas de Información <a href="">&ndash; Grupo 1</a>
+                2023 &copy; Sistemas de Información <a href="">&ndash; Grupo 3</a>
             </div>
             <div class="col-md-6">
                 <div class="text-md-right footer-links d-none d-sm-block">
