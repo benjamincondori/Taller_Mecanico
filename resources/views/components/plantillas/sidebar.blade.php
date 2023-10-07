@@ -27,12 +27,20 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="javascript: void(0);">
                     <i class="fas fa-user-friends"></i>
                     <span> Personal </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                <li>
+                        <a href="{{route('personal.index')}}">Lista de Personal</a>
+                    </li>
+                    <li>
+                        <a href="{{route('cargo.index')}}">Lista de Cargos</a>
+                    </li>
+                </ul>
             </li>
-
             <li>
                 <a href="javascript: void(0);">
                     <i class="fas fa-user-friends"></i>
