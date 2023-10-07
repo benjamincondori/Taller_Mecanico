@@ -43,13 +43,13 @@
             </li>
             <li>
                 <a href="javascript: void(0);">
-                    <i class="fas fa-user-friends"></i>
+                    <i class="fas fa-car"></i>
                     <span> Vehiculos </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="#">Listado de Vehiculos</a>
+                        <a href="{{ route('vehiculos.index') }}">Listado de Vehiculos</a>
                     </li>
                     <li>
                         <a href="#">Marcas</a>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\PersonalController;
 use Illuminate\Support\Facades\Route;
