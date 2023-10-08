@@ -13,7 +13,7 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{route('usuarios.index')}}">
                     <i class="fas fa-user-cog"></i>
                     <span> Usuarios </span>
                 </a>
