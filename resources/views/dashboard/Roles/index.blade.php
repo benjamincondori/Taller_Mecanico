@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <button type="button" class="btn btn-primary waves-effect waves-light">
                                 <i class="fas fa-plus-circle"></i>&nbsp;
-                                Registrar Usuario
+                                Registrar Rol
                             </button>
                         </div>
 
@@ -38,10 +38,7 @@
                         <table class="table table-hover mb-0">
                             <thead class="bg-dark text-center text-white text-nowrap">
                                 <tr style="cursor: pointer">
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Contraseña</th>
-                                    <th scope="col">Persona</th>
-                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Rol</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -49,10 +46,7 @@
                                 {{-- @if ($clientes->count()) --}}
                                 {{-- @foreach ($clientes as $cliente) --}}
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">cesar@gmail.com</th>
-                                    <td class="align-middle">************</td>
-                                    <td class="align-middle">Cesar Alejandro Caballero Caballero</td>
-                                    <td class="align-middle">Empleado</td>
+                                    <th scope="row" class="align-middle">Administrador</th>
                                     <td class="align-middle text-nowrap">
                                         <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                 class="fas fa-eye"></i></button>
@@ -64,10 +58,7 @@
                                 </tr>
 
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">benjamin@gmail.com</th>
-                                    <td class="align-middle">************</td>
-                                    <td class="align-middle">Eben Cayo Terrazas</td>
-                                    <td class="align-middle">Empleado</td>
+                                    <th scope="row" class="align-middle">Mecanico</th>
                                     <td class="align-middle text-nowrap">
                                         <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                 class="fas fa-eye"></i></button>
@@ -77,35 +68,7 @@
                                                 class="fas fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
-
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">ricardo@gmail.com</th>
-                                    <td class="align-middle">***********</td>
-                                    <td class="align-middle">Ricardo Juan Gutierrez</td>
-                                    <td class="align-middle">Cliente</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">GomezBolaños@gmail.com</th>
-                                    <td class="align-middle">**************</td>
-                                    <td class="align-middle">Roberto Gomez Bolaños</td>
-                                    <td class="align-middle">Cliente</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
+                                
                                 {{-- @endforeach
                                 @else
                                 <tr class="text-center">
