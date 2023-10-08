@@ -13,17 +13,29 @@
             </li>
 
             <li>
-                <a href="#">
-                    <i class="fas fa-user-cog"></i>
-                    <span> Usuarios </span>
-                </a>
-            </li>
-
-            <li>
                 <a href="{{ route('clientes.index') }}">
                     <i class="fas fa-user-friends"></i>
                     <span> Clientes </span>
                 </a>
+            </li>
+
+            <li>
+                <a href="javascript: void(0);">
+                    <i class="fas fa-user-friends"></i>
+                    <span> Usuarios </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="{{route('usuarios.index')}}">Lista de usuarios</a>
+                    </li>
+                    <li>
+                        <a href="{{route('roles.index')}}">Roles</a>
+                    </li>
+                    <li>
+                        <a href="#">Permisos</a>
+                    </li>
+                </ul>
             </li>
 
             <li>
