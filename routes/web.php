@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,4 @@ Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('p
 Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
 Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
 Route::get('/dashboard/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+Route::get('/dashboard/roles', [RolesController::class, 'index'])->name('roles.index');
