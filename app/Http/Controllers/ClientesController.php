@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ClientesController extends Controller
 {
@@ -27,7 +28,19 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $url = env('URL_SERVER_API');
+
+        // Validación de datos
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'password' => 'required|string|min:6',
+        // ]);
+        
+        $response = Http::post($url.'/register', [
+            'nombre' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            'password' => $request->input('ci'),
+        ]);
     }
 
     /**
