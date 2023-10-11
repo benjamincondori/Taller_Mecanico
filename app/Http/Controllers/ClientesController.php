@@ -16,11 +16,11 @@ class ClientesController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/clientes');
         $data = $response->json();
-        
+
         $title = '¿Está seguro?';
         $text = "¡Se eliminará el cliente definitivamente!";
         confirmDelete($title, $text);
-        
+
         return view('dashboard.clientes.index', compact('data'));
     }
 
@@ -58,7 +58,7 @@ class ClientesController extends Controller
             'telefono' => $request->input('telefono'),
             'email' => $request->input('email'),
         ]);
-        
+
         $result = $response->json();
         if ($result && $result['status']) {
             alert()->success('¡Guardado!','El cliente ha sido guardado exitosamente.');
@@ -115,7 +115,7 @@ class ClientesController extends Controller
             'telefono' => $request->input('telefono'),
             'email' => $request->input('email'),
         ]);
-        
+
         $result = $response->json();
         if ($result && $result['status'] ) {
             alert()->success('¡Actualizado!','El cliente ha sido actualizado exitosamente.');
@@ -133,7 +133,7 @@ class ClientesController extends Controller
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url.'/clientes/'.$id);
-        
+
         $result = $response->json();
         if ($result && $result['status']) {
             alert()->success('Eliminado!','El cliente ha sido eliminado exitosamente.');
