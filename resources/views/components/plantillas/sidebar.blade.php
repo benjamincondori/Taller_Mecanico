@@ -64,10 +64,10 @@
                         <a href="{{ route('vehiculos.index') }}">Listado de Vehiculos</a>
                     </li>
                     <li>
-                        <a href="#">Marcas</a>
+                        <a href="{{ route('marcas.index') }}">Marcas</a>
                     </li>
                     <li>
-                        <a href="#">Modelos</a>
+                        <a href="{{ route('modelos.index') }}">Modelos</a>
                     </li>
                 </ul>
             </li>

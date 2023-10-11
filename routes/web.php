@@ -8,6 +8,8 @@ use App\Http\Controllers\DefaultController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\ModeloController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +35,5 @@ Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name
 Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
 Route::get('/dashboard/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/dashboard/roles', [RolesController::class, 'index'])->name('roles.index');
+Route::get('/dashboard/marcas', [MarcaController::class, 'index'])->name('marcas.index');
+Route::get('/dashboard/modelos', [ModeloController::class, 'index'])->name('modelos.index');
