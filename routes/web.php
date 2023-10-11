@@ -32,6 +32,7 @@ Route::post('/', [AuthController::class, 'login'])->name('auth.login');
 
 Route::get('/dashboard', [DefaultController::class, 'index'])->name('dashboard');
 
+
 Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
 Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
