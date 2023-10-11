@@ -27,11 +27,11 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary waves-effect waves-light">
-                                <i class="fas fa-plus-circle"></i>&nbsp;
-                                Registrar Vehiculo
-                            </button>
-                        </div>
+                        <a href="{{ route('vehiculos.create') }}" class="btn btn-primary waves-effect waves-light">
+                            <i class="fas fa-plus-circle"></i>&nbsp;
+                            Registrar Vehiculo
+                        </a>
+                    </div>
 
                     </div>
 

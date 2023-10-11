@@ -41,6 +41,7 @@ Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('p
 Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
 
 Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
+Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
 
 Route::get('/dashboard/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/dashboard/roles', [RolesController::class, 'index'])->name('roles.index');

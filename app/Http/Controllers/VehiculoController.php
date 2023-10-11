@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class VehiculoController extends Controller
 {
@@ -11,6 +12,13 @@ class VehiculoController extends Controller
      */
     public function index()
     {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url.'/vehiculos');
+        $data = $response->json();
+        
+        $title = '¿Está seguro?';
+        $text = "¡Se eliminará el vehiculo definitivamente!";
+        confirmDelete($title, $text);
         return view('dashboard.vehiculos.index');
     }
 
@@ -19,7 +27,10 @@ class VehiculoController extends Controller
      */
     public function create()
     {
-        //
+        $url = env('URL_SERVER_API', 'http://137.0.0.1:8000');
+        $response =Http::get($url.'/marca');
+        $marcas = $response->json();
+        return view('dashboard.vehiculos.create');
     }
 
     /**
