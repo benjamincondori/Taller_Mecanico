@@ -18,13 +18,18 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/plugins/flatpickr/flatpickr.dark.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"
+    type="text/css" />
+
+    @stack('styles')
+
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.css') }}">
 </head>
 
 <body class="antialiased">
 
     {{ $slot }}
-
 
     <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
@@ -33,6 +38,12 @@
     <script src="{{ asset('assets/libs/custombox/custombox.min.js') }}"></script>
 
     @stack('js')
+
+    <script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    
+    @include('sweetalert::alert')
 
 </body>
 
