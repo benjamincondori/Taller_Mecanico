@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
+/*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('
 
 Route::get('/dashboard/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/dashboard/roles', [RolesController::class, 'index'])->name('roles.index');
+Route::get('/dashboard/permisos', [PermisosController::class, 'index'])->name('permisos.index');
 
 Route::get('/dashboard/marcas', [MarcaController::class, 'index'])->name('marcas.index');
 Route::get('/dashboard/modelos', [ModeloController::class, 'index'])->name('modelos.index');

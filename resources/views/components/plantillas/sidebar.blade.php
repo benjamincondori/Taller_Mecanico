@@ -20,22 +20,10 @@
             </li>
 
             <li>
-                <a href="javascript: void(0);">
+                <a href="{{route('usuarios.index')}}">
                     <i class="fas fa-user-friends"></i>
                     <span> Usuarios </span>
-                    <span class="menu-arrow"></span>
                 </a>
-                <ul class="nav-second-level" aria-expanded="false">
-                    <li>
-                        <a href="{{route('usuarios.index')}}">Lista de usuarios</a>
-                    </li>
-                    <li>
-                        <a href="{{route('roles.index')}}">Roles</a>
-                    </li>
-                    <li>
-                        <a href="#">Permisos</a>
-                    </li>
-                </ul>
             </li>
 
             <li>
@@ -80,10 +68,10 @@
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="#">Roles</a>
+                        <a href="{{route('roles.index')}}">Roles</a>
                     </li>
                     <li>
-                        <a href="#">Permisos</a>
+                        <a href="{{route('permisos.index')}}">Permisos</a>
                     </li>
                     <li>
                         <a href="#">Asignar Permisos</a>
