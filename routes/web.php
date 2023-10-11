@@ -10,6 +10,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
+use App\Http\Controllers\PermisosController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 

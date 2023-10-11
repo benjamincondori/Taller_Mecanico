@@ -47,12 +47,11 @@
                             </thead>
                             <tbody>
                                 {{-- @if ($clientes->count()) --}}
-                                {{-- @foreach ($clientes as $cliente) --}}
+                                @foreach ($data as $usuario)
+
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">cesar@gmail.com</th>
-                                    <td class="align-middle">************</td>
-                                    <td class="align-middle">Cesar Alejandro Caballero Caballero</td>
-                                    <td class="align-middle">Empleado</td>
+                                    <th scope="row" class="align-middle">{{$usuario['email']}}</th>
+                                    <td class="align-middle">{{$usuario['password']}}</td>
                                     <td class="align-middle text-nowrap">
                                         <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                 class="fas fa-eye"></i></button>
@@ -63,55 +62,12 @@
                                     </td>
                                 </tr>
 
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">benjamin@gmail.com</th>
-                                    <td class="align-middle">************</td>
-                                    <td class="align-middle">Eben Cayo Terrazas</td>
-                                    <td class="align-middle">Empleado</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">ricardo@gmail.com</th>
-                                    <td class="align-middle">***********</td>
-                                    <td class="align-middle">Ricardo Juan Gutierrez</td>
-                                    <td class="align-middle">Cliente</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">GomezBolaños@gmail.com</th>
-                                    <td class="align-middle">**************</td>
-                                    <td class="align-middle">Roberto Gomez Bolaños</td>
-                                    <td class="align-middle">Cliente</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
-                                </tr>
-                                {{-- @endforeach
-                                @else
+                                @endforeach
+                                {{-- @else
                                 <tr class="text-center">
                                     <td colspan="7">No existe ningún registro.</td>
                                 </tr>
-                                @endif --}}
+                                @endif  --}}
                             </tbody>
                         </table>
                     </div>
