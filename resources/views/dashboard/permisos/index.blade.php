@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-    <x-layouts.content title="Listado de Usuarios" subtitle="" name="Listado de Usuarios">
+    <x-layouts.content title="Roles" subtitle="" name="Roles">
 
         <div class="row">
             <div class="col-12">
@@ -17,17 +17,22 @@
                             <span>registros</span>
                         </div>
 
-                        <div class="form-group w-50 d-flex">
-                            <input type="text" class="form-control" placeholder="Buscar...">
-                            <button class="btn text-secondary" type="button" disabled>
-                                <i class="fas fa-search"></i>
+                        <div class="btn-group mb-2 col-6">
+                            <button class="btn btn-light width-xl dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Roles <i class="mdi mdi-chevron-down "></i>
                             </button>
+                            <div class="dropdown-menu col-12">
+                                <a class="dropdown-item" href="#">Administrador</a>
+                                <a class="dropdown-item" href="#">Mecanico</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <button type="button" class="btn btn-primary waves-effect waves-light">
                                 <i class="fas fa-plus-circle"></i>&nbsp;
-                                Registrar Usuario
+                                Registrar Rol
                             </button>
                         </div>
 
@@ -38,36 +43,34 @@
                         <table class="table table-hover mb-0">
                             <thead class="bg-dark text-center text-white text-nowrap">
                                 <tr style="cursor: pointer">
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Contraseña</th>
-                                    <th scope="col">Persona</th>
-                                    <th scope="col">Tipo</th>
-                                    <th>Acciones</th>
+                                    <th scope="col">Permiso</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{-- @if ($clientes->count()) --}}
-                                @foreach ($data as $usuario)
+                                {{-- @foreach ($clientes as $cliente) --}}
 
+                                {{-- deberia hacer todos los permisos posibles directamente aca en el frontend? --}}
+                                {{-- o consultamos en el backend o algo por el estilo --}}
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">{{$usuario['email']}}</th>
-                                    <td class="align-middle">{{$usuario['password']}}</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
+                                    <th scope="row" class="align-center">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="AccederClientesCheckbox">
+                                        <label class="form-check-label" for="AccederClientesCheckbox">Acceder Clientes</label>
+                                    </th>
                                 </tr>
 
-                                @endforeach
-                                {{-- @else
+                                <tr class="text-nowrap text-center">
+                                    <th scope="row" class="align-center">
+                                        <input class="form-check-input me-1" type="checkbox" value="" id="AccederUsuariosCheckbox">
+                                        <label class="form-check-label" for="AccederUsuariosCheckbox">Acceder Usuarios</label>
+                                    </th>
+                                </tr>  
+                                {{-- @endforeach
+                                @else
                                 <tr class="text-center">
                                     <td colspan="7">No existe ningún registro.</td>
                                 </tr>
-                                @endif  --}}
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>

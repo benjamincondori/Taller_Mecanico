@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
-class UsuarioController extends Controller
+class PermisosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $url = env('URL_SERVER_API','http://127.0.0.1');
-        $response = Http::get($url.'/usuarios');
-        $data = $response->json();
-        return view('dashboard.usuarios.index',compact('data'));
+        return view('dashboard.permisos.index');
     }
 
     /**
