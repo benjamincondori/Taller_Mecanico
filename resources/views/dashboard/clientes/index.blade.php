@@ -32,6 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+<<<<<<< HEAD
                             @if (is_array($data) && count($data) > 0)
     @foreach ($data as $cliente)
         <tr class="text-nowrap text-center">
@@ -54,6 +55,33 @@
     </tr>
 @endif
 
+=======
+                                @if ($data == null)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">no hay registros</th>
+                                    </tr>
+                                @else
+                                    @foreach ($data as $cliente)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">{{ $cliente['ci'] }}</th>
+                                        <td class="align-middle">{{ $cliente['nombre'] }}</td>
+                                        <td class="align-middle">{{ $cliente['apellido'] }}</td>
+                                        <td class="align-middle">{{ $cliente['direccion'] }}</td>
+                                        <td class="align-middle">{{ $cliente['telefono'] }}</td>
+                                        <td class="align-middle">{{ $cliente['genero'] }}</td>
+                                        <td class="align-middle text-nowrap">
+                                            <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
+                                                    class="fas fa-eye"></i></button>
+                                            <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
+                                                    class="fas fa-edit"></i></a>
+                                            <a href="{{ route('clientes.delete', $cliente['id']) }}" title="Eliminar" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif
+                                
+>>>>>>> 5d2f285aa0136fa66c70d42fffc9f314c507dd97
                             </tbody>
                         </table>
                     </div>

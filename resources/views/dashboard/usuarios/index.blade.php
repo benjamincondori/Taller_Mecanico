@@ -47,22 +47,28 @@
                             </thead>
                             <tbody>
                                 {{-- @if ($clientes->count()) --}}
-                                @foreach ($data as $usuario)
-
+                                @if ($data == null)
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">{{$usuario['email']}}</th>
-                                    <td class="align-middle">{{$usuario['password']}}</td>
-                                    <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></button>
-                                        <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></button>
-                                    </td>
+                                    <th scope="row" class="align-middle">no hay registros</th>
                                 </tr>
-
-                                @endforeach
+                                @else
+                                    @foreach($data as $usuario)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">{{$usuario['email']}}</th>
+                                        <td class="align-middle">{{$usuario['password']}}</td>
+                                        <td class="align-middle text-nowrap">
+                                            <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
+                                                    class="fas fa-eye"></i></button>
+                                            <button type="button" title="Editar" class="btn btn-sm btn-primary"><i
+                                                    class="fas fa-edit"></i></button>
+                                            <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
+                                                    class="fas fa-trash-alt"></i></button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    
+                                @endif
+                                
                                 {{-- @else
                                 <tr class="text-center">
                                     <td colspan="7">No existe ningún registro.</td>

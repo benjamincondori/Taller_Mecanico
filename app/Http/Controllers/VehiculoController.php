@@ -19,7 +19,7 @@ class VehiculoController extends Controller
         $title = '¿Está seguro?';
         $text = "¡Se eliminará el vehiculo definitivamente!";
         confirmDelete($title, $text);
-        return view('dashboard.vehiculos.index');
+        return view('dashboard.vehiculos.index', compact('data'));
     }
 
     /**
@@ -27,10 +27,10 @@ class VehiculoController extends Controller
      */
     public function create()
     {
-        $url = env('URL_SERVER_API', 'http://137.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response =Http::get($url.'/marca');
         $marcas = $response->json();
-        return view('dashboard.vehiculos.create');
+        return view('dashboard.vehiculos.create', compact('marcas'));
     }
 
     /**

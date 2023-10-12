@@ -110,9 +110,9 @@ class ClientesController extends Controller
             'ci' => $request->input('ci'),
             'nombre' => $request->input('nombre'),
             'apellido' => $request->input('apellido'),
+            'telefono' => $request->input('telefono'),
             'direccion' => $request->input('direccion'),
             'genero' => $request->input('genero'),
-            'telefono' => $request->input('telefono'),
             'email' => $request->input('email'),
         ]);
 
