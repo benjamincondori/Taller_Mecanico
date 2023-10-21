@@ -50,8 +50,9 @@
                                                     class="fas fa-eye"></i></button>
                                             <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
                                                     class="fas fa-edit"></i></a>
+                                                    
                                             <a href="{{ route('clientes.delete', $cliente['id']) }}" title="Eliminar" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
-                                                    class="fas fa-trash-alt"></i></a>
+                                                    class="fas fa-trash-alt" ></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
