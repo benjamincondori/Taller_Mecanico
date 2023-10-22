@@ -37,7 +37,7 @@ Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('c
 Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
 Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
-Route::get('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
+Route::delete('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
 Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
 
 Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('personal.index');

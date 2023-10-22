@@ -131,13 +131,11 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-
-       
+        
         $response = Http::delete($url.'/clientes/'.$id);
         $result = $response->json();
-
+        
         if ($result && $result['status']) {
             alert()->success('Eliminado!','El cliente ha sido eliminado exitosamente.');
         } else {
