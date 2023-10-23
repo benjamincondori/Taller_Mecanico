@@ -79,6 +79,13 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="{{route('categorias.index')}}">
+                    <i class="fas fa-tag"></i>
+                    <span> Categorias </span>
+                </a>
+            </li>
+
         </ul>
 
     </div>

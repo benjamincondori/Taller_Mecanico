@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="Toyota" value="{{ old('nombre') }}" >
+                                        placeholder="Supra 1995" value="{{ old('nombre') }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -28,11 +28,17 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="marca_id" class="control-label">Marca</label>
-                                    <select class="form-control" name="marca_id" id="marca_id">
-                                        <option value="">Seleccionar</option>
-                                        @foreach ($marcas as $marca)
-                                            <option value="{{ $marca['id'] }}">{{ $marca['nombre'] }}</option>
-                                        @endforeach
+                                    <select class="form-control" name="marca_id" id="marca_id"> 
+                                        @if ($marcas == null)
+                                        <tr class="text-nowrap text-center">
+                                            <option value="-1">no existen registros</option>
+                                        </tr>
+                                        @else
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($marcas as $marca)
+                                                <option value="{{ $marca['id'] }}">{{ $marca['nombre'] }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     @error('marca_id')
                                         <span class="error text-danger">* {{ $message }}</span>

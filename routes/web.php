@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\DefaultController;
@@ -33,12 +34,12 @@ Route::post('/', [AuthController::class, 'login'])->name('auth.login');
 Route::get('/dashboard', [DefaultController::class, 'index'])->name('dashboard');
 
 
-Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
-Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
-Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
-Route::get('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
-Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+Route::get('/dashboard/clientes',                       [ClientesController::class, 'index'])->name('clientes.index');
+Route::get('/dashboard/clientes/create',                [ClientesController::class, 'create'])->name('clientes.create');
+Route::get('/dashboard/clientes/edit/{id}',             [ClientesController::class, 'edit'])->name('clientes.edit');
+Route::post('/dashboard/clientes',                      [ClientesController::class, 'store'])->name('clientes.store');
+Route::get('/dashboard/clientes/delete/{id}',           [ClientesController::class, 'destroy'])->name('clientes.delete');
+Route::post('/dashboard/clientes/update/{id}',          [ClientesController::class, 'update'])->name('clientes.update');
 
 Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('personal.index');
 Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
@@ -58,3 +59,13 @@ Route::get('/dashboard/modelos/edit/{modelo}', [ModeloController::class, 'edit']
 Route::post('/dashboard/modelos', [ModeloController::class, 'store'])->name('modelos.store');
 Route::post('/dashboard/modelos/update/{modelo}', [ModeloController::class, 'update'])->name('modelos.update');
 
+
+
+Route::controller(CategoriasController::class)->group(function(){
+Route::get('/dashboard/categorias','index')->name('categorias.index');
+Route::get('/dashboard/categorias/create','create')->name('categorias.create');
+Route::get('/dashboard/categorias/edit/{categoria}','edit')->name('categorias.edit');
+Route::post('/dashboard/categorias','store')->name('categorias.store');
+Route::post('/dashboard/categorias/edit/{categoria}','update')->name('categorias.update');
+Route::delete('/dashboard/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
+});
