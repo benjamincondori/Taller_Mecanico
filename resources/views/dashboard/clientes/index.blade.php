@@ -33,43 +33,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($data == null)
-                                    <tr class="text-nowrap text-center">
-                                        <th scope="row" class="align-middle">no hay registros</th>
-                                    </tr>
-                                @else
-                                    @foreach ($data as $cliente)
-                                    <tr class="text-nowrap text-center">
-                                        <th scope="row" class="align-middle">{{ $cliente['ci'] }}</th>
-                                        <td class="align-middle">{{ $cliente['nombre'] }}</td>
-                                        <td class="align-middle">{{ $cliente['apellido'] }}</td>
-                                        <td class="align-middle">{{ $cliente['direccion'] }}</td>
-                                        <td class="align-middle">{{ $cliente['telefono'] }}</td>
-                                        <td class="align-middle">{{ $cliente['genero'] }}</td>
-                                        <td class="align-middle text-nowrap">
-                                            <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                    class="fas fa-eye"></i></button>
-                                            <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <form action="{{route('clientes.delete',$cliente['id'])}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" title="Eliminar" class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-trash-alt"></i></button>
-                                                    {{-- <button type="submit" title="Eliminar" class="btn btn-sm btn-danger" data-confirm-delete="true">
-                                                        <i class="fas fa-trash-alt"></i></button> --}}
-                                                    {{-- con sweetalert --}}
-                                            </form>
-                                            {{-- no me funciona con el script de sweetalert te manda a un link indefinido --}}
-                                            {{-- pueden hacer el boton bonitos porfasssss --}}
-
-                                            {{-- <a href="{{ route('clientes.delete', $cliente['id']) }}" title="Eliminar" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
-                                                    class="fas fa-trash-alt" ></i></a> antiguo boton--}}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                @endif
-
                                 @foreach ($data as $cliente)
                                 <tr class="text-nowrap text-center">
                                     <th scope="row" class="align-middle">{{ $cliente['id'] }}</th>
@@ -82,10 +45,16 @@
                                     <td class="align-middle text-nowrap">
                                         <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                 class="fas fa-eye"></i></button>
-                                        <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
-                                                class="fas fa-edit"></i></a>
-                                        <a href="{{ route('clientes.delete', $cliente['id']) }}" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar"
+                                            class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('clientes.delete', $cliente['id']) }}" title="Eliminar"
+                                            class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                    {{-- <form action="{{route('clientes.delete',$cliente['id'])}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Eliminar" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash-alt"></i></button>
+                                        </form> --}}
                                     </td>
                                 </tr>
                                 @endforeach
