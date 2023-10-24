@@ -98,6 +98,12 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="{{route('cotizacion.index')}}">
+                    <i class="fe-dollar-sign"></i>
+                    <span> Cotizaciones </span>
+                </a>
+            </li>
 
         </ul>
 

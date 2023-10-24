@@ -15,6 +15,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\CotizacionController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -66,3 +67,7 @@ Route::post('/dashboard/modelos/update/{modelo}', [ModeloController::class, 'upd
 Route::get('/dashboard/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
 Route::get('/dashboard/proveedor',[proveedorController::class,'index'])->name('proveedor.index');
 Route::get('/dashboard/diagnostico',[diagnosticoController::class,'index'])->name('diagnostico.index');
+
+Route::get('/dashboard/cotizacion', [CotizacionController::class, 'index'])->name('cotizacion.index');
+Route::get('/dashboard/cotizacion/create', [CotizacionController::class, 'create'])->name('cotizacion.create');
+Route::post('/dashboard/cotizacion', [CotizacionController::class, 'store'])->name('cotizacion.store');
