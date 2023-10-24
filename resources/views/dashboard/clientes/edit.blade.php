@@ -40,7 +40,7 @@
                                 <div class="form-group">
                                     <label for="email" class="control-label">Email</label>
                                     <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="jhondoe@gmail.com" value="{{ $cliente['user']['email'] }}" >
+                                        placeholder="jhondoe@gmail.com" value="{{ $cliente['usuario']['email'] }}" >
                                     @error('email')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
