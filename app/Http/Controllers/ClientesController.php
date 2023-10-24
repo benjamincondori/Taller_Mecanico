@@ -8,18 +8,15 @@ use Illuminate\Support\Facades\Http;
 
 class ClientesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/clientes');
         $data = $response->json();
 
-        $title = '¿Está seguro?';
-        $text = "¡Se eliminará el cliente definitivamente!";
-        confirmDelete($title, $text);
+        // $title = '¿Está seguro?';
+        // $text = "¡Se eliminará el cliente definitivamente!";
+        // confirmDelete($title, $text);
 
         return view('dashboard.clientes.index', compact('data'));
     }
@@ -132,10 +129,12 @@ class ClientesController extends Controller
     public function destroy($id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        
+
         $response = Http::delete($url.'/clientes/'.$id);
+        // $response = Http::delete('http://18.216.45.210/api/clientes/'.$id);
+
         $result = $response->json();
-        
+
         if ($result && $result['status']) {
             alert()->success('Eliminado!','El cliente ha sido eliminado exitosamente.');
         } else {
