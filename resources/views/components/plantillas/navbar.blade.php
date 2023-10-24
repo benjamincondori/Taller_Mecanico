@@ -100,12 +100,21 @@
                 <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user-image" class="rounded-circle">
                 <span class="pro-user-name ml-1">
                     @php
-                        $user = Auth::user();
-                        if (Auth::check() && $user->empleado) {
-                            $nombre = $user->empleado->nombres .' '. $user->empleado->apellidos;
-                        } else {
-                            $nombre = 'Admin';
-                        }
+                        // $user = Session::get('usuario');
+                        // $user = session('usuario');
+                        // echo($user);
+                        // if ($user) {
+                        //     $nombre = $user->email;
+                        // } else {
+                        //     $nombre = 'Admin';
+                        // }
+
+                        // $user = Auth::user();
+                        // if (Auth::check() && $user->empleado) {
+                        //     $nombre = $user->empleado->nombres .' '. $user->empleado->apellidos;
+                        // } else {
+                        //     $nombre = 'Admin';
+                        // }
                     @endphp
                     {{ $nombre }} &nbsp;<i class="la la-angle-down"></i>
                 </span>
@@ -134,13 +143,13 @@
                 <div class="dropdown-divider"></div>
 
                 <!-- item-->
-                {{-- <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <a href="javascript:void(0);" class="dropdown-item notify-item" onclick="this.closest('form').submit()">
                         <i class="fe-log-out"></i>
                         <span>Cerrar Sesión</span>
                     </a>
-                </form> --}}
+                </form>
 
             </div>
         </li>

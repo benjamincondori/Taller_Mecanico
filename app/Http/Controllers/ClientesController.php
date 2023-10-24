@@ -21,17 +21,13 @@ class ClientesController extends Controller
         return view('dashboard.clientes.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         return view('dashboard.clientes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         // Validación de datos
@@ -66,17 +62,13 @@ class ClientesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -86,9 +78,7 @@ class ClientesController extends Controller
         return view('dashboard.clientes.edit', compact('cliente'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, $id)
     {
         // Validación de datos
@@ -123,16 +113,12 @@ class ClientesController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
         $response = Http::delete($url.'/clientes/'.$id);
-        // $response = Http::delete('http://18.216.45.210/api/clientes/'.$id);
-
         $result = $response->json();
 
         if ($result && $result['status']) {

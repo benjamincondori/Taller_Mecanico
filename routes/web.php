@@ -32,17 +32,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 Route::post('/', [AuthController::class, 'login'])->name('auth.login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 
 Route::get('/dashboard', [DefaultController::class, 'index'])->name('dashboard');
 
 
-Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
-Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
-Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
-Route::delete('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
-Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+Route::group(['prefix' => 'dashboard'], function () {
+    Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
+    Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
+    Route::get('/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
+    Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
+    Route::get('/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
+    Route::post('/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+});
+
 
 Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('personal.index');
 Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
@@ -63,5 +67,5 @@ Route::post('/dashboard/modelos', [ModeloController::class, 'store'])->name('mod
 Route::post('/dashboard/modelos/update/{modelo}', [ModeloController::class, 'update'])->name('modelos.update');
 
 Route::get('/dashboard/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
-Route::get('/dashboard/proveedor',[proveedorController::class,'index'])->name('proveedor.index');
-Route::get('/dashboard/diagnostico',[diagnosticoController::class,'index'])->name('diagnostico.index');
+Route::get('/dashboard/proveedor', [proveedorController::class, 'index'])->name('proveedor.index');
+Route::get('/dashboard/diagnostico', [diagnosticoController::class, 'index'])->name('diagnostico.index');

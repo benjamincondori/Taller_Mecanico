@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -14,7 +15,6 @@ class AuthController extends Controller
         return view('index');
     }
 
-
     public function login(Request $request)
     {
         $url = env('URL_SERVER_API');
@@ -22,7 +22,7 @@ class AuthController extends Controller
         // Validación de datos
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
 
         $response = Http::post($url.'/login', [
@@ -32,21 +32,51 @@ class AuthController extends Controller
 
         if ($response->successful()) {
             $data = $response->json();
-            $token = $data['token'];
+            $usuario = $data['usuario'];
 
-            // Almacena el token JWT en la sesión o en una cookie, según tus necesidades
-            // $this->guardarTokenLocalStorage($data);
+            Session::regenerate();
+            Session::put('usuario', $usuario);
 
-            return redirect('/dashboard');
+            return redirect()->route('dashboard');
+
         } else {
-            $errorMessage = $response->json('error');
-            // dd($errorMessage);
-
-            // Muestra el mensaje de error en la vista
-            return back()->with('error', $errorMessage);
+            return back()->withErrors([
+                'email' => 'Las credenciales proporcionadas no son válidas.',
+            ])->onlyInput('email');
         }
 
     }
+
+
+    // public function login(Request $request)
+    // {
+    //     $url = env('URL_SERVER_API');
+
+    //     // Validación de datos
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required|string',
+    //     ]);
+
+    //     $response = Http::post($url.'/login', [
+    //         'email' => $request->input('email'),
+    //         'password' => $request->input('password'),
+    //     ]);
+
+    //     if ($response->successful()) {
+    //         $data = $response->json();
+    //         // $token = $data['token'];
+
+    //         return redirect('/dashboard');
+    //     } else {
+    //         $errorMessage = $response->json('error');
+    //         // dd($errorMessage);
+
+    //         // Muestra el mensaje de error en la vista
+    //         return back()->with('error', $errorMessage);
+    //     }
+
+    // }
 
     public function logout() {
 
