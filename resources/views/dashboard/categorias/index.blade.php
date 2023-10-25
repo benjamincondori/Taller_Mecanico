@@ -44,7 +44,7 @@
                                                         class="fas fa-eye"></i></button>
                                                 <a href="{{route('categorias.edit',$categoria['id'])}}" class="btn btn-sm btn-primary"><i
                                                         class="fas fa-edit"></i></a>
-                                                <a href="#" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
+                                                <a href="{{route('categorias.destroy',$categoria['id'])}}" class="btn btn-sm btn-danger" data-confirm-delete="true"><i
                                                         class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>

@@ -129,6 +129,17 @@ class CategoriasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::delete($url.'/categorias/'.$id);
+
+        $result = $response->json();
+        if ($result && $result['status']) {
+            alert()->success('Eliminado!','La Categoria ha sido eliminado exitosamente.');
+        } else {
+            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+        }
+        return redirect()->route('categorias.index');
+
     }
 }
