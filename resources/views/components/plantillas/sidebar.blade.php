@@ -57,9 +57,29 @@
                     <li>
                         <a href="{{ route('modelos.index') }}">Modelos</a>
                     </li>
+                    <li>
+                        <a href="{{ route('tipovehiculo.index') }}">Tipos de Vehiculos</a>
+                    </li>
                 </ul>
             </li>
-
+            <li>
+                <a href="{{route('diagnostico.index')}}">
+                    <i class="far fa-plus-square"></i>
+                    <span> Diagnostico </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('proveedor.index')}}">
+                    <i class="fas fa-user-friends"></i>
+                    <span> Proveedor </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('bitacora.index')}}">
+                    <i class="fas far fa-clock"></i>
+                    <span> Bitacora </span>
+                </a>
+            </li>
             <li>
                 <a href="javascript: void(0);">
                     <i class="fas fa-key"></i>

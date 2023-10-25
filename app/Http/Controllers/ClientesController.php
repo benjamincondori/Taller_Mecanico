@@ -8,33 +8,26 @@ use Illuminate\Support\Facades\Http;
 
 class ClientesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/clientes');
         $data = $response->json();
 
-        $title = '¿Está seguro?';
-        $text = "¡Se eliminará el cliente definitivamente!";
-        confirmDelete($title, $text);
+        // $title = '¿Está seguro?';
+        // $text = "¡Se eliminará el cliente definitivamente!";
+        // confirmDelete($title, $text);
 
         return view('dashboard.clientes.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    
     public function create()
     {
         return view('dashboard.clientes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         // Validación de datos
@@ -69,17 +62,13 @@ class ClientesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit($id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -89,9 +78,7 @@ class ClientesController extends Controller
         return view('dashboard.clientes.edit', compact('cliente'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, $id)
     {
         // Validación de datos
@@ -126,15 +113,14 @@ class ClientesController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::delete($url.'/clientes/'.$id);
 
+        $response = Http::delete($url.'/clientes/'.$id);
         $result = $response->json();
+
         if ($result && $result['status']) {
             alert()->success('Eliminado!','El cliente ha sido eliminado exitosamente.');
         } else {
