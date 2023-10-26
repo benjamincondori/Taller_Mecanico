@@ -62,10 +62,14 @@
                                 <div class="form-group">
                                     <label for="marca_id" class="control-label">Marca</label>
                                     <select class="form-control" name="marca_id" id="marca_id">
-                                        <option value="">Seleccionar</option>
-                                        @foreach ($marcas as $marca)
+                                        @if(!$marcas)
+                                            <option value="">no hay registros</option>
+                                        @else
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($marcas as $marca)
                                             <option value="{{ $marca['id'] }}">{{ $marca['nombre'] }}</option>
-                                        @endforeach
+                                            @endforeach
+                                        @endif
                                     </select>
                                     @error('marca_id')
                                         <span class="error text-danger">* {{ $message }}</span>
@@ -74,12 +78,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="marca_id" class="control-label">Marca</label>
-                                    <select class="form-control" name="marca_id" id="marca_id">
-                                        <option value="">Seleccionar</option>
-                                        @foreach ($marcas as $marca)
-                                            <option value="{{ $marca['id'] }}">{{ $marca['nombre'] }}</option>
-                                        @endforeach
+                                    <label for="modelo_id" class="control-label">Modelo</label>
+                                    <select class="form-control" name="modelo_id" id="modelo_id">
+                                        @if(!$modelos)
+                                        <option value="">no hay registros</option>
+                                        @else
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($modelos as $modelo)
+                                            <option value="{{ $modelo['id'] }}">{{ $modelo['nombre'] }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     @error('marca_id')
                                         <span class="error text-danger">* {{ $message }}</span>

@@ -19,11 +19,8 @@ use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\CotizacionServicioController;
 use App\Http\Controllers\CotizacionProductoController;
 use App\Http\Controllers\CategoriasController;
-<<<<<<< HEAD
 use App\Http\Controllers\ProductoController;
-=======
 use App\Http\Controllers\ServiciosController;
->>>>>>> 0ca756bf9570ee36801d7b421a60feceecdb8fd0
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -64,8 +61,9 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DefaultController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
-Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
+        Route::get('/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
+        Route::get('/vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
+
         Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
         Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
         Route::get('/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
@@ -82,8 +80,6 @@ Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])
 
         Route::get('/personal', [PersonalController::class, 'index'])->name('personal.index');
         Route::get('/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
-
-        Route::get('/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
 
         Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
         Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
@@ -102,16 +98,6 @@ Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])
         Route::get('/proveedor', [proveedorController::class, 'index'])->name('proveedor.index');
         Route::get('/diagnostico', [diagnosticoController::class, 'index'])->name('diagnostico.index');
 
-<<<<<<< HEAD
-    Route::controller(CategoriasController::class)->group(function(){
-        Route::get('/categorias','index')->name('categorias.index');
-        Route::get('/categorias/create','create')->name('categorias.create');
-        Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
-
-        Route::post('/categorias','store')->name('categorias.store');
-        Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
-        Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy');
-=======
         Route::controller(CategoriasController::class)->group(function(){
             Route::get('/categorias','index')->name('categorias.index');
             Route::get('/categorias/create','create')->name('categorias.create');
@@ -120,7 +106,6 @@ Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])
             Route::post('/categorias','store')->name('categorias.store');
             Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
             Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
->>>>>>> 0ca756bf9570ee36801d7b421a60feceecdb8fd0
         });
 
         Route::controller(ServiciosController::class)->group(function(){
@@ -135,8 +120,7 @@ Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])
     });
 
 });
-
-
+ 
 
 Route::get('/dashboard/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
 Route::get('/dashboard/proveedor',[proveedorController::class,'index'])->name('proveedor.index');

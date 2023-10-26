@@ -28,9 +28,13 @@ class VehiculoController extends Controller
     public function create()
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response =Http::get($url.'/marca');
+        $response =Http::get($url.'/marcas');
         $marcas = $response->json();
-        return view('dashboard.vehiculos.create', compact('marcas'));
+
+        $response =Http::get($url.'/modelos');
+        $modelos =$response->json();
+
+        return view('dashboard.vehiculos.create', compact('marcas','modelos'));
     }
 
     /**
