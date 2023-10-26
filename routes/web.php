@@ -15,6 +15,9 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\CotizacionServicioController;
+use App\Http\Controllers\CotizacionProductoController;
 use App\Http\Controllers\CategoriasController;
 <<<<<<< HEAD
 use App\Http\Controllers\ProductoController;
@@ -44,6 +47,14 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
+Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
+Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
+Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
+Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
+Route::delete('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
+Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
+
 Route::middleware(['auth.admin'])->group(function () {
     Route::get('/logout', function() {
         return back();
@@ -53,6 +64,8 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DefaultController::class, 'index'])->name('dashboard');
 
+Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
+Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
         Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
         Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
         Route::get('/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
@@ -125,3 +138,17 @@ Route::middleware(['auth.admin'])->group(function () {
 
 
 
+Route::get('/dashboard/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
+Route::get('/dashboard/proveedor',[proveedorController::class,'index'])->name('proveedor.index');
+Route::get('/dashboard/diagnostico',[diagnosticoController::class,'index'])->name('diagnostico.index');
+
+Route::get('/dashboard/cotizacion', [CotizacionController::class, 'index'])->name('cotizacion.index');
+Route::get('/dashboard/cotizacion/create/{id}', [CotizacionController::class, 'create'])->name('cotizacion.create');
+Route::get('/dashboard/cotizacion/new', [CotizacionController::class, 'new'])->name('cotizacion.new');
+Route::post('/dashboard/cotizacion', [CotizacionController::class, 'store'])->name('cotizacion.store');
+Route::delete('/dashboard/cotizacion/delete/{id}', [CotizacionController::class, 'destroy'])->name('cotizacion.delete');
+Route::get('/dashboard/cotizacion/{id}', [CotizacionController::class, 'show'])->name('cotizacion.show');
+Route::post('/dashboard/cotizacion/update/{id}', [CotizacionController::class, 'update'])->name('cotizacion.update');
+
+Route::post('/{id}', [CotizacionProductoController::class, 'store'])->name('cotizacionProducto.store');
+Route::post('/{id}', [CotizacionServicioController::class, 'store'])->name('cotizacionServicio.store');
