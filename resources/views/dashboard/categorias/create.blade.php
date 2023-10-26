@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="categoria_id" class="control-label">Marca</label>
+                                    <label for="categoria_id" class="control-label">Categoria Padre</label>
                                     <select class="form-control" name="categoria_id" id="categoria_id"> 
                                         @if ($categorias == null)
                                         <tr class="text-nowrap text-center">
