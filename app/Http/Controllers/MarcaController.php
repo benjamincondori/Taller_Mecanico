@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class MarcaController extends Controller
 {
@@ -16,7 +17,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.marcas.create');
     }
 
     /**
@@ -24,7 +25,24 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validación de datos
+        $request->validate([
+            'nombre' => 'required|string|min:2|max:100',
+        ]);
+
+        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::post($url . '/marcas', [
+            'nombre' => $request->input('nombre'),
+        ]);
+        $result = $response->json();
+        if ($result && $result['status']) {
+            alert()->success('¡Guardado!', 'La marca ha sido guardada exitosamente.');
+            return redirect()->route('marcas.index');
+        } else {
+            alert()->error('Oops...', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->route('marcas.create');
+        }
     }
 
     /**
@@ -40,7 +58,11 @@ class MarcaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url . '/marcas/' . $id);
+        $marca = $response->json();
+        return view('dashboard.marcas.edit', compact('marca'));
     }
 
     /**
@@ -48,7 +70,24 @@ class MarcaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validación de datos
+        $request->validate([
+            'nombre' => 'required|string|min:2|max:100',
+        ]);
+
+        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::put($url . '/marcas/' . $id, [
+            'nombre' => $request->input('nombre'),
+        ]);
+        $result = $response->json();
+        if ($result && $result['status']) {
+            alert()->success('¡Actualizado!', 'La marca ha sido actualizada exitosamente.');
+            return redirect()->route('marcas.index');
+        } else {
+            alert()->error('Oops...', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->route('marcas.edit', $id);
+        }
     }
 
     /**
@@ -56,6 +95,17 @@ class MarcaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::delete($url . '/marcas/' . $id);
+        $result = $response->json();
+        if ($result && $result['status']) {
+            alert()->success('¡Eliminado!', 'La marca ha sido eliminada exitosamente.');
+            
+        } else {
+            alert()->error('Oops...', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            
+        }
+        return redirect()->route('marcas.index');
     }
 }

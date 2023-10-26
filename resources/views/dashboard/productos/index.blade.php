@@ -32,6 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach ($data as $producto)
                                 <tr class="text-center">
                                     <th scope="row" class="align-middle">{{ $producto['id'] }}</th>
@@ -52,6 +53,32 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                {{-- @if(!$data)
+                                    <tr class="text-center">
+                                        <th scope="row" class="align-middle">no hay registros</th>
+                                    </tr>
+                                @else
+                                    @foreach ($data as $producto)
+                                    <tr class="text-center">
+                                        <th scope="row" class="align-middle">{{ $producto['id'] }}</th>
+                                        <td class="align-middle">{{ $producto['nombre'] }}</td>
+                                        <td class="align-middle">{{ $producto['proveedor']['nombre'] }}</td>
+                                        <td class="align-middle">
+                                            {{ $producto['stock_disponible'] }}
+                                        </td>
+                                        <td class="align-middle">{{ $producto['precio_venta'] }}</td>
+                                        <td class="align-middle">{{ $producto['categoria']['nombre'] }}</td>
+                                        <td class="align-middle text-nowrap">
+                                            <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
+                                                    class="fas fa-eye"></i></button>
+                                            <a href="" title="Editar" class="btn btn-sm btn-primary"><i
+                                                    class="fas fa-edit"></i></a>
+                                            <a href="" title="Eliminar" class="btn btn-sm btn-danger"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>

@@ -24,28 +24,34 @@
                                 <tr style="cursor: pointer">
                                     <th scope="col">ID</th>
                                     <th>Nombre</th>
+                                    <th>Marca</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($data == null)
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">no hay registros</th>
-                                </tr>
-                                @else
-                                    @foreach ($data as $modelo)
+                                @if ($modelos == null || empty($modelos))
                                     <tr class="text-nowrap text-center">
-                                        <th scope="row" class="align-middle">{{ $modelo['id'] }}</th>
-                                        <td class="align-middle">{{ $modelo['nombre'] }}</td>
-                                        <td class="align-middle text-nowrap">
-                                            <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                    class="fas fa-eye"></i></button>
-                                            <a href="{{ route('modelos.edit', $modelo['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </td>
+                                        <th scope="row" class="align-middle" colspan="4">No hay registros</th>
                                     </tr>
+                                @else
+                                    @foreach ($modelos as $modelo)
+                                        <tr class="text-nowrap text-center">
+                                            <th scope="row" class="align-middle">{{ $modelo['id'] }}</th>
+                                            <td class="align-middle">{{ $modelo['nombre'] }}</td>
+                                            <td class="align-middle">
+                                                @foreach ($marcas as $marca)
+                                                    @if ($marca['id'] == $modelo['marca_id'])
+                                                        {{ $marca['nombre'] }}
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td class="align-middle text-nowrap">
+                                                <a href="{{ route('modelos.edit', $modelo['id']) }}" title="Editar"
+                                                    class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('modelos.delete', $modelo['id']) }}" title="Eliminar"
+                                                    class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 @endif
                             </tbody>
