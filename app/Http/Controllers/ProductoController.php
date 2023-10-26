@@ -44,7 +44,7 @@ class ProductoController extends Controller
             'nombre' => 'required|string|min:2|max:100',
             'descripcion' => 'nullable|string',
             // 'imagen' => 'required|dimensions:min_width=100,min_height=200',
-            'picture' => 'nullable|mimes:png,jpg,jpeg|max:10240',
+            'imagen' => 'nullable|mimes:png,jpg,jpeg|max:10240',
             'stock_disponible' => 'required|integer',
             'stock_minimo' => 'required|integer',
             'precio_venta' => 'required|numeric',
@@ -58,7 +58,7 @@ class ProductoController extends Controller
         $response = Http::post($url.'/productos', [
             'nombre' => $request->input('nombre'),
             'descripcion' => $request->input('descripcion'),
-            // 'picture' => $request->input('picture'),
+            'imagen' => $request->input('imagen'),
             'stock_disponible' => $request->input('stock_disponible'),
             'stock_minimo' => $request->input('stock_minimo'),
             'precio_venta' => $request->input('precio_venta'),
@@ -67,7 +67,7 @@ class ProductoController extends Controller
             'proveedor_id' => $request->input('proveedor_id'),
         ]);
 
-        dd($response);
+        // dd($response);
 
         $result = $response->json();
         if ($result && $result['status']) {
@@ -92,7 +92,11 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url.'/productos/'.$id);
+
+        $producto = $response->json();
+        return view('dashboard.productos.edit', compact('producto'));
     }
 
     /**

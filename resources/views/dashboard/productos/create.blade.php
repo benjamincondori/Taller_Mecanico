@@ -133,11 +133,11 @@
                                     <label>Subir imagen</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="picture" id="picture" lang="es" >
+                                            <input type="file" class="custom-file-input" name="picture" id="imagen" lang="es" >
                                             <label class="custom-file-label" for="picture">Seleccionar imagen</label>
                                         </div>
                                     </div>
-                                    @error('picture')
+                                    @error('imagen')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
                                 </div>

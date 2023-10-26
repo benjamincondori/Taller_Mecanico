@@ -45,9 +45,9 @@
                                     <td class="align-middle text-nowrap">
                                         <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                 class="fas fa-eye"></i></button>
-                                        <a href="" title="Editar" class="btn btn-sm btn-primary"><i
+                                        <a href="{{ route('productos.edit', $producto['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
                                                 class="fas fa-edit"></i></a>
-                                        <a href="" title="Eliminar" class="btn btn-sm btn-danger"><i
+                                        <a href="{{ route('productos.delete', $producto['id']) }}" title="Eliminar" class="btn btn-sm btn-danger"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
