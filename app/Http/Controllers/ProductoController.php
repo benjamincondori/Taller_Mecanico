@@ -43,7 +43,6 @@ class ProductoController extends Controller
         $request->validate([
             'nombre' => 'required|string',
             'descripcion' => 'nullable|string',
-            // 'imagen' => 'required|dimensions:min_width=100,min_height=200',
             'imagen' => 'nullable|mimes:png,jpg,jpeg|max:10240',
             'stock_disponible' => 'required|integer',
             'stock_minimo' => 'required|integer',
