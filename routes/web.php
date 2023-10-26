@@ -16,6 +16,8 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\CotizacionServicioController;
+use App\Http\Controllers\CotizacionProductoController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +46,8 @@ Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])
 Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
 Route::delete('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
 Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
+
 
 Route::get('/dashboard/personal', [PersonalController::class, 'index'])->name('personal.index');
 Route::get('/dashboard/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
@@ -69,5 +73,12 @@ Route::get('/dashboard/proveedor',[proveedorController::class,'index'])->name('p
 Route::get('/dashboard/diagnostico',[diagnosticoController::class,'index'])->name('diagnostico.index');
 
 Route::get('/dashboard/cotizacion', [CotizacionController::class, 'index'])->name('cotizacion.index');
-Route::get('/dashboard/cotizacion/create', [CotizacionController::class, 'create'])->name('cotizacion.create');
+Route::get('/dashboard/cotizacion/create/{id}', [CotizacionController::class, 'create'])->name('cotizacion.create');
+Route::get('/dashboard/cotizacion/new', [CotizacionController::class, 'new'])->name('cotizacion.new');
 Route::post('/dashboard/cotizacion', [CotizacionController::class, 'store'])->name('cotizacion.store');
+Route::delete('/dashboard/cotizacion/delete/{id}', [CotizacionController::class, 'destroy'])->name('cotizacion.delete');
+Route::get('/dashboard/cotizacion/{id}', [CotizacionController::class, 'show'])->name('cotizacion.show');
+Route::post('/dashboard/cotizacion/update/{id}', [CotizacionController::class, 'update'])->name('cotizacion.update');
+
+Route::post('/{id}', [CotizacionProductoController::class, 'store'])->name('cotizacionProducto.store');
+Route::post('/{id}', [CotizacionServicioController::class, 'store'])->name('cotizacionServicio.store');
