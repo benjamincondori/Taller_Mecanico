@@ -16,6 +16,7 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\ServiciosController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -76,17 +77,27 @@ Route::middleware(['auth.admin'])->group(function () {
         Route::get('/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
         Route::get('/proveedor', [proveedorController::class, 'index'])->name('proveedor.index');
         Route::get('/diagnostico', [diagnosticoController::class, 'index'])->name('diagnostico.index');
-    });
 
-    Route::controller(CategoriasController::class)->group(function(){
-        Route::get('/categorias','index')->name('categorias.index');
-        Route::get('/categorias/create','create')->name('categorias.create');
-        Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
-        
-        Route::post('/categorias','store')->name('categorias.store');
-        Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
-        Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
+        Route::controller(CategoriasController::class)->group(function(){
+            Route::get('/categorias','index')->name('categorias.index');
+            Route::get('/categorias/create','create')->name('categorias.create');
+            Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
+            
+            Route::post('/categorias','store')->name('categorias.store');
+            Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
+            Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
         });
+
+        Route::controller(ServiciosController::class)->group(function(){
+            Route::get('/servicios','index')->name('servicios.index');
+            Route::get('/servicios/create','create')->name('servicios.create');
+            Route::get('/servicios/edit/{servicio}','edit')->name('servicios.edit');
+            
+            Route::post('/servicios','store')->name('servicios.store');
+            Route::post('/servicios/update/{servicio}','update')->name('servicios.update');
+            Route::get('/servicios/delete/{servicio}','destroy')->name('servicios.destroy'); 
+        });
+    });
 
 });
 
