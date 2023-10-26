@@ -12,7 +12,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/productos');
         $data = $response->json();
 
@@ -24,7 +24,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/categorias');
         $categorias = $response->json();
 
@@ -41,10 +41,10 @@ class ProductoController extends Controller
     {
         // Validación de datos
         $request->validate([
-            'nombre' => 'required|string|min:2|max:100',
+            'nombre' => 'required|string',
             'descripcion' => 'nullable|string',
             // 'imagen' => 'required|dimensions:min_width=100,min_height=200',
-            'picture' => 'nullable|mimes:png,jpg,jpeg|max:10240',
+            'imagen' => 'nullable|mimes:png,jpg,jpeg|max:10240',
             'stock_disponible' => 'required|integer',
             'stock_minimo' => 'required|integer',
             'precio_venta' => 'required|numeric',
@@ -53,12 +53,11 @@ class ProductoController extends Controller
             'proveedor_id' => 'required|integer'
         ]);
 
-        // dd($request);
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::post($url.'/productos', [
             'nombre' => $request->input('nombre'),
             'descripcion' => $request->input('descripcion'),
-            // 'picture' => $request->input('picture'),
+            'imagen' => $request->input('imagen'),
             'stock_disponible' => $request->input('stock_disponible'),
             'stock_minimo' => $request->input('stock_minimo'),
             'precio_venta' => $request->input('precio_venta'),
@@ -66,8 +65,6 @@ class ProductoController extends Controller
             'categoria_id' => $request->input('categoria_id'),
             'proveedor_id' => $request->input('proveedor_id'),
         ]);
-
-        dd($response);
 
         $result = $response->json();
         if ($result && $result['status']) {
@@ -92,7 +89,17 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url.'/productos/'.$id);
+        $producto = $response->json();
+
+        $response = Http::get($url.'/categorias');
+        $categorias = $response->json();
+
+        $response = Http::get($url.'/proveedores');
+        $proveedores = $response->json();
+
+        return view('dashboard.productos.edit', compact('producto', 'categorias', 'proveedores'));
     }
 
     /**
@@ -100,7 +107,39 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string',
+            'descripcion' => 'nullable|string',
+            'imagen' => 'nullable|mimes:png,jpg,jpeg|max:10240',
+            'stock_disponible' => 'required|integer',
+            'stock_minimo' => 'required|integer',
+            'precio_venta' => 'required|numeric',
+            'precio_compra' => 'required|numeric',
+            'categoria_id' => 'required|integer',
+            'proveedor_id' => 'required|integer'
+        ]);
+
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::put($url.'/productos/'.$id, [
+            'nombre' => $request->input('nombre'),
+            'descripcion' => $request->input('descripcion'),
+            'imagen' => $request->input('imagen'),
+            'stock_disponible' => $request->input('stock_disponible'),
+            'stock_minimo' => $request->input('stock_minimo'),
+            'precio_venta' => $request->input('precio_venta'),
+            'precio_compra' => $request->input('precio_compra'),
+            'categoria_id' => $request->input('categoria_id'),
+            'proveedor_id' => $request->input('proveedor_id'),
+        ]);
+
+        $result = $response->json();
+        if ($result && $result['status'] ) {
+            alert()->success('¡Actualizado!','El producto ha sido actualizado exitosamente.');
+            return redirect()->route('productos.index');
+        } else {
+            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->route('productos.edit', $id);
+        }
     }
 
     /**
@@ -108,6 +147,16 @@ class ProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+
+        $response = Http::delete($url.'/productos/'.$id);
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+            alert()->success('Eliminado!','El producto ha sido eliminado exitosamente.');
+        } else {
+            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+        }
+        return redirect()->route('productos.index');
     }
 }

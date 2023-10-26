@@ -38,16 +38,16 @@
                                     <td class="align-middle">{{ $producto['nombre'] }}</td>
                                     <td class="align-middle">{{ $producto['proveedor']['nombre'] }}</td>
                                     <td class="align-middle">
-                                        {{ $producto['inventario']['stock_disponible'] }}
+                                        {{ $producto['stock_disponible'] }}
                                     </td>
                                     <td class="align-middle">{{ $producto['precio_venta'] }}</td>
                                     <td class="align-middle">{{ $producto['categoria']['nombre'] }}</td>
                                     <td class="align-middle text-nowrap">
                                         <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                 class="fas fa-eye"></i></button>
-                                        <a href="" title="Editar" class="btn btn-sm btn-primary"><i
+                                        <a href="{{ route('productos.edit', $producto['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
                                                 class="fas fa-edit"></i></a>
-                                        <a href="" title="Eliminar" class="btn btn-sm btn-danger"><i
+                                        <a href="{{ route('productos.delete', $producto['id']) }}" title="Eliminar" class="btn btn-sm btn-danger"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>

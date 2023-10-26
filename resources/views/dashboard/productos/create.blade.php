@@ -11,7 +11,8 @@
                         <h3 class="fs-1 d-inline-block ml-1">Registrar nuevo producto</h3>
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="{{ route('productos.store') }}" method="post" enctype="multipart/form-data">
+                    <form class="px-4 pt-2 pb-2" action="{{ route('productos.store') }}"
+                        method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -30,11 +31,8 @@
                                     <select class="form-control" name="categoria_id" id="categoria_id">
                                         <option value="">Seleccionar</option>
                                         @foreach ($categorias as $categoria)
-                                            <option value="{{ $categoria['id'] }}"
-                                                @if ($categoria['id'] == old('categoria_id'))
-                                                selected
-                                                @endif
-                                            >
+                                        <option value="{{ $categoria['id'] }}"
+                                        @if ($categoria['id'] == old('categoria_id')) selected @endif>
                                             {{ $categoria['nombre'] }}
                                         </option>
                                         @endforeach
@@ -74,16 +72,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="proveedor_id" class="control-label">Proveedor</label>
-                                    <select class="form-control" name="proveedor_id" id="categoria_id">
+                                    <select class="form-control" name="proveedor_id" id="proveedor_id">
                                         <option value="">Seleccionar</option>
                                         @foreach ($proveedores as $proveedor)
-                                            <option value="{{ $categoria['id'] }}"
-                                                @if ($proveedor['id'] == old('proveedor_id'))
-                                                    selected
-                                                @endif
-                                            >
+                                        <option value="{{ $proveedor['id'] }}"
+                                        @if ($proveedor['id'] == old('proveedor_id')) selected @endif>
                                             {{ $proveedor['nombre'] }}
-                                            </option>
+                                        </option>
                                         @endforeach
                                     </select>
                                     @error('proveedor_id')
@@ -100,8 +95,8 @@
                                             <span class="input-group-text">Bs</span>
                                         </div>
                                         <input type="number" class="form-control" placeholder="150,5"
-                                            aria-label="Amount (to the nearest dollar)" name="precio_venta" id="precio_venta"
-                                            value="{{ old('precio_venta') }}">
+                                            aria-label="Amount (to the nearest dollar)" name="precio_venta"
+                                            id="precio_venta" value="{{ old('precio_venta') }}">
                                     </div>
                                     @error('precio_venta')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -119,8 +114,8 @@
                                             <span class="input-group-text">Bs</span>
                                         </div>
                                         <input type="number" class="form-control" placeholder="150,5"
-                                            aria-label="Amount (to the nearest dollar)" name="precio_compra" id="precio_compra"
-                                            value="{{ old('precio_compra') }}">
+                                            aria-label="Amount (to the nearest dollar)" name="precio_compra"
+                                            id="precio_compra" value="{{ old('precio_compra') }}">
                                     </div>
                                     @error('precio_compra')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -133,11 +128,12 @@
                                     <label>Subir imagen</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="picture" id="picture" lang="es" >
-                                            <label class="custom-file-label" for="picture">Seleccionar imagen</label>
+                                            <input type="file" class="custom-file-input" name="imagen" id="imagen"
+                                                lang="es">
+                                            <label class="custom-file-label" for="imagen">Seleccionar imagen</label>
                                         </div>
                                     </div>
-                                    @error('picture')
+                                    @error('imagen')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
                                 </div>
@@ -172,5 +168,58 @@
         </div>
 
     </x-layouts.content>
+
+    @push('js')
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const productoForm = document.getElementById('productoForm');
+
+            productoForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const nombre = productoForm.querySelector('[name="nombre"]').value;
+                const descripcion = productoForm.querySelector('[name="descripcion"]').value;
+                const precio_venta = productoForm.querySelector('[name="precio_venta"]').value;
+                const precio_compra = productoForm.querySelector('[name="precio_compra"]').value;
+                const categoria_id = productoForm.querySelector('[name="categoria_id"]').value;
+                const proveedor_id = productoForm.querySelector('[name="proveedor_id"]').value;
+                const stock_disponible = productoForm.querySelector('[name="stock_disponible"]').value;
+                const stock_minimo = productoForm.querySelector('[name="stock_minimo"]').value;
+                const imagen = productoForm.querySelector('[name="picture"]').value;
+
+                // console.log(nombre, descripcion, precio_venta, precio_compra, categoria_id, proveedor_id, stock_disponible, stock_minimo);
+
+                // console.log(imagen);
+
+                const url = "{{ env('URL_SERVER_API') }}" + "/login";
+                const data = { nombre, descripcion, precio_venta, precio_compra, categoria_id, proveedor_id, stock_disponible, stock_minimo, imagen }; // Datos a enviar en la solicitud
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error de autenticación');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const token = data.token;
+                    localStorage.setItem('token', token);
+
+                    window.location.href = '/dashboard';
+                })
+                .catch(error => {
+                    console.error('Error de autenticación:', error);
+                });
+            });
+        });
+    </script> --}}
+
+    @endpush
 
 </x-layouts.app>
