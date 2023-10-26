@@ -39,7 +39,7 @@
                                     <td class="align-middle">{{ $producto['nombre'] }}</td>
                                     <td class="align-middle">{{ $producto['proveedor']['nombre'] }}</td>
                                     <td class="align-middle">
-                                        {{ $producto['inventario']['stock_disponible'] }}
+                                        {{ $producto['stock_disponible'] }}
                                     </td>
                                     <td class="align-middle">{{ $producto['precio_venta'] }}</td>
                                     <td class="align-middle">{{ $producto['categoria']['nombre'] }}</td>
