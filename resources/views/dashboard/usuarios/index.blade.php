@@ -39,9 +39,6 @@
                             <thead class="bg-dark text-center text-white text-nowrap">
                                 <tr style="cursor: pointer">
                                     <th scope="col">Email</th>
-                                    <th scope="col">Contraseña</th>
-                                    <th scope="col">Persona</th>
-                                    <th scope="col">Tipo</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -55,7 +52,7 @@
                                     @foreach($data as $usuario)
                                     <tr class="text-nowrap text-center">
                                         <th scope="row" class="align-middle">{{$usuario['email']}}</th>
-                                        <td class="align-middle">{{$usuario['password']}}</td>
+                                      
                                         <td class="align-middle text-nowrap">
                                             <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
                                                     class="fas fa-eye"></i></button>

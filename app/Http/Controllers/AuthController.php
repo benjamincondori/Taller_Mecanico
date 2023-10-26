@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
+
+use function PHPUnit\Framework\isEmpty;
 
 class AuthController extends Controller
 {
@@ -14,7 +17,6 @@ class AuthController extends Controller
         return view('index');
     }
 
-
     public function login(Request $request)
     {
         $url = env('URL_SERVER_API');
@@ -22,7 +24,7 @@ class AuthController extends Controller
         // Validación de datos
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
 
         $response = Http::post($url.'/login', [
@@ -30,26 +32,35 @@ class AuthController extends Controller
             'password' => $request->input('password'),
         ]);
 
-        if ($response->successful()) {
-            $data = $response->json();
-            $token = $data['token'];
+        $data = $response->json();
 
-            // Almacena el token JWT en la sesión o en una cookie, según tus necesidades
-            // $this->guardarTokenLocalStorage($data);
+        if (isset($data) && $data['status']) {
+            $usuario = $data['usuario'];
+            $rol_id = $data['usuario']['rol_id'];
+        }
 
-            return redirect('/dashboard');
+        if ($response->successful() && isset($rol_id) &&  $rol_id !== 4) {
+
+            Session::regenerate();
+            Session::put('usuario', $usuario);
+
+            return redirect()->route('dashboard');
+
         } else {
-            $errorMessage = $response->json('error');
-            // dd($errorMessage);
-
-            // Muestra el mensaje de error en la vista
-            return back()->with('error', $errorMessage);
+            return back()->withErrors([
+                'email' => 'Las credenciales proporcionadas no son válidas.',
+            ])->onlyInput('email');
         }
 
     }
 
+
     public function logout() {
 
+        session()->flush();
+        session()->forget('usuario');
+
+        return redirect('/');
     }
 
     public function profile() {
@@ -58,12 +69,4 @@ class AuthController extends Controller
         $data = $response->json();
     }
 
-
-    // private function guardarTokenLocalStorage($data) {
-    //     // Almacena el token JWT en el localStorage
-    //     $token = $data['token'];
-    //     "<script>
-    //             localStorage.setItem('token', '$token');
-    //           </script>";
-    // }
 }
