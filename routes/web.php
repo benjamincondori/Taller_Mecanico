@@ -15,6 +15,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,13 @@ Route::middleware(['auth.admin'])->group(function () {
         Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
         Route::get('/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
         Route::post('/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+
+        Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+        Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
+        Route::get('/productos/edit/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
+        Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+        Route::get('/productos/delete/{id}', [ProductoController::class, 'destroy'])->name('productos.delete');
+        Route::post('/productos/update/{id}', [ProductoController::class, 'update'])->name('productos.update');
 
         Route::get('/personal', [PersonalController::class, 'index'])->name('personal.index');
         Route::get('/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');

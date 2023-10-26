@@ -25,6 +25,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.css') }}">
+
 </head>
 
 <body class="antialiased">
@@ -42,7 +43,7 @@
     <script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    
+
     @include('sweetalert::alert')
 
 </body>
