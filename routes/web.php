@@ -44,14 +44,6 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
-Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
-Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
-Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
-Route::delete('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
-Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
-Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
-
 Route::middleware(['auth.admin'])->group(function () {
     Route::get('/logout', function() {
         return back();
@@ -102,10 +94,10 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('/categorias','index')->name('categorias.index');
             Route::get('/categorias/create','create')->name('categorias.create');
             Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
-            
+
             Route::post('/categorias','store')->name('categorias.store');
             Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
-            Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
+            Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy');
         });
 
         Route::controller(ServiciosController::class)->group(function(){

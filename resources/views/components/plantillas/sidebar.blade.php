@@ -73,10 +73,10 @@
                         <a href="{{ route('productos.index') }}">Productos</a>
                     </li>
                     <li>
-                        <a href="#">Servicios</a>
+                        <a href="{{route('servicios.index')}}">Servicios</a>
                     </li>
                     <li>
-                        <a href="#">Categorías</a>
+                        <a href="{{route('categorias.index')}}">Categorías</a>
                     </li>
                 </ul>
             </li>
@@ -123,19 +123,7 @@
                 </a>
             </li>
 
-            <li>
-                <a href="{{route('categorias.index')}}">
-                    <i class="fas fa-tag"></i>
-                    <span> Categorias </span>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('servicios.index')}}">
-                    <i class="fas fa-wrench"></i>
-                    <span>Servicios</span>
-                </a>
-            </li>
-
+            
         </ul>
 
     </div>
