@@ -16,11 +16,8 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\CategoriasController;
-<<<<<<< HEAD
 use App\Http\Controllers\ProductoController;
-=======
 use App\Http\Controllers\ServiciosController;
->>>>>>> 0ca756bf9570ee36801d7b421a60feceecdb8fd0
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -89,25 +86,14 @@ Route::middleware(['auth.admin'])->group(function () {
         Route::get('/proveedor', [proveedorController::class, 'index'])->name('proveedor.index');
         Route::get('/diagnostico', [diagnosticoController::class, 'index'])->name('diagnostico.index');
 
-<<<<<<< HEAD
-    Route::controller(CategoriasController::class)->group(function(){
-        Route::get('/categorias','index')->name('categorias.index');
-        Route::get('/categorias/create','create')->name('categorias.create');
-        Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
-
-        Route::post('/categorias','store')->name('categorias.store');
-        Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
-        Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy');
-=======
         Route::controller(CategoriasController::class)->group(function(){
             Route::get('/categorias','index')->name('categorias.index');
             Route::get('/categorias/create','create')->name('categorias.create');
             Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
-            
+
             Route::post('/categorias','store')->name('categorias.store');
             Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
-            Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
->>>>>>> 0ca756bf9570ee36801d7b421a60feceecdb8fd0
+            Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy');
         });
 
         Route::controller(ServiciosController::class)->group(function(){
