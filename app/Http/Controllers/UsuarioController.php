@@ -11,7 +11,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $url = env('URL_SERVER_API','http://127.0.0.1');
+        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/usuarios');
         $data = $response->json();
         return view('dashboard.usuarios.index',compact('data'));
@@ -30,7 +31,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
