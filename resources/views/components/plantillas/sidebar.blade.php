@@ -105,6 +105,12 @@
                     <span> Categorias </span>
                 </a>
             </li>
+            <li>
+                <a href="{{route('servicios.index')}}">
+                    <i class="fas fa-wrench"></i>
+                    <span>Servicios</span>
+                </a>
+            </li>
 
         </ul>
 
