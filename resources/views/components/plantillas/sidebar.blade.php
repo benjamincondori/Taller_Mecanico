@@ -63,6 +63,24 @@
                 </ul>
             </li>
             <li>
+                <a href="javascript: void(0);">
+                    <i class="fas fa-th"></i>
+                    <span> Inventario </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="{{ route('productos.index') }}">Productos</a>
+                    </li>
+                    <li>
+                        <a href="{{route('servicios.index')}}">Servicios</a>
+                    </li>
+                    <li>
+                        <a href="{{route('categorias.index')}}">Categorías</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <a href="{{route('diagnostico.index')}}">
                     <i class="far fa-plus-square"></i>
                     <span> Diagnostico </span>
@@ -98,7 +116,14 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="{{route('cotizacion.index')}}">
+                    <i class="fe-dollar-sign"></i>
+                    <span> Cotizaciones </span>
+                </a>
+            </li>
 
+            
         </ul>
 
     </div>

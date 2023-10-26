@@ -15,6 +15,12 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
+use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\CotizacionServicioController;
+use App\Http\Controllers\CotizacionProductoController;
+use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ServiciosController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -47,12 +53,22 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DefaultController::class, 'index'])->name('dashboard');
 
+        Route::get('/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
+        Route::get('/vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
+
         Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
         Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
         Route::get('/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
         Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
         Route::get('/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
         Route::post('/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+
+        Route::get('/productos', [ProductoController::class, 'index'])->name('productos.index');
+        Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
+        Route::get('/productos/edit/{id}', [ProductoController::class, 'edit'])->name('productos.edit');
+        Route::post('/productos', [ProductoController::class, 'store'])->name('productos.store');
+        Route::get('/productos/delete/{id}', [ProductoController::class, 'destroy'])->name('productos.delete');
+        Route::post('/productos/update/{id}', [ProductoController::class, 'update'])->name('productos.update');
 
         Route::get('/personal', [PersonalController::class, 'index'])->name('personal.index');
         Route::get('/personal/create', [PersonalController::class, 'create'])->name('personal.create');

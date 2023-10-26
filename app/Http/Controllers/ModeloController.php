@@ -45,9 +45,11 @@ class ModeloController extends Controller
             'nombre' => 'required|string|min:2|max:100',
             'marca_id' => 'required',
         ]);
+        
+        // dd($request->input('nombre'), $request->input('marca_id'));
 
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
-        $response = Http::post($url . '/modelos', [
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::post($url.'/modelo', [
             'nombre' => $request->input('nombre'),
             'marca_id' => $request->input('marca_id'),
         ]);
@@ -68,14 +70,16 @@ class ModeloController extends Controller
 
     public function edit($modelo)
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
-        $response = Http::get($url . '/marcas');
+        
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url.'/marca');
         $marcas = $response->json();
-
-        $response = Http::get($url . '/modelos/' . $modelo);
-        $modeloData = $response->json();
-
-        return view('dashboard.modelos.edit', compact('modeloData', 'marcas'));
+        
+        $response = Http::get($url.'/modelo/'.$modelo);
+        // dd($response);
+        
+        $modelo = $response->json();
+        return view('dashboard.modelos.edit', compact('modelo', 'marcas'));
     }
 
     public function update(Request $request)
