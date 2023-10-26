@@ -155,6 +155,17 @@ Route::middleware(['auth.admin'])->group(function () {
         Route::post('/diagnostico', [diagnosticoController::class, 'store'])->name('diagnostico.store');
         Route::get('/diagnostico/delete/{id}', [diagnosticoController::class, 'destroy'])->name('diagnostico.delete');
         Route::post('/diagnostico/update/{id}', [diagnosticoController::class, 'update'])->name('diagnostico.update');
+
+        Route::get('/dashboard/cotizacion', [CotizacionController::class, 'index'])->name('cotizacion.index');
+        Route::get('/dashboard/cotizacion/create/{id}', [CotizacionController::class, 'create'])->name('cotizacion.create');
+        Route::get('/dashboard/cotizacion/new', [CotizacionController::class, 'new'])->name('cotizacion.new');
+        Route::post('/dashboard/cotizacion', [CotizacionController::class, 'store'])->name('cotizacion.store');
+        Route::delete('/dashboard/cotizacion/delete/{id}', [CotizacionController::class, 'destroy'])->name('cotizacion.delete');
+        Route::get('/dashboard/cotizacion/{id}', [CotizacionController::class, 'show'])->name('cotizacion.show');
+        Route::post('/dashboard/cotizacion/update/{id}', [CotizacionController::class, 'update'])->name('cotizacion.update');
+
+        Route::post('/{id}', [CotizacionProductoController::class, 'store'])->name('cotizacionProducto.store');
+        Route::post('/{id}', [CotizacionServicioController::class, 'store'])->name('cotizacionServicio.store');
     });
 });
 
