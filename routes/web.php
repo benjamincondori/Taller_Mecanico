@@ -42,14 +42,6 @@ Route::middleware(['guest'])->group(function () {
 });
 
 
-Route::get('/dashboard/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('/dashboard/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
-Route::get('/dashboard/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
-Route::post('/dashboard/clientes', [ClientesController::class, 'store'])->name('clientes.store');
-Route::delete('/dashboard/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
-Route::post('/dashboard/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
-Route::get('/clientes/buscar', [ClientesController::class, 'buscar'])->name('clientes.buscar');
-
 Route::middleware(['auth.admin'])->group(function () {
     Route::get('/logout', function() {
         return back();
@@ -102,12 +94,6 @@ Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])
         });
 
 });
-
-
-
-Route::get('/dashboard/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
-Route::get('/dashboard/proveedor',[proveedorController::class,'index'])->name('proveedor.index');
-Route::get('/dashboard/diagnostico',[diagnosticoController::class,'index'])->name('diagnostico.index');
 
 Route::get('/dashboard/cotizacion', [CotizacionController::class, 'index'])->name('cotizacion.index');
 Route::get('/dashboard/cotizacion/create/{id}', [CotizacionController::class, 'create'])->name('cotizacion.create');
