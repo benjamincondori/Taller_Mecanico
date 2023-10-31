@@ -39,16 +39,18 @@
                                     <td class="align-middle">{{ $proveedor['telefono'] }}</td>
                                     <td class="align-middle">{{ $proveedor['email'] }}</td>
                                     <td class="align-middle text-nowrap">
-                                        <a href="{{ route('proveedor.edit', $proveedor['id']) }}" title="Editar"
-                                            class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                        <a href="{{ route('proveedor.delete', $proveedor['id']) }}" title="Eliminar"
-                                            class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                    {{-- <form action="{{route('proveedors.delete',$proveedor['id'])}}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" title="Eliminar" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash-alt"></i></button>
-                                        </form> --}}
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{{ route('proveedor.edit', $proveedor['id']) }}" title="Editar"
+                                            class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i></a>
+                                            <form id="formDeleteProveedor_{{ $proveedor['id'] }}"
+                                            action="{{route('proveedor.delete', $proveedor['id']) }}" method="post">
+                                                @csrf
+                                                <button type="button" title="Eliminar"
+                                                onclick="confirmDelete({{ $proveedor['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -61,5 +63,28 @@
         </div>
 
     </x-layouts.content>
+
+    @push('js')
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#556ee6',
+                    cancelButtonColor: '#f46a6a',
+                    confirmButtonText: 'Sí, eliminarlo',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formId = 'formDeleteProveedor_' + id;
+                        var form = document.getElementById(formId);
+                        form.submit(); // Envía el formulario si el usuario confirma
+                    }
+                });
+            }
+        </script>
+    @endpush
 
 </x-layouts.app>

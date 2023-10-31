@@ -7,28 +7,31 @@
                 <div class="card-box">
 
                     <div class="form-group px-4 pt-2">
-                        <i class="fas fa-user-plus fa-2x"></i>
+                        <i class="fas fa-plus-circle fa-2x"></i>
                         <h3 class="fs-1 d-inline-block ml-1">Crear nuevo cargo</h3>
                     </div>
 
                     <form class="px-4 pt-2 pb-2" action="{{ route('cargo.store') }}" method="post">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="John" value="{{ old('nombre') }}" >
+                                        placeholder="Técnico automotriz" value="{{ old('nombre') }}" >
                                     @error('nombre')
-                                    <span class="error text-danger">* {{ $message }}</span>
+                                        <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="descripcion" class="control-label">descripcion</label>
+                                    <label for="descripcion" class="control-label">Descripción</label>
                                     <input type="text" class="form-control" id="descripcion" name="descripcion"
-                                        placeholder="Doe" value="{{ old('descripcion') }}">
+                                        placeholder="Se encarga del mantenimiento y reparación de vehículos" value="{{ old('descripcion') }}">
                                     @error('descripcion')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror

@@ -7,7 +7,7 @@
                 <div class="card-box">
 
                     <div class="form-group px-4 pt-2">
-                        <i class="fas fa-user-plus fa-2x"></i>
+                        <i class="fas fa-plus-circle fa-2x"></i>
                         <h3 class="fs-1 d-inline-block ml-1">Crear nueva categoria</h3>
                     </div>
 
@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="introduzca categoria" value="{{ old('nombre') }}" >
+                                        placeholder="Introduzca la categoria" value="{{ old('nombre') }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -28,8 +28,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="categoria_id" class="control-label">Categoria Padre</label>
-                                    <select class="form-control" name="categoria_id" id="categoria_id"> 
-                                        @if ($categorias == null)
+                                    <select class="form-control" name="categoria_id" id="categoria_id">
+                                        <option value="">Seleccionar</option> 
+                                        <option value="1">Productos</option> 
+                                        <option value="2">Servicios</option> 
+                                        {{-- @if ($categorias == null)
                                         <tr class="text-nowrap text-center">
                                             <option value="-1">no existen registros</option>
                                         </tr>
@@ -38,7 +41,7 @@
                                             @foreach ($categorias as $categoria)
                                                 <option value="{{ $categoria['id'] }}">{{ $categoria['nombre'] }}</option>
                                             @endforeach
-                                        @endif
+                                        @endif --}}
                                     </select>
                                     @error('categoria_id')
                                         <span class="error text-danger">* {{ $message }}</span>

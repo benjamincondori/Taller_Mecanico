@@ -30,19 +30,23 @@
                             <tbody>
                                 @foreach ($data as $tipovehiculo)
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">{{ $tipovehiculo['id'] }}</th>
-                                    <th scope="row" class="align-middle">{{ $tipovehiculo['nombre'] }}</th>
-                                    <td class="align-middle text-nowrap">
-                                        <a href="{{ route('tipovehiculo.edit', $tipovehiculo['id']) }}" title="Editar"
-                                            class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                        <a href="{{ route('tipovehiculo.delete', $tipovehiculo['id']) }}" title="Eliminar"
-                                            class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                    {{-- <form action="{{route('tipovehiculo.delete',$tipovehiculo['id'])}}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" title="Eliminar" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash-alt"></i></button>
-                                        </form> --}}
+                                    <th scope="row" class="align-middle" style="width: 120px">
+                                        {{ $tipovehiculo['id'] }}
+                                    </th>
+                                    <td class="align-middle">{{ $tipovehiculo['nombre'] }}</td>
+                                    <td class="align-middle text-nowrap" style="width: 200px">
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{{ route('tipovehiculo.edit', $tipovehiculo['id']) }}" title="Editar" class="btn btn-sm btn-primary mr-1">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form id="formDeleteTipoVehiculo_{{ $tipovehiculo['id'] }}" action="{{route('tipovehiculo.delete', $tipovehiculo['id']) }}" method="post">
+                                                @csrf
+                                                <button type="button" title="Eliminar"
+                                                onclick="confirmDelete({{ $tipovehiculo['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -55,5 +59,28 @@
         </div>
 
     </x-layouts.content>
+
+    @push('js')
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#556ee6',
+                    cancelButtonColor: '#f46a6a',
+                    confirmButtonText: 'Sí, eliminarlo',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formId = 'formDeleteTipoVehiculo_' + id;
+                        var form = document.getElementById(formId);
+                        form.submit(); // Envía el formulario si el usuario confirma
+                    }
+                });
+            }
+        </script>
+    @endpush
 
 </x-layouts.app>

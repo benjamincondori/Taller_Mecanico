@@ -7,8 +7,8 @@
                 <div class="card-box">
 
                     <div class="form-group px-4 pt-2">
-                        <i class="fas fa-user-plus fa-2x"></i>
-                        <h3 class="fs-1 d-inline-block ml-1">Crear nuevo modelo</h3>
+                        <i class="fas fa-plus-circle fa-2x"></i>
+                        <h3 class="fs-1 d-inline-block ml-1">Crear Nuevo Modelo</h3>
                     </div>
 
                     <form class="px-4 pt-2 pb-2" action="{{ route('modelos.store') }}" method="post">
@@ -28,17 +28,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="marca_id" class="control-label">Marca</label>
-                                    <select class="form-control" name="marca_id" id="marca_id"> 
-                                        @if ($marcas == null)
-                                        <tr class="text-nowrap text-center">
-                                            <option value="-1">no existen registros</option>
-                                        </tr>
-                                        @else
-                                            <option value="">Seleccionar</option>
-                                            @foreach ($marcas as $marca)
-                                                <option value="{{ $marca['id'] }}">{{ $marca['nombre'] }}</option>
-                                            @endforeach
-                                        @endif
+                                    <select class="form-control" name="marca_id" id="marca_id">
+                                        <option value="">Seleccionar</option>
+                                        @foreach ($marcas as $marca)
+                                            <option value="{{ $marca['id'] }}"
+                                            @if ($marca['id'] == old('marca_id'))
+                                                selected
+                                            @endif
+                                            >{{ $marca['nombre'] }}</option>
+                                        @endforeach
                                     </select>
                                     @error('marca_id')
                                         <span class="error text-danger">* {{ $message }}</span>

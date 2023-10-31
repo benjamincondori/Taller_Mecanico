@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Http;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -19,9 +16,7 @@ class ProductoController extends Controller
         return view('dashboard.productos.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -34,9 +29,7 @@ class ProductoController extends Controller
         return view('dashboard.productos.create', compact('categorias', 'proveedores'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         // Validación de datos
@@ -68,25 +61,21 @@ class ProductoController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
-            alert()->success('¡Guardado!','El producto ha sido guardado exitosamente.');
+            session()->flash('guardado','El producto ha sido guardado exitosamente.');
             return redirect()->route('productos.index');
         } else {
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
-            return redirect()->route('productos.create');
+            session()->flash('error','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->back();
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -101,12 +90,9 @@ class ProductoController extends Controller
         $proveedores = $response->json();
 
         return view('dashboard.productos.edit', compact('producto', 'categorias', 'proveedores'));
-
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -136,17 +122,15 @@ class ProductoController extends Controller
 
         $result = $response->json();
         if ($result && $result['status'] ) {
-            alert()->success('¡Actualizado!','El producto ha sido actualizado exitosamente.');
+            session()->flash('actualizado','El producto ha sido actualizado exitosamente.');
             return redirect()->route('productos.index');
         } else {
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error','Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->route('productos.edit', $id);
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -155,9 +139,9 @@ class ProductoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
-            alert()->success('Eliminado!','El producto ha sido eliminado exitosamente.');
+            session()->flash('eliminado','El producto ha sido eliminado exitosamente.');
         } else {
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error','Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
         return redirect()->route('productos.index');
     }

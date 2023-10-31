@@ -24,9 +24,7 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="direccion" class="control-label">Dirección</label>
                                     <input type="text" class="form-control" id="direccion" name="direccion"
@@ -37,7 +35,18 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="control-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="jhondoe@gmail.com" value="{{ old('email') }}">
+                                    @error('email')
+                                    <span class="error text-danger">* {{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="telefono" class="control-label">Telefono</label>
@@ -49,20 +58,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="email" class="control-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="jhondoe@gmail.com" value="{{ old('email') }}">
-                                    @error('email')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>  
-                        </div>
-                        
-                        
 
                         <div class="form-group text-right m-b-0">
                             <a href="{{ route('proveedor.index') }}" class="btn btn-danger waves-effect m-l-5">

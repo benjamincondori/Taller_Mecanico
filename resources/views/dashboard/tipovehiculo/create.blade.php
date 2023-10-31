@@ -7,18 +7,18 @@
                 <div class="card-box">
 
                     <div class="form-group px-4 pt-2">
-                        <i class="fas fa-user-plus fa-2x"></i>
+                        <i class="fas fa-plus-circle fa-2x"></i>
                         <h3 class="fs-1 d-inline-block ml-1">Crear nuevo Tipo de Vehiculo</h3>
                     </div>
 
                     <form class="px-4 pt-2 pb-2" action="{{ route('tipovehiculo.store') }}" method="post">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="John" value="{{ old('nombre') }}" >
+                                        placeholder="Camioneta" value="{{ old('nombre') }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror

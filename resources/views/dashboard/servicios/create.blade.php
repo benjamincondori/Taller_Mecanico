@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="lavado" value="{{ old('nombre') }}" >
+                                        placeholder="Lavado" value="{{ old('nombre') }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -26,22 +26,15 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="precio" class="control-label">Precio</label>
-                                    <input type="text" class="form-control" id="precio" name="precio"
-                                        placeholder="100" value="{{ old('precio') }}">
+                                    <label>Precio</label>
+                                    <div class="input-group mt-0">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Bs</span>
+                                        </div>
+                                        <input type="number" class="form-control" placeholder="150,5"
+                                            name="precio" id="precio" value="{{ old('precio') }}">
+                                    </div>
                                     @error('precio')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="descripcion" class="control-label">Descripcion</label>
-                                    <input type="text" class="form-control" id="descripcion" name="descripcion"
-                                        placeholder="lavar todo el vehiculo" value="{{ old('descripcion') }}">
-                                    @error('descripcion')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
                                 </div>
@@ -49,20 +42,38 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3">
-                                <label for="categoria_id" class="control-label">Categoria</label>
-                                <select class="form-control" name="categoria_id" id="categoria_id"> 
-                                    @if ($categorias == null)
-                                    <tr class="text-nowrap text-center">
-                                        <option value="">no existen registros</option>
-                                    </tr>
-                                    @else
-                                        <option value="">Seleccionar</option>
-                                        @foreach ($categorias as $categoria)
-                                            <option value="{{ $categoria['id'] }}">{{ $categoria['nombre'] }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="descripcion" class="control-label">Descripción</label>
+                                    <textarea class="form-control" name="descripcion" id="descripcion" rows="5"
+                                        placeholder="Lavado de todo el vehículo">{{ old('descripcion') }}</textarea>
+                                    @error('descripcion')
+                                    <span class="error text-danger">* {{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="categoria_id" class="control-label">Categoría</label>
+                                    <select class="form-control" name="categoria_id" id="categoria_id">
+                                        @if ($categorias == null)
+                                            <tr class="text-nowrap text-center">
+                                                <option value="">no existen registros</option>
+                                            </tr>
+                                        @else
+                                            <option value="">Seleccionar</option>
+                                            @foreach ($categorias as $categoria)
+                                            <option value="{{ $categoria['id'] }}"
+                                            @if ($categoria['id'] == old('categoria_id')) selected @endif>
+                                                {{ $categoria['nombre'] }}
+                                            </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @error('categoria_id')
+                                    <span class="error text-danger">* {{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 

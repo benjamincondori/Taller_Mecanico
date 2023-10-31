@@ -17,7 +17,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre"
+                                    <input type="text" id="nombre" name="nombre"
+                                    class="form-control @error('nombre') is-invalid @enderror"
                                         placeholder="John" value="{{ old('nombre') }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -27,7 +28,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="apellido" class="control-label">Apellido</label>
-                                    <input type="text" class="form-control" id="apellido" name="apellido"
+                                    <input type="text" id="apellido" name="apellido"
+                                    class="form-control @error('apellido') is-invalid @enderror" id="apellido" name="apellido"
                                         placeholder="Doe" value="{{ old('apellido') }}">
                                     @error('apellido')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -39,7 +41,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="email" class="control-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"
+                                    <input type="email" id="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
                                         placeholder="jhondoe@gmail.com" value="{{ old('email') }}">
                                     @error('email')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -51,10 +54,11 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="direccion" class="control-label">Dirección</label>
-                                    <input type="text" class="form-control" id="direccion" name="direccion"
+                                    <input type="text" id="direccion" name="direccion"
+                                    class="form-control @error('direccion') is-invalid @enderror"
                                         placeholder="Address" value="{{ old('direccion') }}">
                                     @error('direccion')
-                                    <span class="error text-danger">* {{ $message }}</span>
+                                        <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
@@ -63,7 +67,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ci" class="control-label">Cédula de identidad</label>
-                                    <input type="number" min="0" class="form-control" id="ci" name="ci"
+                                    <input type="number" min="0" id="ci" name="ci"
+                                    class="form-control @error('ci') is-invalid @enderror"
                                         placeholder="1234567" value="{{ old('ci') }}">
                                     @error('ci')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -74,7 +79,8 @@
                                 <div class="form-group">
                                     <label for="telefono" class="control-label">Número
                                         telefónico</label>
-                                    <input type="number" min="0" class="form-control" id="telefono" name="telefono"
+                                    <input type="number" min="0" id="telefono" name="telefono"
+                                    class="form-control @error('telefono') is-invalid @enderror"
                                         placeholder="77664412" value="{{ old('telefono') }}">
                                     @error('telefono')
                                     <span class="error text-danger">* {{ $message }}</span>
@@ -118,5 +124,20 @@
         </div>
 
     </x-layouts.content>
+
+    @push('js')
+
+        @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                timer: 5000
+            });
+        </script>
+        @endif
+
+    @endpush
 
 </x-layouts.app>

@@ -8,17 +8,17 @@
 
                     <div class="form-group px-4 pt-2">
                         <i class="fas fa-pencil-alt fa-2x"></i>
-                        <h3 class="fs-1 d-inline-block ml-1">Editar modelo</h3>
+                        <h3 class="fs-1 d-inline-block ml-1">Editar Modelo</h3>
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="{{ route('modelos.update', $modeloData['id']) }}" method="post">
+                    <form class="px-4 pt-2 pb-2" action="{{ route('modelos.update', $modelo['id']) }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="Toyota" value="{{ $modeloData['nombre'] }}" >
+                                        placeholder="Toyota" value="{{ $modelo['nombre'] }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -32,7 +32,7 @@
                                         <option value="">Seleccionar</option>
                                         @foreach ($marcas as $marca)
                                             <option value="{{ $marca['id'] }}"
-                                            @if ($marca['id'] == old('marca_id', $modeloData['marca_id']))
+                                            @if ($marca['id'] == old('marca_id', $modelo['marca_id']))
                                                 selected
                                             @endif
                                             >{{ $marca['nombre'] }}</option>

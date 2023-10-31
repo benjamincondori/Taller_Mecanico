@@ -7,34 +7,17 @@ use Illuminate\Support\Facades\Http;
 
 class VehiculoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $responseVehiculos = Http::get($url . '/vehiculos');
-        $responseMarcas = Http::get($url . '/marcas');
-        $responseModelos = Http::get($url . '/modelos');
-        $responseClientes = Http::get($url . '/clientes');
-        $responseTipoVehiculos = Http::get($url . '/tipo-vehiculos');
-
-        $vehiculos = collect($responseVehiculos->json())->sortBy('id')->values()->all();
-        $marcas = $responseMarcas->json();
-        $modelos = $responseModelos->json();
-        $clientes = $responseClientes->json();
-        $tipoVehiculos = $responseTipoVehiculos->json();
-
-        return view('dashboard.vehiculos.index', compact('vehiculos', 'marcas', 'modelos', 'clientes', 'tipoVehiculos'));
+        $response = Http::get($url . '/vehiculos');
+        $vehiculos = $response->json();
+        return view('dashboard.vehiculos.index', compact('vehiculos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $responseMarcas = Http::get($url . '/marcas');
         $responseModelos = Http::get($url . '/modelos');
@@ -49,16 +32,13 @@ class VehiculoController extends Controller
         return view('dashboard.vehiculos.create', compact('marcas', 'modelos', 'clientes', 'tipoVehiculos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    
-     public function store(Request $request)
+
+    public function store(Request $request)
     {
         $request->validate([
-            'placa' => 'required|unique:vehiculos',
-            'nro_chasis' => 'required|unique:vehiculos',
-            'color' => 'required',
+            'placa' => 'required',
+            'nro_chasis' => 'required',
+            'color' => 'required|string',
             'año' => 'required|numeric',
             'marca_id' => 'required',
             'modelo_id' => 'required',
@@ -66,7 +46,6 @@ class VehiculoController extends Controller
             'tipo_vehiculo_id' => 'required',
         ]);
 
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::post($url . '/vehiculos', [
             'placa' => $request->input('placa'),
@@ -80,30 +59,25 @@ class VehiculoController extends Controller
         ]);
 
         $result = $response->json();
+
         if ($result && $result['status']) {
-            alert()->success('¡Guardado!', 'El vehículo ha sido guardado exitosamente.');
+            session()->flash('guardado', 'El vehículo ha sido guardado exitosamente.');
             return redirect()->route('vehiculos.index');
         } else {
-            alert()->error('Oops...', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
-            return redirect()->route('vehiculos.create');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->back();
         }
     }
 
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+
+    public function edit(string $id)
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $responseVehiculo = Http::get($url . '/vehiculos/' . $id);
         $responseMarcas = Http::get($url . '/marcas');
@@ -121,9 +95,6 @@ class VehiculoController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -137,7 +108,6 @@ class VehiculoController extends Controller
             'tipo_vehiculo_id' => 'required',
         ]);
 
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::put($url . '/vehiculos/' . $id, [
             'placa' => $request->input('placa'),
@@ -153,31 +123,26 @@ class VehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
-            alert()->success('¡Actualizado!', 'El vehículo ha sido actualizado exitosamente.');
+            session()->flash('actualizado', 'El vehículo ha sido actualizado exitosamente.');
             return redirect()->route('vehiculos.index');
         } else {
-            alert()->error('Oops...', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->route('vehiculos.edit', $id);
         }
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/vehiculos/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
-            alert()->success('¡Eliminado!', 'El vehículo ha sido eliminado exitosamente.');
+            session()->flash('eliminado', 'El vehículo ha sido eliminado exitosamente.');
         } else {
-            alert()->error('Oops...', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
         return redirect()->route('vehiculos.index');
     }
-
 }

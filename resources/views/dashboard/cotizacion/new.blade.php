@@ -7,53 +7,66 @@
                         <i class="fas fa-file-invoice-dollar fa-2x"></i>
                         <h3 class="fs-1 d-inline-block ml-1">Crear nueva cotización</h3>
                     </div>
-                    <form id="nuevaCotizacionForm" action="{{ route('cotizacion.store') }}" method="post">
-                         <!-- Campo oculto para la fecha con valor predeterminado de la fecha actual -->
-    <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
-    
-    <!-- Campo oculto para el precio con valor predeterminado de 0 -->
-    <input type="hidden" name="precio" value="0">
+                    <form id="nuevaCotizacionForm" class="px-4 pt-2 pb-2" action="{{ route('cotizacion.store') }}"
+                        method="post">
+                        <!-- Campo oculto para la fecha con valor predeterminado de la fecha actual -->
+                        <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
+
+                        <!-- Campo oculto para el precio con valor predeterminado de 0 -->
+                        <input type="hidden" name="precio" value="0">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cliente" class="control-label">Cliente</label>
                                     <select class="form-control" id="cliente" name="cliente">
-                                            <option value="">Selecciona un cliente</option>
+                                        <option value="">Selecciona un cliente</option>
                                         @foreach ($clientes as $cliente)
-                                            <option value="{{ $cliente['id'] }}">{{ $cliente['ci'] }} | {{ $cliente['nombre'] }} {{ $cliente['apellido'] }}</option>
+                                        <option value="{{ $cliente['id'] }}">{{ $cliente['ci'] }} | {{
+                                            $cliente['nombre'] }} {{ $cliente['apellido'] }}</option>
                                         @endforeach
                                     </select>
+                                    @error('cliente')
+                                        <span class="error text-danger">* {{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vehiculo" class="control-label">Vehículo</label>
                                     @if (!empty($vehiculos))
-                                        <select class="form-control" id="vehiculo" name="vehiculo" >
-                                            <option value="">Selecciona un vehículo</option>
-                                            @foreach ($vehiculos as $vehiculo)
-                                            <option value="{{ $vehiculo['id'] }}">{{ $vehiculo['placa'] }}, {{ $vehiculo['modelo_nombre'] }}, {{ $vehiculo['marca_nombre'] }}</option>
-                                            @endforeach
-                                        </select>
+                                    <select class="form-control" id="vehiculo" name="vehiculo">
+                                        <option value="">Selecciona un vehículo</option>
+                                        @foreach ($vehiculos as $vehiculo)
+                                        <option value="{{ $vehiculo['id'] }}">{{ $vehiculo['placa'] }}, {{
+                                            $vehiculo['modelo_nombre'] }}, {{ $vehiculo['marca_nombre'] }}</option>
+                                        @endforeach
+                                    </select>
                                     @else
-                                        <select class="form-control" id="vehiculo" name="vehiculo">
-                                            <option value="">No hay vehículos registrados</option>
-                                        </select>
+                                    <select class="form-control" id="vehiculo" name="vehiculo">
+                                        <option value="">No hay vehículos registrados</option>
+                                    </select>
                                     @endif
+                                    @error('vehiculo')
+                                        <span class="error text-danger">* {{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="descripcion" class="control-label">Descripcion</label>
-                                    <input type="text" class="form-control" id="descripcion" name="descripcion" >
+                                    <input type="text" class="form-control" id="descripcion" name="descripcion">
+                                    @error('descripcion')
+                                        <span class="error text-danger">* {{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
-                            
+
                         </div>
+                        <div class="form-group text-right m-b-0">
                             <a href="{{ route('cotizacion.index') }}" class="btn btn-danger waves-effect m-l-5">
                                 Cancelar
                             </a>
@@ -61,9 +74,10 @@
                                 Guardar Cotización
                             </button>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
+        </div>
         </div>
     </x-layouts.content>
 </x-layouts.app>
@@ -77,12 +91,12 @@
         const precioUnitarioInput = document.getElementById("precioUnitarioProducto");
         const cantidadInput = document.getElementById("cantidadProducto");
         const precioPorCantidadInput = document.getElementById("precioPorCantidadProducto");
-        
+
         const precioUnitarioServicioInput = document.getElementById("precioUnitarioServicio");
         const cantidadServicioInput = document.getElementById("cantidadServicio");
         const precioPorCantidadServicioInput = document.getElementById("precioPorCantidadServicio");
         const precioTotalInput = document.getElementById("precioTotal");
-        
+
         // Inicializa el campo TOTAL en 0
         precioTotalInput.value = 0;
 

@@ -7,74 +7,85 @@ use Illuminate\Support\Facades\Http;
 
 class tipovehiculoController extends Controller
 {
-    public function index(){
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+    public function index()
+    {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::get($url.'/tipo-vehiculos');
+        $response = Http::get($url . '/tipo-vehiculos');
         $data = $response->json();
         return view('dashboard.tipovehiculo.index', compact('data'));
     }
-    
-    public function create(){
+
+    public function create()
+    {
         return view('dashboard.tipovehiculo.create');
     }
-    public function store(Request $request){
+
+    public function store(Request $request)
+    {
         // Validación de datos
         $request->validate([
             'nombre' => 'required|string|min:2|max:100',
         ]);
 
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::post($url.'/tipo-vehiculos', [
+        $response = Http::post($url . '/tipo-vehiculos', [
             'nombre' => $request->input('nombre'),
         ]);
-        $result= $response->json();
-        if($result && $result['status']){
-            alert()->success('¡Guardado!','El tipo de vehiculo ha sido guardado exitosamente.');
+
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+            session()->flash('guardado', 'El tipo de vehiculo ha sido guardado exitosamente.');
             return redirect()->route('tipovehiculo.index');
-        }else{
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
-            return redirect()->route('tipovehiculo.create');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->back();
         }
     }
-    public function edit($id){
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+
+    public function edit($id)
+    {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::get($url.'/tipo-vehiculos/'.$id);
+        $response = Http::get($url . '/tipo-vehiculos/' . $id);
         $tipovehiculo = $response->json();
         return view('dashboard.tipovehiculo.edit', compact('tipovehiculo'));
     }
-    public function update(Request $request, $id){
+
+    public function update(Request $request, $id)
+    {
         // Validación de datos
         $request->validate([
             'nombre' => 'required|string|min:2|max:100',
         ]);
 
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::put($url.'/tipo-vehiculos/'.$id, [
+        $response = Http::put($url . '/tipo-vehiculos/' . $id, [
             'nombre' => $request->input('nombre'),
         ]);
-        $result= $response->json();
-        if($result && $result['status']){
-            alert()->success('¡Actualizado!','El tipo de vehiculo ha sido actualizado exitosamente.');
+
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+            session()->flash('actualizado', 'El tipo de vehiculo ha sido actualizado exitosamente.');
             return redirect()->route('tipovehiculo.index');
-        }else{
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->route('tipovehiculo.edit', $id);
         }
     }
-    public function destroy($id){
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
+
+    public function destroy($id)
+    {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::delete($url.'/tipo-vehiculos/'.$id);
-        $result= $response->json();
-        if($result && $result['status']){
-            alert()->success('¡Eliminado!','El tipo de vehiculo ha sido eliminado exitosamente.');
-        }else{
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+        $response = Http::delete($url . '/tipo-vehiculos/' . $id);
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+            session()->flash('eliminado', 'El tipo de vehiculo ha sido eliminado exitosamente.');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
+        
         return redirect()->route('tipovehiculo.index');
     }
 }
