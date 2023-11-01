@@ -38,6 +38,10 @@ class RolesController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Rol creado con el id: ' . $result['rol']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', '¡Guardado! El rol ha sido guardado exitosamente.');
             return redirect()->route('roles.index');
         } else {
@@ -79,6 +83,10 @@ class RolesController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Rol actualizado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El rol ha sido actualizado exitosamente.');
             return redirect()->route('roles.index');
         } else {
@@ -95,6 +103,10 @@ class RolesController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Rol eliminado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El rol ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

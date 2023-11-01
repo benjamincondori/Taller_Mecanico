@@ -37,6 +37,10 @@ class MarcaController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Marca creada con el ID: ' . $result['marca']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'La marca ha sido guardada exitosamente.');
             return redirect()->route('marcas.index');
         } else {
@@ -76,6 +80,10 @@ class MarcaController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Marca actualizada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'La marca ha sido actualizada exitosamente.');
             return redirect()->route('marcas.index');
         } else {
@@ -92,6 +100,10 @@ class MarcaController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Marca eliminada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'La marca ha sido eliminada exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

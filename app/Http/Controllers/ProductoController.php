@@ -61,6 +61,10 @@ class ProductoController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Producto creado con el ID: ' . $result['producto']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado','El producto ha sido guardado exitosamente.');
             return redirect()->route('productos.index');
         } else {
@@ -80,7 +84,6 @@ class ProductoController extends Controller
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/productos/'.$id);
-
         $producto = $response->json();
 
         $response = Http::get($url.'/categorias');
@@ -122,6 +125,10 @@ class ProductoController extends Controller
 
         $result = $response->json();
         if ($result && $result['status'] ) {
+
+            $descripcion = 'Producto actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado','El producto ha sido actualizado exitosamente.');
             return redirect()->route('productos.index');
         } else {
@@ -139,6 +146,10 @@ class ProductoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Producto eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado','El producto ha sido eliminado exitosamente.');
         } else {
             session()->flash('error','Ha ocurrido un error. Por favor, intenta nuevamente.');

@@ -79,6 +79,10 @@ class UsuarioController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Usuario actualizado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El personal se ha actualizado correctamente');
             return redirect()->route('usuarios.index');
         } else {
@@ -96,6 +100,10 @@ class UsuarioController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Usuario eliminado con el id: ' . $id;
+            registrarBitacora($descripcion);
+            
             session()->flash('eliminado', 'El usuario ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

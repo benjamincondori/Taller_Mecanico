@@ -40,6 +40,10 @@ class CargoController extends Controller
         ]);
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Cargo creado con el id: ' . $result['puesto']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', '¡Guardado! El cargo ha sido guardado exitosamente.');
             return redirect()->route('cargo.index');
         } else {
@@ -73,6 +77,10 @@ class CargoController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Cargo actualizado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El cargo ha sido actualizado exitosamente.');
             return redirect()->route('cargo.index');
         } else {
@@ -88,6 +96,10 @@ class CargoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Cargo eliminado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El cargo ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

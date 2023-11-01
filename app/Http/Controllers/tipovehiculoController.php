@@ -35,6 +35,10 @@ class tipovehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Tipo de vehiculo creado con el ID: ' . $result['tipoVehiculo']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El tipo de vehiculo ha sido guardado exitosamente.');
             return redirect()->route('tipovehiculo.index');
         } else {
@@ -66,6 +70,10 @@ class tipovehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Tipo de vehiculo actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El tipo de vehiculo ha sido actualizado exitosamente.');
             return redirect()->route('tipovehiculo.index');
         } else {
@@ -81,11 +89,15 @@ class tipovehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Tipo de vehiculo eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El tipo de vehiculo ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
-        
+
         return redirect()->route('tipovehiculo.index');
     }
 }

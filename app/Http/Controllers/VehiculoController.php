@@ -61,6 +61,10 @@ class VehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Vehículo creado con el ID: ' . $result['vehiculo']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El vehículo ha sido guardado exitosamente.');
             return redirect()->route('vehiculos.index');
         } else {
@@ -123,6 +127,10 @@ class VehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Vehículo actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El vehículo ha sido actualizado exitosamente.');
             return redirect()->route('vehiculos.index');
         } else {
@@ -139,6 +147,10 @@ class VehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Vehículo eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El vehículo ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

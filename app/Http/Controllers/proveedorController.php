@@ -39,6 +39,10 @@ class proveedorController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Proveedor creado con el ID: ' . $result['proveedor']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El proveedor ha sido guardado exitosamente.');
             return redirect()->route('proveedor.index');
         } else {
@@ -75,6 +79,10 @@ class proveedorController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Proveedor actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El proveedor ha sido actualizado exitosamente.');
             return redirect()->route('proveedor.index');
         } else {
@@ -90,6 +98,10 @@ class proveedorController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Proveedor eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El proveedor ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

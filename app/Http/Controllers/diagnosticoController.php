@@ -43,6 +43,10 @@ class diagnosticoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Diagnóstico creado con el ID: ' . $result['diagnostico']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El diagnóstico ha sido guardado exitosamente.');
             return redirect()->route('diagnostico.index');
         } else {
@@ -90,6 +94,10 @@ class diagnosticoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Diagnóstico actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El diagnóstico ha sido actualizado exitosamente.');
             return redirect()->route('diagnostico.index');
         } else {
@@ -106,6 +114,10 @@ class diagnosticoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Diagnóstico eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El diagnóstico ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

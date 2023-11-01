@@ -66,6 +66,10 @@ class PersonalController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Personal creado con el id: ' . $result['empleado']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El personal se ha guardado correctamente');
             return redirect()->route('personal.index');
         } else {
@@ -79,10 +83,10 @@ class PersonalController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/empleados/' . $id);
         $personal = $response->json();
-        
+
         $response = Http::get($url . '/puestos');
         $puestos = $response->json();
-        
+
         $response = Http::get($url . '/roles');
         $roles = $response->json();
 
@@ -115,9 +119,13 @@ class PersonalController extends Controller
             'puesto_id' => $request->input('puesto_id'),
             'rol_id' => $request->input('rol_id'),
         ]);
-        
+
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Personal actualizado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El personal se ha actualizado correctamente');
             return redirect()->route('personal.index');
         } else {
@@ -133,6 +141,10 @@ class PersonalController extends Controller
         $response = Http::delete($url . '/empleados/' . $id);
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Personal eliminado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El personal se ha eliminado correctamente');
         } else {
             session()->flash('error', 'El personal no se ha eliminado correctamente');

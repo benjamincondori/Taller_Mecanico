@@ -19,7 +19,11 @@ class PermisosController extends Controller
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/permisos');
-        $result = $response->json();
+        $permisos = $response->json();
+
+        $response = Http::get($url . '/roles');
+        $roles = $response->json();
+
         return view('dashboard.permisos.asignar', compact('permisos', 'roles'));
     }
 

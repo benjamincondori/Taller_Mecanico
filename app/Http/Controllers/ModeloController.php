@@ -40,6 +40,10 @@ class ModeloController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Modelo creado con el ID: ' . $result['modelo']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El modelo ha sido guardado exitosamente.');
             return redirect()->route('modelos.index');
         } else {
@@ -81,6 +85,10 @@ class ModeloController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Modelo actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El modelo ha sido actualizado exitosamente.');
             return redirect()->route('modelos.index');
         } else {
@@ -96,6 +104,10 @@ class ModeloController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Modelo eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El modelo ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

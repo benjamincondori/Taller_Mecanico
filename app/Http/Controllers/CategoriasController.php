@@ -41,6 +41,10 @@ class CategoriasController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Categoria creada con el ID: ' . $result['categoria']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'La categoría ha sido guardado exitosamente.');
             return redirect()->route('categorias.index');
         } else {
@@ -87,6 +91,10 @@ class CategoriasController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Categoria actualizada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'La categoría ha sido actualizado exitosamente.');
             return redirect()->route('categorias.index');
         } else {
@@ -103,6 +111,10 @@ class CategoriasController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Categoria eliminada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'La Categoria ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
