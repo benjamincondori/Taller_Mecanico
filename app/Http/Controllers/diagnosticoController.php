@@ -16,6 +16,11 @@ class diagnosticoController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/vehiculos');
         $vehiculos = $response->json();
@@ -58,12 +63,20 @@ class diagnosticoController extends Controller
 
     public function show(string $id)
     {
-        //
+        if (!verificarPermiso('Ver_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/diagnosticos/' . $id);
         $diagnostico = $response->json();
@@ -109,6 +122,11 @@ class diagnosticoController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/diagnosticos/' . $id);
         $result = $response->json();

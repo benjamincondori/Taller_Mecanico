@@ -19,6 +19,11 @@ class ModeloController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Modelos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/marcas');
         $marcas = $response->json();
@@ -59,6 +64,11 @@ class ModeloController extends Controller
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_Modelos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/marcas');
         $marcas = $response->json();
@@ -99,6 +109,11 @@ class ModeloController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Modelos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/modelos/' . $id);
         $result = $response->json();

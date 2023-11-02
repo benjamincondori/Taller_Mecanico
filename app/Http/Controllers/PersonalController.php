@@ -9,7 +9,6 @@ class PersonalController extends Controller
 {
     public function index()
     {
-        $url = env('URL_SERVER_API_LOCAL', 'http://127.0.0.1:8000');
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/empleados');
         $data = $response->json();
@@ -26,13 +25,26 @@ class PersonalController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Empleados')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/puestos');
         $puestos = $response->json();
+
         $response = Http::get($url . '/roles');
         $roles = $response->json();
 
         return view('dashboard.personal.create', compact('puestos', 'roles'));
+    }
+
+    public function show(string $id) {
+        if (!verificarPermiso('Ver_Empleados')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
@@ -80,6 +92,11 @@ class PersonalController extends Controller
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_Empleados')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/empleados/' . $id);
         $personal = $response->json();
@@ -137,6 +154,11 @@ class PersonalController extends Controller
 
     public function destroy($id)
     {
+        if (!verificarPermiso('Eliminar_Empleados')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/empleados/' . $id);
         $result = $response->json();

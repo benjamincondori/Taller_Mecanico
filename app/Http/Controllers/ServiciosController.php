@@ -18,6 +18,11 @@ class ServiciosController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Servicios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/categorias');
         $categorias = $response->json();
@@ -67,6 +72,11 @@ class ServiciosController extends Controller
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Servicios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/servicios/'.$id);
         $servicio = $response->json();
@@ -113,6 +123,11 @@ class ServiciosController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Servicios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url.'/servicios/'.$id);
         $result = $response->json();

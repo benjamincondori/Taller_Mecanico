@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class UsuarioController extends Controller
 {
@@ -29,12 +30,20 @@ class UsuarioController extends Controller
 
     public function show(string $id)
     {
-        //
+        if (!verificarPermiso('Ver_Usuarios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Usuarios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/usuarios/' . $id);
         $usuario = $response->json();
@@ -95,6 +104,11 @@ class UsuarioController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Usuarios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/usuarios/' . $id);
         $result = $response->json();
@@ -103,7 +117,7 @@ class UsuarioController extends Controller
 
             $descripcion = 'Usuario eliminado con el id: ' . $id;
             registrarBitacora($descripcion);
-            
+
             session()->flash('eliminado', 'El usuario ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

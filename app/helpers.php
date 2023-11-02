@@ -19,6 +19,22 @@ function registrarBitacora($descripcion)
     ]);
 }
 
+function verificarPermiso($permiso) {
+    $usuario = Session::get('usuario');
+
+    $rol = $usuario['rol']['nombre'];
+    $rol_id = $usuario['rol_id'];
+
+    if ($rol === "Administrador") {
+        return true;
+    }
+
+    $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+    $response = Http::get($url . '/permisos-tienePermiso/'.$rol_id.'/'.$permiso);
+    $data = $response->json();
+    return $data['tienePermiso'];
+}
+
 function formatearFecha($fecha)
 {
     // Convierte la fecha a un objeto Carbon

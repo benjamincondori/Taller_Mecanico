@@ -100,7 +100,12 @@
                 <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user-image" class="rounded-circle">
                 <span class="pro-user-name ml-1">
                     @if(session('usuario'))
-                        {{ session('usuario')['email'] }}
+                        @php
+                            $usuario = Session::get('usuario');
+                            $nombre = $usuario['empleado']['nombre'];
+                            $apellido = $usuario['empleado']['apellido'];
+                        @endphp
+                        {{ $nombre }} {{ $apellido }}
                     @else
                         Admin
                     @endif

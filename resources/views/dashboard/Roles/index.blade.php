@@ -32,8 +32,11 @@
                                     <td class="align-middle">{{ $rol['descripcion'] }}</td>
                                     <td class="align-middle text-nowrap">
                                         <div class="d-flex justify-content-center">
+                                            <a href="{{ route('roles.show', $rol['id']) }}" title="Ver" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                             <a href="{{ route('roles.edit', $rol['id']) }}" title="Editar"
-                                            class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i></a>
+                                            class="btn btn-sm btn-primary mx-1"><i class="fas fa-edit"></i></a>
                                             <form id="formDeleteRol_{{ $rol['id'] }}"
                                             action="{{route('roles.delete', $rol['id']) }}" method="post">
                                                 @csrf

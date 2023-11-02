@@ -17,6 +17,11 @@ class tipovehiculoController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_TiposVehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         return view('dashboard.tipovehiculo.create');
     }
 
@@ -49,6 +54,11 @@ class tipovehiculoController extends Controller
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_TiposVehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/tipo-vehiculos/' . $id);
         $tipovehiculo = $response->json();
@@ -84,6 +94,11 @@ class tipovehiculoController extends Controller
 
     public function destroy($id)
     {
+        if (!verificarPermiso('Eliminar_TiposVehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/tipo-vehiculos/' . $id);
         $result = $response->json();

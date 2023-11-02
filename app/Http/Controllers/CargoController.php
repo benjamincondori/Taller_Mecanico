@@ -22,6 +22,11 @@ class CargoController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Puestos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         return view('dashboard.cargo.create');
     }
 
@@ -55,6 +60,11 @@ class CargoController extends Controller
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_Puestos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/puestos/' . $id);
         $cargo = $response->json();
@@ -91,6 +101,11 @@ class CargoController extends Controller
 
     public function destroy($id)
     {
+        if (!verificarPermiso('Eliminar_Puestos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/puestos/' . $id);
         $result = $response->json();

@@ -36,11 +36,7 @@ class PermisosController extends Controller
 
     public function store(Request $request)
     {
-        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::post($url . '/permisos', [
-            'rol_id' => $request->input('rol_id'),
-            'permiso_id' => $request->input('permiso_id'),
-        ]);
+        //
     }
 
 

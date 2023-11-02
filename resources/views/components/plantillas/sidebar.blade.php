@@ -12,122 +12,192 @@
                 </a>
             </li>
 
-            <li>
-                <a href="{{route('usuarios.index')}}">
-                    <i class="fas fa-user-cog"></i>
-                    <span> Usuarios </span>
-                </a>
-            </li>
-
-            <li>
-                <a href="javascript: void(0);">
-                    <i class="fas fa-key"></i>
-                    <span> Roles y Permisos </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="nav-second-level" aria-expanded="false">
-                    <li>
-                        <a href="{{route('roles.index')}}">Roles</a>
-                    </li>
-                    <li>
-                        <a href="{{route('permisos.index')}}">Permisos</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('permisos.asignar') }}">Asignar Permisos</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="{{ route('clientes.index') }}">
-                    <i class="fas fa-users"></i>
-                    <span> Clientes </span>
-                </a>
-            </li>
-
-            <li>
-                <a href="javascript: void(0);">
-                    <i class="fas fa-user-friends"></i>
-                    <span> Personal </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="nav-second-level" aria-expanded="false">
+            @if (verificarPermiso('Lista_Usuarios'))
                 <li>
-                        <a href="{{route('personal.index')}}">Listado del Personal</a>
-                    </li>
-                    <li>
-                        <a href="{{route('cargo.index')}}">Cargos</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript: void(0);">
-                    <i class="fas fa-car"></i>
-                    <span> Vehiculos </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="nav-second-level" aria-expanded="false">
-                    <li>
-                        <a href="{{ route('vehiculos.index') }}">Listado de Vehiculos</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('marcas.index') }}">Marcas</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('modelos.index') }}">Modelos</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('tipovehiculo.index') }}">Tipos de Vehiculos</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript: void(0);">
-                    <i class="fas fa-th"></i>
-                    <span> Inventario </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <ul class="nav-second-level" aria-expanded="false">
-                    <li>
-                        <a href="{{ route('productos.index') }}">Productos</a>
-                    </li>
-                    <li>
-                        <a href="{{route('servicios.index')}}">Servicios</a>
-                    </li>
-                    <li>
-                        <a href="{{route('categorias.index')}}">Categorías</a>
-                    </li>
-                </ul>
-            </li>
+                    <a href="{{route('usuarios.index')}}">
+                        <i class="fas fa-user-cog"></i>
+                        <span> Usuarios </span>
+                    </a>
+                </li>
+            @endif
 
+            @if (verificarPermiso('Lista_Roles') || verificarPermiso('Lista_Permisos')
+                || verificarPermiso('Asignar_Permisos'))
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fas fa-key"></i>
+                        <span> Roles y Permisos </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        @if (verificarPermiso('Lista_Roles'))
+                            <li>
+                                <a href="{{route('roles.index')}}">Roles</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_Permisos'))
+                            <li>
+                                <a href="{{route('permisos.index')}}">Permisos</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Asignar_Permisos'))
+                            <li>
+                                <a href="{{ route('permisos.asignar') }}">Asignar Permisos</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+
+            @if (verificarPermiso('Lista_Clientes'))
+                <li>
+                    <a href="{{ route('clientes.index') }}">
+                        <i class="fas fa-users"></i>
+                        <span> Clientes </span>
+                    </a>
+                </li>
+            @endif
+
+            @if (verificarPermiso('Lista_Empleados') || verificarPermiso('Lista_Puestos'))
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fas fa-user-friends"></i>
+                        <span> Personal </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        @if (verificarPermiso('Lista_Empleados'))
+                            <li>
+                                <a href="{{route('personal.index')}}">Listado del Personal</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_Puestos'))
+                            <li>
+                                <a href="{{route('cargo.index')}}">Cargos</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+            
+            @if (verificarPermiso('Lista_Marcas') || verificarPermiso('Lista_Modelos')
+                || verificarPermiso('Lista_TiposVehiculos') || verificarPermiso('Lista_Vehiculos'))
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fas fa-car"></i>
+                        <span> Vehiculos </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        @if (verificarPermiso('Lista_Vehiculos'))
+                            <li>
+                                <a href="{{ route('vehiculos.index') }}">Listado de Vehiculos</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_Marcas'))
+                            <li>
+                                <a href="{{ route('marcas.index') }}">Marcas</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_Modelos'))
+                            <li>
+                                <a href="{{ route('modelos.index') }}">Modelos</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_TiposVehiculos'))
+                            <li>
+                                <a href="{{ route('tipovehiculo.index') }}">Tipos de Vehiculos</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+            
+                
+            @if (verificarPermiso('Lista_Productos') || verificarPermiso('Lista_Servicios') 
+                || verificarPermiso('Lista_Categorias'))
+                <li>
+                    <a href="javascript: void(0);">
+                        <i class="fas fa-th"></i>
+                        <span> Inventario </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        @if (verificarPermiso('Lista_Productos'))
+                            <li>
+                                <a href="{{ route('productos.index') }}">Productos</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_Servicios'))
+                            <li>
+                                <a href="{{route('servicios.index')}}">Servicios</a>
+                            </li> 
+                        @endif
+                        @if (verificarPermiso('Lista_Categorias'))
+                            <li>
+                                <a href="{{route('categorias.index')}}">Categorías</a>
+                            </li>  
+                        @endif
+                    </ul>
+                </li>
+            @endif
+
+            @if (verificarPermiso('Lista_Proveedores'))  
+                <li>
+                    <a href="{{route('proveedor.index')}}">
+                        <i class="fas fas fa-truck"></i>
+                        <span> Proveedores </span>
+                    </a>
+                </li>
+            @endif
+
+            @if (verificarPermiso('Lista_Diagnosticos'))   
+                <li>
+                    <a href="{{route('diagnostico.index')}}">
+                        <i class="fas fa-plus-square"></i>
+                        <span> Diagnostico </span>
+                    </a>
+                </li>
+            @endif
+
+            @if (verificarPermiso('Lista_Cotizaciones'))     
+                <li>
+                    <a href="{{route('cotizacion.index')}}">
+                        <i class=" fas fa-dollar-sign"></i>
+                        <span> Cotizaciones </span>
+                    </a>
+                </li>
+            @endif
+            
             <li>
-                <a href="{{route('proveedor.index')}}">
-                    <i class="fas fas fa-truck"></i>
-                    <span> Proveedores </span>
+                <a href="#">
+                    <i class="far fa-calendar-alt"></i>
+                    <span> Reservas </span>
                 </a>
             </li>
-
+            
             <li>
-                <a href="{{route('diagnostico.index')}}">
-                    <i class="fas fa-plus-square"></i>
-                    <span> Diagnostico </span>
+                <a href="#">
+                    <i class="fas fa-tools"></i>
+                    <span> Ordenes de Trabajo </span>
                 </a>
             </li>
-
+            
             <li>
-                <a href="{{route('cotizacion.index')}}">
-                    <i class=" fas fa-dollar-sign"></i>
-                    <span> Cotizaciones </span>
+                <a href="#">
+                    <i class="fas fa-donate"></i>
+                    <span> Pagos </span>
                 </a>
             </li>
-
-            <li>
-                <a href="{{route('bitacora.index')}}">
-                    <i class="fas fa-history"></i>
-                    <span> Bitacora </span>
-                </a>
-            </li>
-
+            
+            @if (verificarPermiso('Lista_Bitacoras'))
+                <li>
+                    <a href="{{route('bitacora.index')}}">
+                        <i class="fas fa-history"></i>
+                        <span> Bitacora </span>
+                    </a>
+                </li>
+            @endif
 
         </ul>
 

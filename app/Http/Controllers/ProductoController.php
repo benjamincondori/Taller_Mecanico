@@ -19,6 +19,11 @@ class ProductoController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Productos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/categorias');
         $categorias = $response->json();
@@ -76,12 +81,20 @@ class ProductoController extends Controller
 
     public function show(string $id)
     {
-        //
+        if (!verificarPermiso('Ver_Productos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Productos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/productos/'.$id);
         $producto = $response->json();
@@ -140,8 +153,12 @@ class ProductoController extends Controller
 
     public function destroy(string $id)
     {
-        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        if (!verificarPermiso('Eliminar_Productos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
 
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url.'/productos/'.$id);
         $result = $response->json();
 

@@ -113,18 +113,17 @@ Route::middleware(['auth.admin'])->group(function () {
         Route::controller(RolesController::class)->group(function () {
             Route::get('/roles', 'index')->name('roles.index');
             Route::get('/roles/create', 'create')->name('roles.create');
+            Route::get('/roles/show/{id}', 'show')->name('roles.show');
             Route::get('/roles/edit/{id}', 'edit')->name('roles.edit');
             Route::post('/roles', 'store')->name('roles.store');
             Route::post('/roles/update/{id}', 'update')->name('roles.update');
             Route::post('/roles/delete/{id}', 'destroy')->name('roles.delete');
         });
 
-        Route::get('/permisos', [PermisosController::class, 'index'])->name('permisos.index');
-        Route::get('/asignar-permisos', [PermisosController::class, 'asignar'])->name('permisos.asignar');
-        Route::post('/asignar-permisos', [PermisosController::class, 'store'])->name('permisos.store');
-        Route::post('/asignar-permisos/{id_rol}', [PermisosController::class, 'asignarTodos'])->name('permisos.asignarTodos');
-        Route::get('/permisos/asignar', [PermisosController::class, 'asignar'])->name('permisos.asignar');
-
+        Route::controller(PermisosController::class)->group(function () {
+            Route::get('/permisos', 'index')->name('permisos.index');
+            Route::get('/permisos/asignar', 'asignar')->name('permisos.asignar');
+        });
 
         Route::controller(MarcaController::class)->group(function () {
             Route::get('/marcas', 'index')->name('marcas.index');

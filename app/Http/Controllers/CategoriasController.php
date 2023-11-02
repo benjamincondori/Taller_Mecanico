@@ -18,6 +18,11 @@ class CategoriasController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Categorias')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/categorias');
         $categorias = $response->json();
@@ -62,6 +67,11 @@ class CategoriasController extends Controller
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Categorias')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/categorias/' . $id);
         $categoria = $response->json();
@@ -106,6 +116,11 @@ class CategoriasController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Categorias')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/categorias/' . $id);
         $result = $response->json();
