@@ -16,9 +16,9 @@ use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
 use App\Http\Controllers\PermisosController;
 use App\Http\Controllers\CotizacionController;
-use App\Http\Controllers\CotizacionServicioController;
-use App\Http\Controllers\CotizacionProductoController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ServiciosController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +43,7 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth.admin'])->group(function () {
-    Route::get('/logout', function() {
+    Route::get('/logout', function () {
         return back();
     });
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -51,57 +51,158 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DefaultController::class, 'index'])->name('dashboard');
 
-Route::get('/dashboard/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
-Route::get('/dashboard/vehiculos/create', [VehiculoController::class, 'create'])->name('vehiculos.create');
-        Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-        Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
-        Route::get('/clientes/edit/{id}', [ClientesController::class, 'edit'])->name('clientes.edit');
-        Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
-        Route::get('/clientes/delete/{id}', [ClientesController::class, 'destroy'])->name('clientes.delete');
-        Route::post('/clientes/update/{id}', [ClientesController::class, 'update'])->name('clientes.update');
-
-        Route::get('/personal', [PersonalController::class, 'index'])->name('personal.index');
-        Route::get('/personal/cargo', [CargoController::class, 'index'])->name('cargo.index');
-
-        Route::get('/vehiculos', [VehiculoController::class, 'index'])->name('vehiculos.index');
-
-        Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
-        Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
-        Route::get('/permisos', [PermisosController::class, 'index'])->name('permisos.index');
-
-        Route::get('/marcas', [MarcaController::class, 'index'])->name('marcas.index');
-        Route::get('/tipovehiculo', [tipovehiculoController::class, 'index'])->name('tipovehiculo.index');
-
-        Route::get('/modelos', [ModeloController::class, 'index'])->name('modelos.index');
-        Route::get('/modelos/create', [ModeloController::class, 'create'])->name('modelos.create');
-        Route::get('/modelos/edit/{modelo}', [ModeloController::class, 'edit'])->name('modelos.edit');
-        Route::post('/modelos', [ModeloController::class, 'store'])->name('modelos.store');
-        Route::post('/modelos/update/{modelo}', [ModeloController::class, 'update'])->name('modelos.update');
-
-        Route::get('/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
-        Route::get('/proveedor', [proveedorController::class, 'index'])->name('proveedor.index');
-        Route::get('/diagnostico', [diagnosticoController::class, 'index'])->name('diagnostico.index');
-    });
-
-    Route::controller(CategoriasController::class)->group(function(){
-        Route::get('/categorias','index')->name('categorias.index');
-        Route::get('/categorias/create','create')->name('categorias.create');
-        Route::get('/categorias/edit/{categoria}','edit')->name('categorias.edit');
-        
-        Route::post('/categorias','store')->name('categorias.store');
-        Route::post('/categorias/update/{categoria}','update')->name('categorias.update');
-        Route::get('/categorias/delete/{categoria}','destroy')->name('categorias.destroy'); 
+        Route::controller(ClientesController::class)->group(function () {
+            Route::get('/clientes', 'index')->name('clientes.index');
+            Route::get('/clientes/create', 'create')->name('clientes.create');
+            Route::get('/clientes/edit/{id}', 'edit')->name('clientes.edit');
+            Route::get('/clientes/show/{id}', 'show')->name('clientes.show');
+            Route::post('/clientes', 'store')->name('clientes.store');
+            Route::post('/clientes/update/{id}', 'update')->name('clientes.update');
+            Route::post('/clientes/delete/{id}', 'destroy')->name('clientes.delete');
         });
 
+        Route::controller(ProductoController::class)->group(function () {
+            Route::get('/productos', 'index')->name('productos.index');
+            Route::get('/productos/create', 'create')->name('productos.create');
+            Route::get('/productos/edit/{id}', 'edit')->name('productos.edit');
+            Route::get('/productos/show/{id}', 'show')->name('productos.show');
+            Route::post('/productos', 'store')->name('productos.store');
+            Route::post('/productos/update/{id}', 'update')->name('productos.update');
+            Route::post('/productos/delete/{id}', 'destroy')->name('productos.delete');
+        });
+
+        Route::controller(PersonalController::class)->group(function () {
+            Route::get('/personal', 'index')->name('personal.index');
+            Route::get('/personal/create', 'create')->name('personal.create');
+            Route::get('/personal/edit/{id}', 'edit')->name('personal.edit');
+            Route::get('/personal/show/{id}', 'show')->name('personal.show');
+            Route::post('/personal', 'store')->name('personal.store');
+            Route::post('/personal/update/{id}', 'update')->name('personal.update');
+            Route::post('/personal/delete/{id}', 'destroy')->name('personal.delete');
+        });
+
+        Route::controller(CargoController::class)->group(function () {
+            Route::get('/cargo', 'index')->name('cargo.index');
+            Route::get('/cargo/create', 'create')->name('cargo.create');
+            Route::get('/cargo/edit/{id}', 'edit')->name('cargo.edit');
+            Route::post('/cargo', 'store')->name('cargo.store');
+            Route::post('/cargo/update/{id}', 'update')->name('cargo.update');
+            Route::post('/cargo/delete/{id}', 'destroy')->name('cargo.delete');
+        });
+
+        Route::controller(VehiculoController::class)->group(function () {
+            Route::get('/vehiculos', 'index')->name('vehiculos.index');
+            Route::get('/vehiculos/create', 'create')->name('vehiculos.create');
+            Route::get('/vehiculos/edit/{id}', 'edit')->name('vehiculos.edit');
+            Route::get('/vehiculos/show/{id}', 'show')->name('vehiculos.show');
+            Route::post('/vehiculos', 'store')->name('vehiculos.store');
+            Route::post('/vehiculos/update/{id}', 'update')->name('vehiculos.update');
+            Route::post('/vehiculos/delete/{id}', 'destroy')->name('vehiculos.delete');
+        });
+
+        Route::controller(UsuarioController::class)->group(function () {
+            Route::get('/usuarios', 'index')->name('usuarios.index');
+            Route::get('/usuarios/edit/{id}', 'edit')->name('usuarios.edit');
+            Route::get('/usuarios/show/{id}', 'show')->name('usuarios.show');
+            Route::post('/usuarios/update/{id}', 'update')->name('usuarios.update');
+            Route::post('/usuarios/delete/{id}', 'destroy')->name('usuarios.delete');
+        });
+
+        Route::controller(RolesController::class)->group(function () {
+            Route::get('/roles', 'index')->name('roles.index');
+            Route::get('/roles/create', 'create')->name('roles.create');
+            Route::get('/roles/edit/{id}', 'edit')->name('roles.edit');
+            Route::post('/roles', 'store')->name('roles.store');
+            Route::post('/roles/update/{id}', 'update')->name('roles.update');
+            Route::post('/roles/delete/{id}', 'destroy')->name('roles.delete');
+        });
+
+        Route::get('/permisos', [PermisosController::class, 'index'])->name('permisos.index');
+        Route::get('/asignar-permisos', [PermisosController::class, 'asignar'])->name('permisos.asignar');
+        Route::post('/asignar-permisos', [PermisosController::class, 'store'])->name('permisos.store');
+        Route::post('/asignar-permisos/{id_rol}', [PermisosController::class, 'asignarTodos'])->name('permisos.asignarTodos');
+        Route::get('/permisos/asignar', [PermisosController::class, 'asignar'])->name('permisos.asignar');
+
+
+        Route::controller(MarcaController::class)->group(function () {
+            Route::get('/marcas', 'index')->name('marcas.index');
+            Route::get('/marcas/create', 'create')->name('marcas.create');
+            Route::get('/marcas/edit/{id}', 'edit')->name('marcas.edit');
+            Route::post('/marcas', 'store')->name('marcas.store');
+            Route::post('/marcas/update/{id}', 'update')->name('marcas.update');
+            Route::post('/marcas/delete/{id}', 'destroy')->name('marcas.delete');
+        });
+
+        Route::controller(tipovehiculoController::class)->group(function () {
+            Route::get('/tipovehiculo', 'index')->name('tipovehiculo.index');
+            Route::get('/tipovehiculo/create', 'create')->name('tipovehiculo.create');
+            Route::get('/tipovehiculo/edit/{id}', 'edit')->name('tipovehiculo.edit');
+            Route::post('/tipovehiculo', 'store')->name('tipovehiculo.store');
+            Route::post('/tipovehiculo/update/{id}', 'update')->name('tipovehiculo.update');
+            Route::post('/tipovehiculo/delete/{id}', 'destroy')->name('tipovehiculo.delete');
+        });
+
+        Route::controller(ModeloController::class)->group(function () {
+            Route::get('/modelos', 'index')->name('modelos.index');
+            Route::get('/modelos/create', 'create')->name('modelos.create');
+            Route::get('/modelos/edit/{id}', 'edit')->name('modelos.edit');
+            Route::post('/modelos', 'store')->name('modelos.store');
+            Route::post('/modelos/update/{id}', 'update')->name('modelos.update');
+            Route::post('/modelos/delete/{id}', 'destroy')->name('modelos.delete');
+        });
+
+        Route::get('/bitacora', [bitacoraController::class, 'index'])->name('bitacora.index');
+
+        Route::controller(proveedorController::class)->group(function () {
+            Route::get('/proveedor', 'index')->name('proveedor.index');
+            Route::get('/proveedor/create', 'create')->name('proveedor.create');
+            Route::get('/proveedor/edit/{id}', 'edit')->name('proveedor.edit');
+            Route::post('/proveedor', 'store')->name('proveedor.store');
+            Route::post('/proveedor/update/{id}', 'update')->name('proveedor.update');
+            Route::post('/proveedor/delete/{id}', 'destroy')->name('proveedor.delete');
+        });
+
+        Route::controller(CategoriasController::class)->group(function () {
+            Route::get('/categorias', 'index')->name('categorias.index');
+            Route::get('/categorias/create', 'create')->name('categorias.create');
+            Route::get('/categorias/edit/{categoria}', 'edit')->name('categorias.edit');
+            Route::post('/categorias', 'store')->name('categorias.store');
+            Route::post('/categorias/update/{categoria}', 'update')->name('categorias.update');
+            Route::post('/categorias/delete/{categoria}', 'destroy')->name('categorias.delete');
+        });
+
+        Route::controller(ServiciosController::class)->group(function () {
+            Route::get('/servicios', 'index')->name('servicios.index');
+            Route::get('/servicios/create', 'create')->name('servicios.create');
+            Route::get('/servicios/edit/{id}', 'edit')->name('servicios.edit');
+            Route::post('/servicios', 'store')->name('servicios.store');
+            Route::post('/servicios/update/{id}', 'update')->name('servicios.update');
+            Route::post('/servicios/delete/{id}', 'destroy')->name('servicios.delete');
+        });
+
+        Route::controller(diagnosticoController::class)->group(function () {
+            Route::get('/diagnostico', 'index')->name('diagnostico.index');
+            Route::get('/diagnostico/create', 'create')->name('diagnostico.create');
+            Route::get('/diagnostico/edit/{id}', 'edit')->name('diagnostico.edit');
+            Route::get('/diagnostico/show/{id}', 'show')->name('diagnostico.show');
+            Route::post('/diagnostico', 'store')->name('diagnostico.store');
+            Route::post('/diagnostico/update/{id}', 'update')->name('diagnostico.update');
+            Route::post('/diagnostico/delete/{id}', 'destroy')->name('diagnostico.delete');
+        });
+
+        Route::controller(CotizacionController::class)->group(function () {
+            Route::get('/cotizacion', 'index')->name('cotizacion.index');
+            Route::get('/cotizacion/create/{id}', 'create')->name('cotizacion.create');
+            Route::get('/cotizacion/show/{id}', 'show')->name('cotizacion.show');
+            Route::get('/cotizacion/new', 'new')->name('cotizacion.new');
+            Route::post('/cotizacion/store', 'store')->name('cotizacion.store');
+            Route::post('/cotizacion/update/{id}', 'update')->name('cotizacion.update');
+            Route::post('/cotizacion/delete/{id}', 'destroy')->name('cotizacion.delete');
+            Route::post('/cotizacion/storeCotiProducto', 'storeCotiProducto')->name('cotizacion.storeCotiProducto');
+            Route::post('/cotizacion', 'storeCotiServicio')->name('cotizacion.storeCotiServicio');
+            Route::post('/cotizacion/deleteProducto/{id}/{cotizacion_id}', 'destroyProducto')->name('cotizacion.deleteProducto');
+            Route::post('/cotizacion/deleteServicio/{id}/{cotizacion_id}', 'destroyServicio')->name('cotizacion.deleteServicio');
+        });
+
+    });
 });
-
-Route::get('/dashboard/cotizacion', [CotizacionController::class, 'index'])->name('cotizacion.index');
-Route::get('/dashboard/cotizacion/create/{id}', [CotizacionController::class, 'create'])->name('cotizacion.create');
-Route::get('/dashboard/cotizacion/new', [CotizacionController::class, 'new'])->name('cotizacion.new');
-Route::post('/dashboard/cotizacion', [CotizacionController::class, 'store'])->name('cotizacion.store');
-Route::delete('/dashboard/cotizacion/delete/{id}', [CotizacionController::class, 'destroy'])->name('cotizacion.delete');
-Route::get('/dashboard/cotizacion/{id}', [CotizacionController::class, 'show'])->name('cotizacion.show');
-Route::post('/dashboard/cotizacion/update/{id}', [CotizacionController::class, 'update'])->name('cotizacion.update');
-
-Route::post('/{id}', [CotizacionProductoController::class, 'store'])->name('cotizacionProducto.store');
-Route::post('/{id}', [CotizacionServicioController::class, 'store'])->name('cotizacionServicio.store');

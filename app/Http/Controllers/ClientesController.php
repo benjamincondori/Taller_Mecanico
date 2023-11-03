@@ -14,14 +14,10 @@ class ClientesController extends Controller
         $response = Http::get($url.'/clientes');
         $data = $response->json();
 
-        // $title = '¿Está seguro?';
-        // $text = "¡Se eliminará el cliente definitivamente!";
-        // confirmDelete($title, $text);
-
         return view('dashboard.clientes.index', compact('data'));
     }
 
-    
+
     public function create()
     {
         return view('dashboard.clientes.create');
@@ -53,12 +49,13 @@ class ClientesController extends Controller
         ]);
 
         $result = $response->json();
-        if ($result && $result['status']) {
-            alert()->success('¡Guardado!','El cliente ha sido guardado exitosamente.');
+        
+        if (isset($result) && $result['status']) {
+            session()->flash('guardado', 'El cliente ha sido guardado exitosamente.');
             return redirect()->route('clientes.index');
         } else {
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
-            return redirect()->route('clientes.create');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->back();
         }
     }
 
@@ -105,16 +102,16 @@ class ClientesController extends Controller
 
         $result = $response->json();
         if ($result && $result['status'] ) {
-            alert()->success('¡Actualizado!','El cliente ha sido actualizado exitosamente.');
+            session()->flash('actualizado', 'El cliente ha sido actualizado exitosamente.');
             return redirect()->route('clientes.index');
         } else {
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->route('clientes.edit', $id);
         }
     }
 
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
@@ -122,9 +119,9 @@ class ClientesController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
-            alert()->success('Eliminado!','El cliente ha sido eliminado exitosamente.');
+            session()->flash('eliminado', 'El cliente ha sido eliminado exitosamente.');
         } else {
-            alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
         return redirect()->route('clientes.index');
     }

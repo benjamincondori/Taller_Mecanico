@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <label for="nombre" class="control-label">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="John" value="{{ $cliente['nombre'] }}" >
+                                        placeholder="John" value="{{ old('nombre', $cliente['nombre']) }}" >
                                     @error('nombre')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label for="apellido" class="control-label">Apellido</label>
                                     <input type="text" class="form-control" id="apellido" name="apellido"
-                                        placeholder="Doe" value="{{ $cliente['apellido'] }}" >
+                                        placeholder="Doe" value="{{ old('apellido', $cliente['apellido']) }}" >
                                     @error('apellido')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -40,7 +40,8 @@
                                 <div class="form-group">
                                     <label for="email" class="control-label">Email</label>
                                     <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="jhondoe@gmail.com" value="{{ $cliente['usuario']['email'] }}" >
+                                        placeholder="jhondoe@gmail.com"
+                                        value="{{ old('email', $cliente['usuario']['email']) }}" >
                                     @error('email')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -52,7 +53,8 @@
                                 <div class="form-group">
                                     <label for="direccion" class="control-label">Dirección</label>
                                     <input type="text" class="form-control" id="direccion" name="direccion"
-                                        placeholder="Address" value="{{ $cliente['direccion'] }}">
+                                        placeholder="Address"
+                                        value="{{ old('direccion', $cliente['direccion']) }}">
                                     @error('direccion')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -64,7 +66,7 @@
                                 <div class="form-group">
                                     <label for="ci" class="control-label">Cédula de identidad</label>
                                     <input type="number" min="0" class="form-control" id="ci" name="ci"
-                                        placeholder="1234567" value="{{ $cliente['ci'] }}">
+                                        placeholder="1234567" value="{{ old('ci', $cliente['ci']) }}">
                                     @error('ci')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -74,8 +76,8 @@
                                 <div class="form-group">
                                     <label for="telefono" class="control-label">Número
                                         telefónico</label>
-                                    <input type="number" min="0" class="form-control" id="telefono" name="telefono"
-                                        placeholder="77664412" value="{{ $cliente['telefono'] }}">
+                                    <input type="number" min="0" class="form-control" id="telefono" name="telefono" placeholder="77664412"
+                                        value="{{ old('telefono', $cliente['telefono']) }}">
                                     @error('telefono')
                                     <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
@@ -88,12 +90,12 @@
                                     <label class="control-label">Género</label>
                                     <div class="custom-control custom-radio">
                                         <input type="radio" value="F" name="genero" class="custom-control-input"
-                                            id="femenino" {{ $cliente['genero'] === 'F' ? 'checked' : '' }}>
+                                            id="femenino" {{ old('genero', $cliente['genero']) === 'F' ? 'checked' : '' }}>
                                         <label for="femenino" class="custom-control-label">Femenino</label>
                                     </div>
                                     <div class="custom-control custom-radio mt-1">
                                         <input type="radio" value="M" name="genero" class="custom-control-input"
-                                            id="masculino" {{ $cliente['genero'] === 'M' ? 'checked' : '' }}>
+                                            id="masculino" {{ old('genero', $cliente['genero']) === 'M' ? 'checked' : '' }}>
                                         <label for="masculino" class="custom-control-label">Masculino</label>
                                     </div>
                                 </div>

@@ -25,12 +25,14 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.css') }}">
+
 </head>
 
 <body class="antialiased">
 
     {{ $slot }}
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
 
@@ -42,8 +44,50 @@
     <script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/dataTables.bootstrap4.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    
-    @include('sweetalert::alert')
+
+    @if(session('guardado'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Guardado!',
+                text: '{{ session('guardado') }}',
+                timer: 5000
+            });
+        </script>
+    @endif
+
+    @if(session('actualizado'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Actualizado!',
+                text: '{{ session('actualizado') }}',
+                timer: 5000
+            });
+        </script>
+    @endif
+
+    @if(session('eliminado'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Eliminado!',
+                text: '{{ session('eliminado') }}',
+                timer: 5000
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                timer: 5000
+            });
+        </script>
+    @endif
 
 </body>
 

@@ -8,7 +8,7 @@
 
                     <div class="form-group px-4 pt-2">
                         <i class="fas fa-pencil-alt fa-2x"></i>
-                        <h3 class="fs-1 d-inline-block ml-1">Editar modelo</h3>
+                        <h3 class="fs-1 d-inline-block ml-1">Editar Modelo</h3>
                     </div>
 
                     <form class="px-4 pt-2 pb-2" action="{{ route('modelos.update', $modelo['id']) }}" method="post">

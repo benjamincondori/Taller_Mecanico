@@ -43,18 +43,21 @@
                                     <td class="align-middle">{{ $cliente['telefono'] }}</td>
                                     <td class="align-middle">{{ $cliente['genero'] }}</td>
                                     <td class="align-middle text-nowrap">
-                                        <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                class="fas fa-eye"></i></button>
-                                        <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar"
-                                            class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                        <a href="{{ route('clientes.delete', $cliente['id']) }}" title="Eliminar"
-                                            class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                    {{-- <form action="{{route('clientes.delete',$cliente['id'])}}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" title="Eliminar" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash-alt"></i></button>
-                                        </form> --}}
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{{ route('clientes.show', $cliente['id']) }}" title="Ver" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('clientes.edit', $cliente['id']) }}" title="Editar"  class="btn btn-sm btn-primary mx-1">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form id="formDeleteCliente_{{ $cliente['id'] }}" action="{{route('clientes.delete', $cliente['id']) }}" method="post">
+                                                @csrf
+                                                <button type="button" title="Eliminar"
+                                                onclick="confirmDelete({{ $cliente['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -67,5 +70,28 @@
         </div>
 
     </x-layouts.content>
+
+    @push('js')
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#556ee6',
+                    cancelButtonColor: '#f46a6a',
+                    confirmButtonText: 'Sí, eliminarlo',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formId = 'formDeleteCliente_' + id;
+                        var form = document.getElementById(formId);
+                        form.submit(); // Envía el formulario si el usuario confirma
+                    }
+                });
+            }
+        </script>
+    @endpush
 
 </x-layouts.app>

@@ -24,30 +24,35 @@
                                 <tr style="cursor: pointer">
                                     <th scope="col">ID</th>
                                     <th>Nombre</th>
+                                    <th>Marca</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($data == null)
+                                @foreach ($modelos as $modelo)
                                 <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">no hay registros</th>
+                                    <th scope="row" class="align-middle" style="width: 100px">{{ $modelo['id'] }}</th>
+                                    <td class="align-middle">{{ $modelo['nombre'] }}</td>
+                                    <td class="align-middle">
+                                        {{ $modelo['marca']['nombre'] }}
+                                    </td>
+                                    <td class="align-middle text-nowrap" style="width: 200px">
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{{ route('modelos.edit', $modelo['id']) }}" title="Editar" class="btn btn-sm btn-primary mr-1">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form id="formDeleteModelo_{{ $modelo['id'] }}"
+                                            action="{{route('modelos.delete', $modelo['id']) }}" method="post">
+                                                @csrf
+                                                <button type="button" title="Eliminar"
+                                                onclick="confirmDelete({{ $modelo['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
-                                @else
-                                    @foreach ($data as $modelo)
-                                    <tr class="text-nowrap text-center">
-                                        <th scope="row" class="align-middle">{{ $modelo['id'] }}</th>
-                                        <td class="align-middle">{{ $modelo['nombre'] }}</td>
-                                        <td class="align-middle text-nowrap">
-                                            <button type="button" title="Ver" class="btn btn-sm btn-warning"><i
-                                                    class="fas fa-eye"></i></button>
-                                            <a href="{{ route('modelos.edit', $modelo['id']) }}" title="Editar" class="btn btn-sm btn-primary"><i
-                                                    class="fas fa-edit"></i></a>
-                                            <button type="button" title="Eliminar" class="btn btn-sm btn-danger"><i
-                                                    class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                @endif
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -57,5 +62,28 @@
         </div>
 
     </x-layouts.content>
+
+    @push('js')
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#556ee6',
+                    cancelButtonColor: '#f46a6a',
+                    confirmButtonText: 'Sí, eliminarlo',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var formId = 'formDeleteModelo_' + id;
+                        var form = document.getElementById(formId);
+                        form.submit(); // Envía el formulario si el usuario confirma
+                    }
+                });
+            }
+        </script>
+    @endpush
 
 </x-layouts.app>

@@ -13,16 +13,35 @@
             </li>
 
             <li>
-                <a href="{{ route('clientes.index') }}">
-                    <i class="fas fa-user-friends"></i>
-                    <span> Clientes </span>
+                <a href="{{route('usuarios.index')}}">
+                    <i class="fas fa-user-cog"></i>
+                    <span> Usuarios </span>
                 </a>
             </li>
 
             <li>
-                <a href="{{route('usuarios.index')}}">
-                    <i class="fas fa-user-friends"></i>
-                    <span> Usuarios </span>
+                <a href="javascript: void(0);">
+                    <i class="fas fa-key"></i>
+                    <span> Roles y Permisos </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="{{route('roles.index')}}">Roles</a>
+                    </li>
+                    <li>
+                        <a href="{{route('permisos.index')}}">Permisos</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('permisos.asignar') }}">Asignar Permisos</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="{{ route('clientes.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span> Clientes </span>
                 </a>
             </li>
 
@@ -34,10 +53,10 @@
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                 <li>
-                        <a href="{{route('personal.index')}}">Lista de Personal</a>
+                        <a href="{{route('personal.index')}}">Listado del Personal</a>
                     </li>
                     <li>
-                        <a href="{{route('cargo.index')}}">Lista de Cargos</a>
+                        <a href="{{route('cargo.index')}}">Cargos</a>
                     </li>
                 </ul>
             </li>
@@ -63,54 +82,52 @@
                 </ul>
             </li>
             <li>
-                <a href="{{route('diagnostico.index')}}">
-                    <i class="far fa-plus-square"></i>
-                    <span> Diagnostico </span>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('proveedor.index')}}">
-                    <i class="fas fa-user-friends"></i>
-                    <span> Proveedor </span>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('bitacora.index')}}">
-                    <i class="fas far fa-clock"></i>
-                    <span> Bitacora </span>
-                </a>
-            </li>
-            <li>
                 <a href="javascript: void(0);">
-                    <i class="fas fa-key"></i>
-                    <span> Roles y Permisos </span>
+                    <i class="fas fa-th"></i>
+                    <span> Inventario </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="{{route('roles.index')}}">Roles</a>
+                        <a href="{{ route('productos.index') }}">Productos</a>
                     </li>
                     <li>
-                        <a href="{{route('permisos.index')}}">Permisos</a>
+                        <a href="{{route('servicios.index')}}">Servicios</a>
                     </li>
                     <li>
-                        <a href="#">Asignar Permisos</a>
+                        <a href="{{route('categorias.index')}}">Categorías</a>
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a href="{{route('proveedor.index')}}">
+                    <i class="fas fas fa-truck"></i>
+                    <span> Proveedores </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{route('diagnostico.index')}}">
+                    <i class="fas fa-plus-square"></i>
+                    <span> Diagnostico </span>
+                </a>
+            </li>
+
             <li>
                 <a href="{{route('cotizacion.index')}}">
-                    <i class="fe-dollar-sign"></i>
+                    <i class=" fas fa-dollar-sign"></i>
                     <span> Cotizaciones </span>
                 </a>
             </li>
 
             <li>
-                <a href="{{route('categorias.index')}}">
-                    <i class="fas fa-tag"></i>
-                    <span> Categorias </span>
+                <a href="{{route('bitacora.index')}}">
+                    <i class="fas fa-history"></i>
+                    <span> Bitacora </span>
                 </a>
             </li>
+
 
         </ul>
 
