@@ -18,6 +18,11 @@ class VehiculoController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Vehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $responseMarcas = Http::get($url . '/marcas');
         $responseModelos = Http::get($url . '/modelos');
@@ -61,6 +66,10 @@ class VehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Vehículo creado con el ID: ' . $result['vehiculo']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El vehículo ha sido guardado exitosamente.');
             return redirect()->route('vehiculos.index');
         } else {
@@ -72,12 +81,20 @@ class VehiculoController extends Controller
 
     public function show(string $id)
     {
-        //
+        if (!verificarPermiso('Ver_Vehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Vehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $responseVehiculo = Http::get($url . '/vehiculos/' . $id);
         $responseMarcas = Http::get($url . '/marcas');
@@ -123,6 +140,10 @@ class VehiculoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Vehículo actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El vehículo ha sido actualizado exitosamente.');
             return redirect()->route('vehiculos.index');
         } else {
@@ -134,11 +155,20 @@ class VehiculoController extends Controller
 
     public function destroy($id)
     {
+        if (!verificarPermiso('Eliminar_Vehiculos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/vehiculos/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Vehículo eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El vehículo ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

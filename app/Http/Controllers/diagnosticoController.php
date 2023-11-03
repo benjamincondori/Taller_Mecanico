@@ -16,6 +16,11 @@ class diagnosticoController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/vehiculos');
         $vehiculos = $response->json();
@@ -43,6 +48,10 @@ class diagnosticoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Diagnóstico creado con el ID: ' . $result['diagnostico']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El diagnóstico ha sido guardado exitosamente.');
             return redirect()->route('diagnostico.index');
         } else {
@@ -54,12 +63,20 @@ class diagnosticoController extends Controller
 
     public function show(string $id)
     {
-        //
+        if (!verificarPermiso('Ver_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/diagnosticos/' . $id);
         $diagnostico = $response->json();
@@ -90,6 +107,10 @@ class diagnosticoController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Diagnóstico actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El diagnóstico ha sido actualizado exitosamente.');
             return redirect()->route('diagnostico.index');
         } else {
@@ -101,11 +122,20 @@ class diagnosticoController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Diagnosticos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/diagnosticos/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Diagnóstico eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El diagnóstico ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

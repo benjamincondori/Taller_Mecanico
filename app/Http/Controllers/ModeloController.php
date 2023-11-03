@@ -19,6 +19,11 @@ class ModeloController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Modelos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/marcas');
         $marcas = $response->json();
@@ -40,6 +45,10 @@ class ModeloController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Modelo creado con el ID: ' . $result['modelo']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El modelo ha sido guardado exitosamente.');
             return redirect()->route('modelos.index');
         } else {
@@ -55,6 +64,11 @@ class ModeloController extends Controller
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_Modelos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/marcas');
         $marcas = $response->json();
@@ -81,6 +95,10 @@ class ModeloController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Modelo actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El modelo ha sido actualizado exitosamente.');
             return redirect()->route('modelos.index');
         } else {
@@ -91,11 +109,20 @@ class ModeloController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Modelos')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/modelos/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Modelo eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El modelo ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

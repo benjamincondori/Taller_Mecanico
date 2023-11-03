@@ -17,6 +17,11 @@ class proveedorController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Proveedores')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         return view('dashboard.proveedor.create');
     }
 
@@ -39,6 +44,10 @@ class proveedorController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Proveedor creado con el ID: ' . $result['proveedor']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El proveedor ha sido guardado exitosamente.');
             return redirect()->route('proveedor.index');
         } else {
@@ -50,6 +59,11 @@ class proveedorController extends Controller
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_Proveedores')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/proveedores/' . $id);
         $proveedor = $response->json();
@@ -75,6 +89,10 @@ class proveedorController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Proveedor actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El proveedor ha sido actualizado exitosamente.');
             return redirect()->route('proveedor.index');
         } else {
@@ -85,11 +103,20 @@ class proveedorController extends Controller
 
     public function destroy($id)
     {
+        if (!verificarPermiso('Eliminar_Proveedores')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/proveedores/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Proveedor eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El proveedor ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

@@ -28,13 +28,13 @@
                                 @foreach ($data as $cargo)
                                 <tr class="text-nowrap text-center">
                                     <th scope="row" class="align-middle">{{ $cargo['id'] }}</th>
-                                    <th class="align-middle">{{ $cargo['nombre'] }}</th>
+                                    <td class="align-middle">{{ $cargo['nombre'] }}</td>
                                     <td class="align-middle">{{ $cargo['descripcion'] }}</td>
                                     <td class="align-middle text-nowrap">
                                         <div class="d-flex justify-content-center">
                                             <a href="{{ route('cargo.edit', $cargo['id']) }}" title="Editar"
                                             class="btn btn-sm btn-primary mr-1"><i class="fas fa-edit"></i></a>
-                                            <form id="formDeleteCargo_{{ $cargo['id'] }}" 
+                                            <form id="formDeleteCargo_{{ $cargo['id'] }}"
                                             action="{{route('cargo.delete', $cargo['id']) }}" method="post">
                                                 @csrf
                                                 <button type="button" title="Eliminar"
@@ -54,7 +54,7 @@
         </div>
 
     </x-layouts.content>
-    
+
     @push('js')
         <script>
             function confirmDelete(id) {

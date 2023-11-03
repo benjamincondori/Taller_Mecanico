@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
 
 class ClientesController extends Controller
 {
@@ -20,6 +20,10 @@ class ClientesController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Clientes')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
         return view('dashboard.clientes.create');
     }
 
@@ -49,8 +53,12 @@ class ClientesController extends Controller
         ]);
 
         $result = $response->json();
-        
+
         if (isset($result) && $result['status']) {
+
+            $descripcion = 'Cliente creado con el id: '.$result['cliente']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El cliente ha sido guardado exitosamente.');
             return redirect()->route('clientes.index');
         } else {
@@ -62,12 +70,20 @@ class ClientesController extends Controller
 
     public function show(string $id)
     {
-
+        if (!verificarPermiso('Ver_Clientes')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit($id)
     {
+        if (!verificarPermiso('Editar_Clientes')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/clientes/'.$id);
 
@@ -102,6 +118,10 @@ class ClientesController extends Controller
 
         $result = $response->json();
         if ($result && $result['status'] ) {
+
+            $descripcion = 'Cliente actualizado con el id: '.$id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El cliente ha sido actualizado exitosamente.');
             return redirect()->route('clientes.index');
         } else {
@@ -113,12 +133,20 @@ class ClientesController extends Controller
 
     public function destroy(string $id)
     {
-        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        if (!verificarPermiso('Eliminar_Clientes')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
 
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url.'/clientes/'.$id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Cliente eliminado con el id: '.$id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El cliente ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

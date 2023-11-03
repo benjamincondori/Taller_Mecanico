@@ -7,7 +7,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
-use function PHPUnit\Framework\isEmpty;
 
 class AuthController extends Controller
 {
@@ -44,6 +43,9 @@ class AuthController extends Controller
             Session::regenerate();
             Session::put('usuario', $usuario);
 
+            $descripcion = 'Ha iniciado sesión';
+            registrarBitacora($descripcion);
+
             return redirect()->route('dashboard');
 
         } else {
@@ -56,6 +58,9 @@ class AuthController extends Controller
 
 
     public function logout() {
+
+        $descripcion = 'Ha cerrado sesión';
+        registrarBitacora($descripcion);
 
         session()->flush();
         session()->forget('usuario');

@@ -18,6 +18,11 @@ class CategoriasController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Categorias')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/categorias');
         $categorias = $response->json();
@@ -41,6 +46,10 @@ class CategoriasController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Categoria creada con el ID: ' . $result['categoria']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'La categoría ha sido guardado exitosamente.');
             return redirect()->route('categorias.index');
         } else {
@@ -58,6 +67,11 @@ class CategoriasController extends Controller
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Categorias')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/categorias/' . $id);
         $categoria = $response->json();
@@ -87,6 +101,10 @@ class CategoriasController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Categoria actualizada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'La categoría ha sido actualizado exitosamente.');
             return redirect()->route('categorias.index');
         } else {
@@ -98,11 +116,20 @@ class CategoriasController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Categorias')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/categorias/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Categoria eliminada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'La Categoria ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

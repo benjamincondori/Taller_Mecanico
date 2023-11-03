@@ -6,18 +6,15 @@
             <div class="col-12">
 
                 <div class="mb-2 d-flex justify-content-between">
-
                     <div class="form-group">
                         <a href="{{ route('clientes.create') }}" class="btn btn-primary waves-effect waves-light">
                             <i class="fas fa-plus-circle"></i>&nbsp;
                             Nuevo Cliente
                         </a>
                     </div>
-
                 </div>
 
                 <div class="card-box">
-
                     <div class="table-responsive">
                         <table id="table-clientes" class="table table-hover mb-0 dts">
                             <thead class="bg-dark text-center text-white text-nowrap">

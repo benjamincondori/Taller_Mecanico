@@ -18,6 +18,11 @@ class RolesController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Roles')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         return view('dashboard.roles.create');
     }
 
@@ -38,6 +43,10 @@ class RolesController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Rol creado con el id: ' . $result['rol']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', '¡Guardado! El rol ha sido guardado exitosamente.');
             return redirect()->route('roles.index');
         } else {
@@ -50,12 +59,20 @@ class RolesController extends Controller
 
     public function show(string $id)
     {
-        //
+        if (!verificarPermiso('Ver_Roles')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
     }
 
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Roles')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/roles/' . $id);
         $rol = $response->json();
@@ -79,6 +96,10 @@ class RolesController extends Controller
 
         $result = $response->json();
         if ($result && $result['status']) {
+
+            $descripcion = 'Rol actualizado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El rol ha sido actualizado exitosamente.');
             return redirect()->route('roles.index');
         } else {
@@ -90,11 +111,20 @@ class RolesController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Roles')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/roles/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Rol eliminado con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El rol ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

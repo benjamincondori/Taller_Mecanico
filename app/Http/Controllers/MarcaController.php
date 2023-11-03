@@ -18,6 +18,11 @@ class MarcaController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Marcas')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         return view('dashboard.marcas.create');
     }
 
@@ -37,6 +42,10 @@ class MarcaController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Marca creada con el ID: ' . $result['marca']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'La marca ha sido guardada exitosamente.');
             return redirect()->route('marcas.index');
         } else {
@@ -54,6 +63,11 @@ class MarcaController extends Controller
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Marcas')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/marcas/' . $id);
         $marca = $response->json();
@@ -76,6 +90,10 @@ class MarcaController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Marca actualizada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'La marca ha sido actualizada exitosamente.');
             return redirect()->route('marcas.index');
         } else {
@@ -87,11 +105,20 @@ class MarcaController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Marcas')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/marcas/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Marca eliminada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'La marca ha sido eliminada exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');

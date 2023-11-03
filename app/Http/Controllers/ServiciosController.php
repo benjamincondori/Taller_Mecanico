@@ -18,6 +18,11 @@ class ServiciosController extends Controller
 
     public function create()
     {
+        if (!verificarPermiso('Agregar_Servicios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/categorias');
         $categorias = $response->json();
@@ -46,6 +51,10 @@ class ServiciosController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Servicio creado con el ID: ' . $result['servicio']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'El servicio ha sido guardado exitosamente.');
             return redirect()->route('servicios.index');
         } else {
@@ -63,6 +72,11 @@ class ServiciosController extends Controller
 
     public function edit(string $id)
     {
+        if (!verificarPermiso('Editar_Servicios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/servicios/'.$id);
         $servicio = $response->json();
@@ -82,7 +96,7 @@ class ServiciosController extends Controller
             'precio' => 'required|numeric',
             'categoria_id' => 'required'
         ]);
-        
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::put($url.'/servicios/'.$id,[
             'nombre' => $request->input('nombre'),
@@ -94,6 +108,10 @@ class ServiciosController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Servicio actualizado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'El servicio ha sido actualizado exitosamente.');
             return redirect()->route('servicios.index');
         } else {
@@ -105,16 +123,25 @@ class ServiciosController extends Controller
 
     public function destroy(string $id)
     {
+        if (!verificarPermiso('Eliminar_Servicios')) {
+            session()->flash('accesoDenegado');
+            return redirect()->back();
+        }
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url.'/servicios/'.$id);
         $result = $response->json();
-        
+
         if ($result && $result['status']) {
+
+            $descripcion = 'Servicio eliminado con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('eliminado', 'El servicio ha sido eliminado exitosamente.');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
-        
+
         return redirect()->route('servicios.index');
     }
 }

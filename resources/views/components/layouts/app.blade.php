@@ -51,7 +51,7 @@
                 icon: 'success',
                 title: '¡Guardado!',
                 text: '{{ session('guardado') }}',
-                timer: 5000
+                timer: 3000
             });
         </script>
     @endif
@@ -62,7 +62,7 @@
                 icon: 'success',
                 title: '¡Actualizado!',
                 text: '{{ session('actualizado') }}',
-                timer: 5000
+                timer: 3000
             });
         </script>
     @endif
@@ -73,7 +73,7 @@
                 icon: 'success',
                 title: '¡Eliminado!',
                 text: '{{ session('eliminado') }}',
-                timer: 5000
+                timer: 3000
             });
         </script>
     @endif
@@ -84,8 +84,19 @@
                 icon: 'error',
                 title: 'Oops...',
                 text: '{{ session('error') }}',
-                timer: 5000
+                timer: 3000
             });
+        </script>
+    @endif
+
+    @if (session('accesoDenegado'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Acceso Denegado!',
+                text: 'No tiene los permisos necesarios.',
+                timer: 3000
+            })
         </script>
     @endif
 
