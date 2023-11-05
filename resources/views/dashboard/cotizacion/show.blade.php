@@ -81,6 +81,7 @@
                     <td>{{ $servicio['servicio_precio'] }}</td>
                     <td>{{ $servicio['servicio_preciototal'] }}</td>
                 </tr>
+                
                 @endforeach
             </tbody>
         </table>

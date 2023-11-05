@@ -24,6 +24,7 @@
                                         @foreach ($productos as $producto)
                                         <option value="{{ $producto['id'] }}" data-precio="{{ $producto['precio_venta'] }}">{{
                                             $producto['nombre'] }}</option>
+                                            
                                         @endforeach
                                     </select>
                                     @else
