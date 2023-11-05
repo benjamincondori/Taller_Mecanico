@@ -33,6 +33,7 @@
                                     <th scope="row" class="align-middle">{{ $cotizacion['id'] }}</th>
                                     <td class="align-middle">{{ $cotizacion['cliente_nombre'] }}
                                         {{ $cotizacion['cliente_apellido'] }}
+                                        
                                     </td>
                                     <td class="align-middle">{{ $cotizacion['precio'] }}</td>
                                     <td class="align-middle">{{ $cotizacion['fecha'] }}</td>

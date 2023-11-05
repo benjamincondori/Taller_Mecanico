@@ -45,6 +45,7 @@
                                     @else
                                     <select class="form-control" id="vehiculo" name="vehiculo">
                                         <option value="">No hay vehículos registrados</option>
+                                        
                                     </select>
                                     @endif
                                     @error('vehiculo')

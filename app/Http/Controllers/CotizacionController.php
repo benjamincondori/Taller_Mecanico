@@ -27,6 +27,7 @@ class CotizacionController extends Controller
 
         return view('dashboard.cotizacion.index', compact('cotizacionesConNombreCliente'));
     }
+    
 
     public function create(Request $request, $id)
     {
