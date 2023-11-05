@@ -81,7 +81,8 @@
             @endif
             
             @if (verificarPermiso('Lista_Marcas') || verificarPermiso('Lista_Modelos')
-                || verificarPermiso('Lista_TiposVehiculos') || verificarPermiso('Lista_Vehiculos'))
+                || verificarPermiso('Lista_TiposVehiculos') || verificarPermiso('Lista_Vehiculos') ||
+                verificarPermiso('Lista_EstadoVehiculos'))
                 <li>
                     <a href="javascript: void(0);">
                         <i class="fas fa-car"></i>
@@ -107,6 +108,11 @@
                         @if (verificarPermiso('Lista_TiposVehiculos'))
                             <li>
                                 <a href="{{ route('tipovehiculo.index') }}">Tipos de Vehiculos</a>
+                            </li>
+                        @endif
+                        @if (verificarPermiso('Lista_EstadoVehiculos'))
+                            <li>
+                                <a href="{{ route('estadoVehiculo.index') }}">Estado de Vehiculos</a>
                             </li>
                         @endif
                     </ul>

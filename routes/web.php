@@ -21,6 +21,7 @@ use App\Http\Controllers\CotizacionProductoController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ServiciosController;
+use App\Http\Controllers\estadoVehiculoController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -100,6 +101,15 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/vehiculos', 'store')->name('vehiculos.store');
             Route::post('/vehiculos/update/{id}', 'update')->name('vehiculos.update');
             Route::post('/vehiculos/delete/{id}', 'destroy')->name('vehiculos.delete');
+        });
+        Route::controller(estadoVehiculoController::class)->group(function () {
+            Route::get('/estadoVehiculo', 'index')->name('estadoVehiculo.index');
+            Route::get('/estadoVehiculo/create', 'create')->name('estadoVehiculo.create');
+            Route::get('/estadoVehiculo/edit/{id}', 'edit')->name('estadoVehiculo.edit');
+            Route::get('/estadoVehiculo/show/{id}', 'show')->name('estadoVehiculo.show');
+            Route::post('/estadoVehiculo', 'store')->name('estadoVehiculo.store');
+            Route::post('/estadoVehiculo/update/{id}', 'update')->name('estadoVehiculo.update');
+            Route::post('/estadoVehiculo/delete/{id}', 'destroy')->name('estadoVehiculo.delete');
         });
 
         Route::controller(UsuarioController::class)->group(function () {
