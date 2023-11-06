@@ -206,12 +206,13 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('/cotizacion/create/{id}', 'create')->name('cotizacion.create');
             Route::get('/cotizacion/show/{id}', 'show')->name('cotizacion.show');
             Route::get('/cotizacion/new', 'new')->name('cotizacion.new');
-            Route::post('/cotizacion', 'store')->name('cotizacion.store');
+            Route::post('/cotizacion/store', 'store')->name('cotizacion.store');
             Route::post('/cotizacion/update/{id}', 'update')->name('cotizacion.update');
             Route::post('/cotizacion/delete/{id}', 'destroy')->name('cotizacion.delete');
+            Route::post('/cotizacion/storeCotiProducto', 'storeCotiProducto')->name('cotizacion.storeCotiProducto');
+            Route::post('/cotizacion', 'storeCotiServicio')->name('cotizacion.storeCotiServicio');
+            Route::post('/cotizacion/deleteProducto/{id}/{cotizacion_id}', 'destroyProducto')->name('cotizacion.deleteProducto');
+            Route::post('/cotizacion/deleteServicio/{id}/{cotizacion_id}', 'destroyServicio')->name('cotizacion.deleteServicio');
         });
-
-        Route::post('/{id}', [CotizacionProductoController::class, 'store'])->name('cotizacionProducto.store');
-        Route::post('/{id}', [CotizacionServicioController::class, 'store'])->name('cotizacionServicio.store');
     });
 });
