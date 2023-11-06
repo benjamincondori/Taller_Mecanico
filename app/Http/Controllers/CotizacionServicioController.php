@@ -20,11 +20,10 @@ class CotizacionServicioController extends Controller
             $result = $response->json();
 
             if ($result && $result['status']) {
-                //alert()->success('¡Guardado!','Ahora a registrar los datos.');
-
+                // session()->flash('guardado', 'Ahora a registrar los datos.');
                 return redirect()->route('cotizacion.create',compact('id'));
             } else {
-                alert()->error('Oops...','Ha ocurrido un error. Por favor, intenta nuevamente.');
+                session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
                 return redirect()->route('cotizacion.create',compact('id'));
             }
     }

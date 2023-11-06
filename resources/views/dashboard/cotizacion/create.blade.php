@@ -21,9 +21,9 @@
                                     <select class="form-control" id="producto" name="producto">
                                         <option value="">Selecciona un producto</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto['id'] }}" data-precio="{{ $producto['precio'] }}">{{
+                                        <option value="{{ $producto['id'] }}" data-precio="{{ $producto['precio_venta'] }}">{{
                                             $producto['nombre'] }}</option>
-                                            
+
                                         @endforeach
                                     </select>
                                     @else
@@ -59,14 +59,16 @@
                                         name="precioPorCantidadProducto" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <label for="precioPorCantidadProducto" class="control-label"> .</label>
-                                <button type="submit" class="btn btn-primary" id="agregarProducto">Agregar
-                                    Producto</button>
+                            <div class="col-md-3">
+                                <div class="d-flex flex-column">
+                                    <label for="precioPorCantidadProducto" class="control-label">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" id="agregarProducto">Agregar
+                                        Producto</button>
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <form id="nuevoServicio" action="{{ route('cotizacionServicio.store',$id)}}" method="post">
+                    <form id="nuevoServicio" class="px-4 pt-2 pb-2" action="{{ route('cotizacionServicio.store',$id)}}" method="post">
                         @csrf
                         <div class="row">
                             <!-- Campos para servicios -->
@@ -112,10 +114,11 @@
                                         name="precioPorCantidadServicio" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <label for="precioPorCantidadProducto" class="control-label"> .</label>
-                                <button type="submit" class="btn btn-primary" id="agregarProducto">Agregar Servicio
-                                    .</button>
+                            <div class="col-md-3">
+                                <div class="d-flex flex-column">
+                                    <label for="precioPorCantidadProducto" style="width: 120px" class="control-label">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" id="agregarProducto">Agregar Servicio</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -123,7 +126,7 @@
                     <div id="productosServicios">
                         <!-- Los productos y servicios agregados se mostrarán aquí -->
                     </div>
-                    <form id="nuevaCotizacionForm" action="{{ route('cotizacion.update',$id)}}" method="post">
+                    <form id="nuevaCotizacionForm" class="px-4 pt-2 pb-2" action="{{ route('cotizacion.update',$id)}}" method="post">
                         @csrf
                         <div class="form-group text-right m-b-0">
                             <div class="row">
