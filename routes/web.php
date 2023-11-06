@@ -203,5 +203,6 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/cotizacion/deleteServicio/{id}/{cotizacion_id}', 'destroyServicio')->name('cotizacion.deleteServicio');
         });
 
+        
     });
 });
