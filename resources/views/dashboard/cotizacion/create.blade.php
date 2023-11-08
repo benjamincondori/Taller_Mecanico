@@ -1,4 +1,3 @@
-
 <x-layouts.app>
     <x-layouts.content title="Añadir Productos y Servicios" subtitle="" name="Añadir Productos y Servicios">
         <div class="row">
@@ -9,20 +8,21 @@
                         <h3 class="fs-1 d-inline-block ml-1">Registrar Datos</h3>
                     </div>
 
-                    <form id="nuevoProducto" class="px-4 pt-2 pb-2" action="{{ route('cotizacion.storeCotiProducto')}}"
+                    <form id="nuevoProducto" class="px-4 pt-2" action="{{ route('cotizacion.storeCotiProducto')}}"
                         method="post">
                         @csrf
 
-                        <div class="row " >
+                        <div class="row ">
                             <!-- Campos para productos -->
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="producto-id" class="control-label">Producto</label>
                                     @if (!empty($productos))
                                     <select class="form-control" id="producto" name="producto">
                                         <option value="">Selecciona un producto</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto['id'] }}" data-precio="{{ $producto['precio_venta'] }}">{{
+                                        <option value="{{ $producto['id'] }}"
+                                            data-precio="{{ $producto['precio_venta'] }}">{{
                                             $producto['nombre'] }}</option>
 
                                         @endforeach
@@ -58,16 +58,21 @@
                             </div>
                             <input type="hidden" name="cotizacion_id" value="{{ $id }}">
                             <div class="col-md-2">
-                                <label for="precioPorCantidadProducto" class="control-label"> .</label>
-                                <button type="submit" class="btn btn-primary" id="agregarProducto"style="white-space: nowrap;">Agregar Producto</button>
+                                <div class="d-flex flex-column">
+                                    <label for="precioPorCantidadProducto" class="control-label">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" id="agregarProducto"
+                                        style="white-space: nowrap;">Agregar Producto</button>
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <form id="nuevoServicio" action="{{ route('cotizacion.storeCotiServicio')}}" method="post">
+
+                    <form id="nuevoServicio" class="px-4 pb-2" action="{{ route('cotizacion.storeCotiServicio')}}"
+                        method="post">
                         @csrf
                         <div class="row">
                             <!-- Campos para servicios -->
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="servicio" class="control-label">Servicio</label>
                                     @if (!empty($servicios))
@@ -111,113 +116,121 @@
                             </div>
                             <input type="hidden" name="cotizacion_id" value="{{ $id }}">
                             <div class="col-md-2">
-                                <label for="precioPorCantidadProducto" class="control-label"> .</label>
-                                <button type="submit" class="btn btn-primary" id="agregarProducto">Agregar Servicio
-                                    .</button>
+                                <div class="d-flex flex-column">
+                                    <label for="precioPorCantidadProducto" class="control-label">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary" id="agregarProducto">
+                                        Agregar Servicio</button>
+                                </div>
                             </div>
                         </div>
                     </form>
                     <!-- Lista de productos y servicios agregados -->
 
 
-                        <div class="form-group text-right m-b-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="precioTotal" class="control-label" style="text-align: left;">
-                                            <h3 style="text-align: left;">TOTAL:</h3>
-                                        </label>
-                                        <input type="number" class="form-control" id="precioTotal2" name="precioTotal2"
-                                            readonly style="text-align: left" value="0">
-                                    </div>
+                    <div class="form-group px-4">
+                        <div class="row text-right">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="precioTotal" class="control-label" style="text-align: left;">
+                                        <h3 style="text-align: left;">TOTAL:</h3>
+                                    </label>
+                                    <input type="number" class="form-control" id="precioTotal2" name="precioTotal2"
+                                        readonly style="text-align: left" value="0">
                                 </div>
                             </div>
-                <div class="card-box">
-                    <div class="table-responsive">
-                        <table id="table-cotizaciones" class="table table-hover mb-0 dts">
-                        <thead class="bg-dark text-center text-white text-nowrap">
-                                <tr style="cursor: pointer">
-                                    <th scope="col">Descripcion</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Sub total</th>
-                                    <th scope="col">Tipo</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if ($cotiProductos == null)
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">Sin Productos</th>
-                                </tr>
-                                @else
-                                @foreach ($cotiProductos as $cotiProducto)
-                                @if ($cotiProducto['cotizacion_id'] == $id)
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">{{ $cotiProducto['producto_nombre'] }}</th>
-                                    <td class="align-middle">{{ $cotiProducto['producto_cantidad'] }}</td>
-                                    <td class="align-middle">{{ $cotiProducto['producto_preciototal'] }}</td>
-                                    <td class="align-middle">Producto</td>
-                                    <td class="align-middle text-nowrap" style="width: 200px">
-                                        <div class="d-flex justify-content-center">
-                                        <form id="formDeleteCotiProducto_{{ $cotiProducto['id'] }}"
-                                            action="{{ route('cotizacion.deleteProducto', ['id' => $cotiProducto['id'], 'cotizacion_id' => $id]) }}" method="post">
-                                            @csrf
-                                            <button type="submit" title="Eliminar" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash-alt"> ELIMINAR</i>
-                                            </button>
-                                        </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                                @endif
-                            </tbody>
-                            <tbody>
-                                @if ($cotiServicios == null)
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">Sin Servicios</th>
-                                </tr>
-                                @else
-                                @foreach ($cotiServicios as $cotiServicio)
-                                @if ($cotiServicio['cotizacion_id'] == $id)
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle">{{ $cotiServicio['servicio_nombre'] }}</th>
-                                    <td class="align-middle">{{ $cotiServicio['servicio_cantidad'] }}</td>
-                                    <td class="align-middle">{{ $cotiServicio['servicio_preciototal'] }}</td>
-                                    <td class="align-middle">Servicio</td>
-                                    <td class="align-middle text-nowrap" style="width: 200px">
-                                        <div class="d-flex justify-content-center">
+                        </div>
 
-                                            <form id="formDeleteCotizacion_{{ $cotiServicio['id'] }}"
-                                            action="{{route('cotizacion.deleteServicio', ['id' => $cotiServicio['id'], 'cotizacion_id' => $id]) }}" method="post">
-                                                @csrf
-                                                <button type="button" title="Eliminar"
-                                                onclick="confirmDelete({{ $cotiServicio['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">
-                                                    <i class="fas fa-trash-alt ">  ELIMINAR </i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                                @endif
-                            </tbody>
+                        <div class="table-responsive py-3">
+                            <table id="table-cotizaciones" class="table table-hover mb-0 dts">
+                                <thead class="bg-dark text-center text-white text-nowrap">
+                                    <tr style="cursor: pointer">
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Sub total</th>
+                                        <th scope="col">Tipo</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($cotiProductos == null)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">Sin Productos</th>
+                                    </tr>
+                                    @else
+                                    @foreach ($cotiProductos as $cotiProducto)
+                                    @if ($cotiProducto['cotizacion_id'] == $id)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">{{ $cotiProducto['producto_nombre'] }}
+                                        </th>
+                                        <td class="align-middle">{{ $cotiProducto['producto_cantidad'] }}</td>
+                                        <td class="align-middle">{{ $cotiProducto['producto_preciototal'] }}</td>
+                                        <td class="align-middle">Producto</td>
+                                        <td class="align-middle text-nowrap" style="width: 200px">
+                                            <div class="d-flex justify-content-center">
+                                                <form id="formDeleteCotiProducto_{{ $cotiProducto['id'] }}"
+                                                    action="{{ route('cotizacion.deleteProducto', ['id' => $cotiProducto['id'], 'cotizacion_id' => $id]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    <button type="submit" title="Eliminar"
+                                                        class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash-alt"> ELIMINAR</i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </tbody>
+                                <tbody>
+                                    @if ($cotiServicios == null)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">Sin Servicios</th>
+                                    </tr>
+                                    @else
+                                    @foreach ($cotiServicios as $cotiServicio)
+                                    @if ($cotiServicio['cotizacion_id'] == $id)
+                                    <tr class="text-nowrap text-center">
+                                        <th scope="row" class="align-middle">{{ $cotiServicio['servicio_nombre'] }}
+                                        </th>
+                                        <td class="align-middle">{{ $cotiServicio['servicio_cantidad'] }}</td>
+                                        <td class="align-middle">{{ $cotiServicio['servicio_preciototal'] }}</td>
+                                        <td class="align-middle">Servicio</td>
+                                        <td class="align-middle text-nowrap" style="width: 200px">
+                                            <div class="d-flex justify-content-center">
+
+                                                <form id="formDeleteCotizacion_{{ $cotiServicio['id'] }}"
+                                                    action="{{route('cotizacion.deleteServicio', ['id' => $cotiServicio['id'], 'cotizacion_id' => $id]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    <button type="button" title="Eliminar"
+                                                        onclick="confirmDelete({{ $cotiServicio['id'] }})"
+                                                        title="Eliminar" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash-alt "> &nbsp;ELIMINAR </i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </tbody>
                             </table>
                         </div>
-                    </div>
-                    <form id="nuevaCotizacionForm" action="{{ route('cotizacion.update',$id)}}" method="post">
-                        @csrf
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="precioTotal" class="control-label" style="text-align: left;">
-                                    <h3>TOTAL:</h3>
-                                </label>
-                                <input type="number" class="form-control" id="precioTotal" name="precioTotal"
-                                            readonly style="text-align: left" value="0">
+
+                        <form id="nuevaCotizacionForm" action="{{ route('cotizacion.update',$id)}}" method="post">
+                            @csrf
+                            <div class="col-md-6">
+                                <div class="form-group text-right">
+                                    <label for="precioTotal" class="control-label" style="text-align: left;">
+                                        <h3>TOTAL:</h3>
+                                    </label>
+                                    <input type="number" class="form-control" id="precioTotal" name="precioTotal"
+                                        readonly style="text-align: left" value="0">
+                                </div>
                             </div>
-                        </div>
                             <div class="form-group text-right m-b-0">
                                 <a href="{{ route('cotizacion.index') }}" class="btn btn-danger waves-effect m-l-5">
                                     Cancelar
@@ -226,15 +239,15 @@
                                     Registrar
                                 </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </x-layouts.content>
     @push('js')
-        <script>
-            function confirmDelete(id) {
+    <script>
+        function confirmDelete(id) {
                 Swal.fire({
                     title: '¿Estás seguro?',
                     text: "¡No podrás revertir esto!",
@@ -252,7 +265,7 @@
                     }
                 });
             }
-        </script>
+    </script>
     @endpush
 </x-layouts.app>
 

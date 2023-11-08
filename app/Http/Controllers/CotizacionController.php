@@ -27,7 +27,7 @@ class CotizacionController extends Controller
 
         return view('dashboard.cotizacion.index', compact('cotizacionesConNombreCliente'));
     }
-    
+
 
     public function create(Request $request, $id)
     {
@@ -79,6 +79,10 @@ class CotizacionController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Cotizacion creada con el id: ' . $result['cotizacion']['id'];
+            registrarBitacora($descripcion);
+
             session()->flash('guardado', 'Ahora a registrar los datos.');
             return redirect()->route('cotizacion.index');
         } else {
@@ -95,7 +99,7 @@ class CotizacionController extends Controller
             'precioPorCantidadProducto' => 'required',
             'cotizacion_id' => 'required',
             'producto' => 'required',
-            
+
         ]);
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
@@ -126,7 +130,7 @@ class CotizacionController extends Controller
             'precioPorCantidadServicio' => 'required',
             'cotizacion_id' => 'required',
             'servicio' => 'required',
-            
+
         ]);
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::post($url . '/cotizacion_servicio', [
@@ -150,7 +154,7 @@ class CotizacionController extends Controller
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/cotizaciones/' . $id);
-        
+
         if ($response->successful()) {
             // Decodifica la respuesta JSON.
             $data = $response->json();
@@ -177,6 +181,10 @@ class CotizacionController extends Controller
         $result = $response->json();
 
         if ($result && $result['status']) {
+
+            $descripcion = 'Cotizacion actualizada con el id: ' . $id;
+            registrarBitacora($descripcion);
+
             session()->flash('actualizado', 'Cotizacion actualizada exitosamente.');
             return redirect()->route('cotizacion.index');
         } else {
@@ -187,7 +195,7 @@ class CotizacionController extends Controller
 
     public function destroy($id)
     {
-        
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
         $response = Http::delete($url . '/cotizaciones/' . $id);
@@ -201,7 +209,7 @@ class CotizacionController extends Controller
     }
     public function destroyProducto($id, $cotizacion_id)
     {
-        
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::delete($url . '/cotizacion_producto/' . $id);
         $result = $response->json();
@@ -315,7 +323,7 @@ class CotizacionController extends Controller
             $producto = $responseProducto->json();
 
             $cotiProducto['producto_nombre'] = $producto['nombre'];
-            
+
             $productosNombres->push($cotiProducto);
         }
         return $productosNombres;
