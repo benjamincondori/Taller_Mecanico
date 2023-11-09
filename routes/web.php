@@ -218,6 +218,7 @@ Route::middleware(['auth.admin'])->group(function () {
 
         Route::controller(ReservacionesController::class)->group(function (){
             Route::get('/reservacion','index')->name('reservacion.index');
+            Route::get('/reservacion/create','create')->name('reservacion.create');
         });
     });
 });

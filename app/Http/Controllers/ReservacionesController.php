@@ -19,7 +19,7 @@ class ReservacionesController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.reservaciones.create');
     }
 
     /**
