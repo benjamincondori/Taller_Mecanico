@@ -99,6 +99,9 @@
             })
         </script>
     @endif
+    
+    {{-- para recibir la exportacion del calendario  --}}
+    @stack('scripts')
 
 </body>
 

@@ -18,7 +18,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $url = env('URL_SERVER_API');
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
         // Validación de datos
         $request->validate([

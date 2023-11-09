@@ -22,6 +22,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\estadoVehiculoController;
+use App\Http\Controllers\ReservacionesController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -213,6 +214,10 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/cotizacion', 'storeCotiServicio')->name('cotizacion.storeCotiServicio');
             Route::post('/cotizacion/deleteProducto/{id}/{cotizacion_id}', 'destroyProducto')->name('cotizacion.deleteProducto');
             Route::post('/cotizacion/deleteServicio/{id}/{cotizacion_id}', 'destroyServicio')->name('cotizacion.deleteServicio');
+        });
+
+        Route::controller(ReservacionesController::class)->group(function (){
+            Route::get('/reservacion','index')->name('reservacion.index');
         });
     });
 });
