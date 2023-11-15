@@ -112,7 +112,7 @@
                         @endif
                         @if (verificarPermiso('Lista_EstadoVehiculos'))
                             <li>
-                                <a href="{{ route('estadoVehiculo.index') }}">Estado de Vehiculos</a>
+                                <a href="{{ route('estadovehiculo.index') }}">Estado de Vehiculos</a>
                             </li>
                         @endif
                     </ul>

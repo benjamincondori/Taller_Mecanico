@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group text-right m-b-0">
-                        <a href="{{ route('estadoVehiculo.index') }}" class="btn btn-primary waves-effect waves-light">
+                        <a href="{{ route('estadovehiculo.index') }}" class="btn btn-primary waves-effect waves-light">
                             Volver
                         </a>
                     </div>

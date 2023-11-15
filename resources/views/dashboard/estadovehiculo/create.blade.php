@@ -9,7 +9,7 @@
             <h3 class="fs-1 d-inline-block ml-1">Crear Estado de Vehiculo</h3>
         </div>
 
-        <form class="px-4 pt-2 pb-2" action="{{ route('estadoVehiculo.store') }}" method="post">
+        <form class="px-4 pt-2 pb-2" action="{{ route('estadovehiculo.store') }}" method="post">
         @csrf
         <div class="row">
         <div class="col-md-12">

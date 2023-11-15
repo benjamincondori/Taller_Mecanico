@@ -11,7 +11,7 @@
                         <h3 class="fs-1 d-inline-block ml-1">Editar Estado de Vehiculo</h3>
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="{{ route('estadoVehiculo.update', $EstadoVehiculo['id']) }}" method="post">
+                    <form class="px-4 pt-2 pb-2" action="{{ route('estadovehiculo.update', $EstadoVehiculo['id']) }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="form-group text-right m-b-0">
-                            <a href="{{ route('estadoVehiculo.index') }}" class="btn btn-danger waves-effect m-l-5">
+                            <a href="{{ route('estadovehiculo.index') }}" class="btn btn-danger waves-effect m-l-5">
                                 Cancelar
                             </a>
                             <button class="btn btn-primary waves-effect waves-light" type="submit">

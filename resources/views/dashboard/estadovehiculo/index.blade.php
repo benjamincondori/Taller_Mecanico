@@ -7,7 +7,7 @@
 
                 <div class="mb-2 d-flex justify-content-between">
                     <div class="form-group">
-                        <a href="{{ route('estadoVehiculo.create') }}" class="btn btn-primary waves-effect waves-light">
+                        <a href="{{ route('estadovehiculo.create') }}" class="btn btn-primary waves-effect waves-light">
                             <i class="fas fa-plus-circle"></i>&nbsp;
                             Registrar nuevo estado de vehiculo
                         </a>
@@ -48,14 +48,14 @@
                                     </td>
                                     <td class="align-middle text-nowrap" style="width: 200px">
                                         <div class="d-flex justify-content-center">
-                                            <a href="{{ route('estadoVehiculo.show', $estadovehiculo['id']) }}" title="Ver" class="btn btn-sm btn-warning">
+                                            <a href="{{ route('estadovehiculo.show', $estadovehiculo['id']) }}" title="Ver" class="btn btn-sm btn-warning">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('estadoVehiculo.edit', $estadovehiculo['id']) }}" title="Editar" class="btn btn-sm btn-primary mx-1">
+                                            <a href="{{ route('estadovehiculo.edit', $estadovehiculo['id']) }}" title="Editar" class="btn btn-sm btn-primary mx-1">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <form id="formDeleteestadovehiculo_{{ $estadovehiculo['id'] }}"
-                                            action="{{route('estadoVehiculo.delete', $estadovehiculo['id']) }}" method="post">
+                                            action="{{route('estadovehiculo.delete', $estadovehiculo['id']) }}" method="post">
                                                 @csrf
                                                 <button type="button" title="Eliminar"
                                                 onclick="confirmDelete({{ $estadovehiculo['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">

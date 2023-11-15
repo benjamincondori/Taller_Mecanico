@@ -24,6 +24,8 @@
                                     <th scope="col">Nro Chasis</th>
                                     <th scope="col">Año</th>
                                     <th scope="col">Color</th>
+                                    <th scope="col">Combustible</th>
+                                    <th scope="col">kilometraje</th>
                                     <th scope="col">Marca</th>
                                     <th scope="col">Modelo</th>
                                     <th scope="col">Cliente</th>
@@ -38,6 +40,8 @@
                                     <td class="align-middle">{{ $vehiculo['nro_chasis'] }}</td>
                                     <td class="align-middle">{{ $vehiculo['año'] }}</td>
                                     <td class="align-middle">{{ $vehiculo['color'] }}</td>
+                                    <td class="align-middle">{{ $vehiculo['combustible'] }}</td>
+                                    <td class="align-middle">{{ $vehiculo['kilometraje'] }}</td>
                                     <td class="align-middle">{{ $vehiculo['marca']['nombre'] }}</td>
                                     <td class="align-middle">{{ $vehiculo['modelo']['nombre'] }}</td>
                                     <td class="align-middle">
@@ -45,16 +49,20 @@
                                     </td>
                                     <td class="align-middle text-nowrap">
                                         <div class="d-flex justify-content-center">
-                                            <a href="{{ route('vehiculos.show', $vehiculo['id']) }}" title="Ver" class="btn btn-sm btn-warning">
+                                            <a href="{{ route('vehiculos.show', $vehiculo['id']) }}" title="Ver"
+                                                class="btn btn-sm btn-warning">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('vehiculos.edit', $vehiculo['id']) }}" title="Editar" class="btn btn-sm btn-primary mx-1">
+                                            <a href="{{ route('vehiculos.edit', $vehiculo['id']) }}" title="Editar"
+                                                class="btn btn-sm btn-primary mx-1">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form id="formDeleteVehiculo_{{ $vehiculo['id'] }}" action="{{route('vehiculos.delete', $vehiculo['id']) }}" method="post">
+                                            <form id="formDeleteVehiculo_{{ $vehiculo['id'] }}"
+                                                action="{{route('vehiculos.delete', $vehiculo['id']) }}" method="post">
                                                 @csrf
                                                 <button type="button" title="Eliminar"
-                                                onclick="confirmDelete({{ $vehiculo['id'] }})" title="Eliminar" class="btn btn-sm btn-danger">
+                                                    onclick="confirmDelete({{ $vehiculo['id'] }})" title="Eliminar"
+                                                    class="btn btn-sm btn-danger">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
@@ -72,26 +80,26 @@
     </x-layouts.content>
 
     @push('js')
-        <script>
-            function confirmDelete(id) {
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "¡No podrás revertir esto!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#556ee6',
-                    cancelButtonColor: '#f46a6a',
-                    confirmButtonText: 'Sí, eliminarlo',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var formId = 'formDeleteVehiculo_' + id;
-                        var form = document.getElementById(formId);
-                        form.submit(); // Envía el formulario si el usuario confirma
-                    }
-                });
-            }
-        </script>
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#556ee6',
+                cancelButtonColor: '#f46a6a',
+                confirmButtonText: 'Sí, eliminarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var formId = 'formDeleteVehiculo_' + id;
+                    var form = document.getElementById(formId);
+                    form.submit(); // Envía el formulario si el usuario confirma
+                }
+            });
+        }
+    </script>
     @endpush
 
 </x-layouts.app>

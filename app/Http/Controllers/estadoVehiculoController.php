@@ -44,7 +44,7 @@ class estadoVehiculoController extends Controller
             $descripcion = 'EstadoVehiculo creado con el ID: ' . $result['estadoVehiculo']['id'];
             registrarBitacora($descripcion);
             session()->flash('guardado', 'El Estado del vehiculo ha sido guardado exitosamente.');
-            return redirect()->route('estadoVehiculo.index');
+            return redirect()->route('estadovehiculo.index');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->back();
