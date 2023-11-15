@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-    <x-layouts.content title="Diagnósticos" subtitle="" name="Diagnósticos">
+    <x-layouts.content title="Estado del Vehiculo" subtitle="" name="Estado del Vehiculo">
 
         <div class="row">
             <div class="col-12">

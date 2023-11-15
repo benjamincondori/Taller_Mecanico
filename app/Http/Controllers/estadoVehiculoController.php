@@ -12,7 +12,7 @@ class estadoVehiculoController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/EstadoVehiculo');
         $data = $response->json();
-        return view('dashboard.estadoVehiculo.index', compact('data'));
+        return view('dashboard.estadovehiculo.index', compact('data'));
     }
     public function create()
     {
@@ -23,7 +23,7 @@ class estadoVehiculoController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/vehiculos');
         $vehiculos = $response->json();
-        return view('dashboard.estadoVehiculo.create', compact('vehiculos'));
+        return view('dashboard.estadovehiculo.create', compact('vehiculos'));
     }
     public function store(Request $request)
     {
@@ -87,7 +87,7 @@ class estadoVehiculoController extends Controller
         $responseCliente = Http::get($url . '/clientes/' . $vehiculo['cliente_id']);
         $cliente = $responseCliente->json();
         $statusColor = $this->getStatusColor($EstadoVehiculo['estado']);
-        return view('dashboard.estadoVehiculo.show', compact('EstadoVehiculo', 'vehiculo', 'cliente','statusColor'));
+        return view('dashboard.estadovehiculo.show', compact('EstadoVehiculo', 'vehiculo', 'cliente','statusColor'));
     }
     
     public function edit($id)
@@ -101,7 +101,7 @@ class estadoVehiculoController extends Controller
         $EstadoVehiculo = $response->json();
         $response = Http::get($url . '/vehiculos');
         $vehiculos = $response->json();
-        return view('dashboard.estadoVehiculo.edit', compact('EstadoVehiculo', 'vehiculos'));
+        return view('dashboard.estadovehiculo.edit', compact('EstadoVehiculo', 'vehiculos'));
     }
     public function update(Request $request, $id)
     {
@@ -122,10 +122,10 @@ class estadoVehiculoController extends Controller
             $descripcion = 'Estado del Vehiculo actualizado con el ID: ' . $id;
             registrarBitacora($descripcion);
             session()->flash('actualizado', 'El Estado del Vehiculo ha sido actualizado exitosamente.');
-            return redirect()->route('estadoVehiculo.index');
+            return redirect()->route('estadovehiculo.index');
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
-            return redirect()->route('estadoVehiculo.index');
+            return redirect()->route('estadovehiculo.index');
         }
     }
     public function destroy($id)
@@ -146,7 +146,7 @@ class estadoVehiculoController extends Controller
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->back();
         }
-        return redirect()->route('estadoVehiculo.index');
+        return redirect()->route('estadovehiculo.index');
     }
 
 }
