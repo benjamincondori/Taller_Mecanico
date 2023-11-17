@@ -25,6 +25,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/fullcalendar/fullcalendar.min.css')}}"  type="text/css" />
 
 </head>
 

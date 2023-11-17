@@ -18,17 +18,50 @@
 
                 </div>
                 <div class = 'card-box col-11'>
-                    <div id = calendar ></div>
+                    <div id = "calendar" ></div>
                 </div>
 
             </div>
         </div>
 
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+          Launch
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="form-group">
+                              <label for="Date">Fecha</label>
+                              algun input con fecha
+                              <small id="fileHelpId" class="form-text text-muted">Help text</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-layouts.content>
 
     {{-- con esto estoy exportando los scripts del calendario a App.blade.php --}}
-    @push('scripts') 
+    @push('js') 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+
     <script>
       // todo lo estoy haciendo con un cdn sorry no le entendi como descargar los paquetes  
       document.addEventListener('DOMContentLoaded', function() {
