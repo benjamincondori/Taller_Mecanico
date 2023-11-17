@@ -12,7 +12,7 @@
                     </div>
 
                     <form class="px-4 pt-2 pb-2" action="{{ route('productos.store') }}"
-                        method="post">
+                        method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -127,7 +127,6 @@
                                     <label>Subir imagen</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-
                                             <input type="file" class="custom-file-input" name="imagen" id="imagen"
                                                 lang="es">
                                             <label class="custom-file-label" for="imagen">Seleccionar imagen</label>

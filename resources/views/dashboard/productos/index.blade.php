@@ -29,7 +29,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach ($data as $producto)
                                 <tr class="text-center">
                                     <th scope="row" class="align-middle">{{ $producto['id'] }}</th>
