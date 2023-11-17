@@ -30,7 +30,7 @@
 </head>
 
 <body class="antialiased">
-
+    <!-- Scripts -->
     {{ $slot }}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -39,7 +39,8 @@
 
     <!-- Modal-Effect -->
     <script src="{{ asset('assets/libs/custombox/custombox.min.js') }}"></script>
-
+   
+   
     @stack('js')
 
     <script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
@@ -102,7 +103,6 @@
     @endif
     
     {{-- para recibir la exportacion del calendario  --}}
-    @stack('scripts')
 
 </body>
 

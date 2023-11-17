@@ -22,7 +22,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\estadoVehiculoController;
-use App\Http\Controllers\ReservacionesController;
+use App\Http\Controllers\ReservasController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -216,9 +216,9 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/cotizacion/deleteServicio/{id}/{cotizacion_id}', 'destroyServicio')->name('cotizacion.deleteServicio');
         });
 
-        Route::controller(ReservacionesController::class)->group(function (){
-            Route::get('/reservacion','index')->name('reservacion.index');
-            Route::get('/reservacion/create','create')->name('reservacion.create');
+        Route::controller(ReservasController::class)->group(function (){
+            Route::get('/reserva','index')->name('reserva.index');
+            Route::get('/reserva/create','create')->name('reserva.create');
         });
     });
 });

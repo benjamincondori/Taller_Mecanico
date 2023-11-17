@@ -70,6 +70,7 @@
         // mirar la documentacion para modificar
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
+            events: @json($events),
             locale: 'es',
             aspectRatio: 2.3,
             firstDay: 1,
