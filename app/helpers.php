@@ -46,4 +46,48 @@ function formatearFecha($fecha)
     return $fechaFormateada;
 }
 
+function formatoFecha($fecha)
+{
+    $carbonFecha = Carbon::parse($fecha);
+    $fechaFormateada = $carbonFecha->format('d/m/Y');
+    return $fechaFormateada;
+}
+
+function transformarFormatoFecha($fecha)
+{
+    $fecha = DateTime::createFromFormat('d/m/Y', $fecha);
+    return $fecha->format('Y-m-d');
+}
+
+function sumaPrecioTotalProductos($productos) {
+    $sumaPrecios = 0;
+    if (count($productos) > 0) {
+        foreach ($productos as $producto) {
+            $sumaPrecios += floatval($producto['pivot']['producto_preciototal']);
+        }
+    }
+    return $sumaPrecios;
+}
+
+function sumaPrecioTotalServicios($servicios) {
+    $sumaPrecios = 0;
+    if (count($servicios) > 0) {
+        foreach ($servicios as $servicio) {
+            $sumaPrecios += floatval($servicio['pivot']['servicio_preciototal']);
+        }
+    }
+    return $sumaPrecios;
+}
+
+function calcularSubtotal($productos, $servicios) {
+    $costoProductos = sumaPrecioTotalProductos($productos);
+    $costoServicios = sumaPrecioTotalServicios($servicios);
+    return $costoProductos + $costoServicios;
+}
+
+function formatearNumero($numero) {
+    return number_format($numero, 2, ',', '.');
+}
+
+
 

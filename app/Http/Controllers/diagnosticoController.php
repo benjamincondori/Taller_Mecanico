@@ -35,7 +35,6 @@ class diagnosticoController extends Controller
             'recomendaciones' => 'required|string',
             'vehiculo_id' => 'required'
         ]);
-        dd(now());
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::post($url . '/diagnosticos', [

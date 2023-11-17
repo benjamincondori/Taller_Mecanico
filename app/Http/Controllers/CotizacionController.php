@@ -195,7 +195,6 @@ class CotizacionController extends Controller
 
     public function destroy($id)
     {
-
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
         $response = Http::delete($url . '/cotizaciones/' . $id);
@@ -207,6 +206,7 @@ class CotizacionController extends Controller
         }
         return redirect()->route('cotizacion.index');
     }
+
     public function destroyProducto($id, $cotizacion_id)
     {
 

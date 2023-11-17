@@ -10,7 +10,7 @@ class ProductoController extends Controller
     public function index()
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::get($url.'/productos');
+        $response = Http::get($url . '/productos');
         $data = $response->json();
 
         return view('dashboard.productos.index', compact('data'));
@@ -25,10 +25,10 @@ class ProductoController extends Controller
         }
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::get($url.'/categorias');
+        $response = Http::get($url . '/categorias');
         $categorias = $response->json();
 
-        $response = Http::get($url.'/proveedores');
+        $response = Http::get($url . '/proveedores');
         $proveedores = $response->json();
 
         return view('dashboard.productos.create', compact('categorias', 'proveedores'));
@@ -38,6 +38,16 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         // Validación de datos
+
+        // dd($request);
+
+        // $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        // $response = Http::post($url . '/productos', [
+        //     'imagen' => $request->input('imagen'),
+        // ]);
+
+
+
         $request->validate([
             'nombre' => 'required|string',
             'descripcion' => 'nullable|string',
@@ -96,13 +106,13 @@ class ProductoController extends Controller
         }
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::get($url.'/productos/'.$id);
+        $response = Http::get($url . '/productos/' . $id);
         $producto = $response->json();
 
-        $response = Http::get($url.'/categorias');
+        $response = Http::get($url . '/categorias');
         $categorias = $response->json();
 
-        $response = Http::get($url.'/proveedores');
+        $response = Http::get($url . '/proveedores');
         $proveedores = $response->json();
 
         return view('dashboard.productos.edit', compact('producto', 'categorias', 'proveedores'));
@@ -124,7 +134,7 @@ class ProductoController extends Controller
         ]);
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::put($url.'/productos/'.$id, [
+        $response = Http::put($url . '/productos/' . $id, [
             'nombre' => $request->input('nombre'),
             'descripcion' => $request->input('descripcion'),
             'imagen' => $request->input('imagen'),
@@ -137,15 +147,15 @@ class ProductoController extends Controller
         ]);
 
         $result = $response->json();
-        if ($result && $result['status'] ) {
+        if ($result && $result['status']) {
 
             $descripcion = 'Producto actualizado con el ID: ' . $id;
             registrarBitacora($descripcion);
 
-            session()->flash('actualizado','El producto ha sido actualizado exitosamente.');
+            session()->flash('actualizado', 'El producto ha sido actualizado exitosamente.');
             return redirect()->route('productos.index');
         } else {
-            session()->flash('error','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->route('productos.edit', $id);
         }
     }
@@ -159,7 +169,7 @@ class ProductoController extends Controller
         }
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::delete($url.'/productos/'.$id);
+        $response = Http::delete($url . '/productos/' . $id);
         $result = $response->json();
 
         if ($result && $result['status']) {
@@ -167,9 +177,9 @@ class ProductoController extends Controller
             $descripcion = 'Producto eliminado con el ID: ' . $id;
             registrarBitacora($descripcion);
 
-            session()->flash('eliminado','El producto ha sido eliminado exitosamente.');
+            session()->flash('eliminado', 'El producto ha sido eliminado exitosamente.');
         } else {
-            session()->flash('error','Ha ocurrido un error. Por favor, intenta nuevamente.');
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
         return redirect()->route('productos.index');
     }

@@ -79,7 +79,7 @@
                     </ul>
                 </li>
             @endif
-            
+
             @if (verificarPermiso('Lista_Marcas') || verificarPermiso('Lista_Modelos')
                 || verificarPermiso('Lista_TiposVehiculos') || verificarPermiso('Lista_Vehiculos') ||
                 verificarPermiso('Lista_EstadoVehiculos'))
@@ -118,9 +118,9 @@
                     </ul>
                 </li>
             @endif
-            
-                
-            @if (verificarPermiso('Lista_Productos') || verificarPermiso('Lista_Servicios') 
+
+
+            @if (verificarPermiso('Lista_Productos') || verificarPermiso('Lista_Servicios')
                 || verificarPermiso('Lista_Categorias'))
                 <li>
                     <a href="javascript: void(0);">
@@ -137,18 +137,18 @@
                         @if (verificarPermiso('Lista_Servicios'))
                             <li>
                                 <a href="{{route('servicios.index')}}">Servicios</a>
-                            </li> 
+                            </li>
                         @endif
                         @if (verificarPermiso('Lista_Categorias'))
                             <li>
                                 <a href="{{route('categorias.index')}}">Categorías</a>
-                            </li>  
+                            </li>
                         @endif
                     </ul>
                 </li>
             @endif
 
-            @if (verificarPermiso('Lista_Proveedores'))  
+            @if (verificarPermiso('Lista_Proveedores'))
                 <li>
                     <a href="{{route('proveedor.index')}}">
                         <i class="fas fas fa-truck"></i>
@@ -157,7 +157,7 @@
                 </li>
             @endif
 
-            @if (verificarPermiso('Lista_Diagnosticos'))   
+            @if (verificarPermiso('Lista_Diagnosticos'))
                 <li>
                     <a href="{{route('diagnostico.index')}}">
                         <i class="fas fa-plus-square"></i>
@@ -166,7 +166,7 @@
                 </li>
             @endif
 
-            @if (verificarPermiso('Lista_Cotizaciones'))     
+            @if (verificarPermiso('Lista_Cotizaciones'))
                 <li>
                     <a href="{{route('cotizacion.index')}}">
                         <i class=" fas fa-dollar-sign"></i>
@@ -174,28 +174,35 @@
                     </a>
                 </li>
             @endif
-            
+
             <li>
                 <a href="#">
                     <i class="far fa-calendar-alt"></i>
                     <span> Reservas </span>
                 </a>
             </li>
-            
+
             <li>
-                <a href="#">
+                <a href="{{ route('ordentrabajo.index') }}">
                     <i class="fas fa-tools"></i>
                     <span> Ordenes de Trabajo </span>
                 </a>
             </li>
-            
+
             <li>
-                <a href="#">
+                <a href="{{ route('pagos.index') }}">
                     <i class="fas fa-donate"></i>
                     <span> Pagos </span>
                 </a>
             </li>
             
+            <li>
+                <a href="{{ route('reportes.index') }}">
+                    <i class="fas fa-file-alt"></i>
+                    <span> Reportes </span>
+                </a>
+            </li>
+
             @if (verificarPermiso('Lista_Bitacoras'))
                 <li>
                     <a href="{{route('bitacora.index')}}">

@@ -22,6 +22,9 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\estadoVehiculoController;
+use App\Http\Controllers\OrdenTrabajoController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -214,5 +217,24 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/cotizacion/deleteProducto/{id}/{cotizacion_id}', 'destroyProducto')->name('cotizacion.deleteProducto');
             Route::post('/cotizacion/deleteServicio/{id}/{cotizacion_id}', 'destroyServicio')->name('cotizacion.deleteServicio');
         });
+
+        Route::controller(OrdenTrabajoController::class)->group(function() {
+            Route::get('/orden-trabajo', 'index')->name('ordentrabajo.index');
+            Route::get('/orden-trabajo/create', 'create')->name('ordentrabajo.create');
+            Route::get('/orden-trabajo/edit/{id}', 'edit')->name('ordentrabajo.edit');
+            Route::get('/orden-trabajo/show/{id}', 'show')->name('ordentrabajo.show');
+            Route::post('/orden-trabajo/store', 'store')->name('ordentrabajo.store');
+            Route::post('/orden-trabajo/update/{id}', 'update')->name('ordentrabajo.update');
+            Route::post('/orden-trabajo/delete/{id}', 'destroy')->name('ordentrabajo.delete');
+        });
+
+        Route::controller(PagoController::class)->group(function() {
+            Route::get('/pagos', 'index')->name('pagos.index');
+        });
+        
+        Route::controller(ReporteController::class)->group(function() {
+            Route::get('/reportes', 'index')->name('reportes.index');
+        });
+
     });
 });
