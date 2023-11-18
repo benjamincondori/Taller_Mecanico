@@ -34,10 +34,15 @@ class ReservasController extends Controller
         $ResponseClientes = Http::get($url.'/clientes');
         $Clientes = $ResponseClientes->json();
 
-        $hora = '10:00:00';
-        $duracion = '00:30:00';
+        $hora = strtotime('15:00:00');
+        $duracion = strtotime('01:00:00');
+        // por alguna razon se suma 4 horas a cualquiera de las 2 variables de tiempo convertidas a int. Pero a la hora
+        // de añadirle otra que es 00:00:00 se arregla   ???????
 
-        $hora_fin= strtotime($hora)+strtotime($duracion);
+        //aaa tambien le estoy poniendo una variacion de un segundo por que el calendario acepta solo 
+        //hora mayores (>) que la hora que termina el evento 
+        $hora_time= $hora + $duracion - strtotime('00:00:01');
+        $hora_fin = date('H:i:s',$hora_time);
 
         dd($hora_fin);
 
