@@ -230,8 +230,12 @@ Route::middleware(['auth.admin'])->group(function () {
 
         Route::controller(PagoController::class)->group(function() {
             Route::get('/pagos', 'index')->name('pagos.index');
+            Route::get('/pagos/create', 'create')->name('pagos.create');
+            Route::get('/pagos/create/{id}', 'createPago')->name('pagos.createPago');
+            Route::post('/pagos/store', 'store')->name('pagos.store');
+            Route::post('/pagos/update/{id}', 'update')->name('pagos.update');
         });
-        
+
         Route::controller(ReporteController::class)->group(function() {
             Route::get('/reportes', 'index')->name('reportes.index');
         });

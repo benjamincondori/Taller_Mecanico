@@ -66,6 +66,8 @@ class CotizacionController extends Controller
             'vehiculo' => 'required|string',
         ]);
 
+        $usuario = getUsuario();
+
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::post($url . '/cotizaciones', [
 
@@ -73,6 +75,7 @@ class CotizacionController extends Controller
             'precioTotal' => $request->input('precio'),
             'descripcion' => $request->input('descripcion'),
             'cliente' => $request->input('cliente'),
+            'empleado' => $usuario['id'],
             'vehiculo' => $request->input('vehiculo'),
 
         ]);

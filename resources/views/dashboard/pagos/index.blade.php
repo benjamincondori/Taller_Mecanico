@@ -5,14 +5,14 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="mb-2 d-flex justify-content-between">
+                {{-- <div class="mb-2 d-flex justify-content-between">
                     <div class="form-group">
-                        <a href="#" class="btn btn-primary waves-effect waves-light">
+                        <a href="{{ route('pagos.create') }}" class="btn btn-primary waves-effect waves-light">
                             <i class="fas fa-plus-circle"></i>&nbsp;
-                            Nueva Pago
+                            Nuevo Pago
                         </a>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="card-box">
                     <div class="table-responsive">
@@ -30,133 +30,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @if ($data !== null)
-                                @foreach ($data as $orden) --}}
+                                @foreach ($pagos as $pago)
                                 <tr class="text-nowrap text-center">
                                     <th scope="row" class="align-middle" style="width: 120px">
-                                        1
+                                        {{ $pago['id'] }}
                                     </th>
                                     <td class="align-middle">
-                                        Pablo Alexis Lijeron Añez
+                                        {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['nombre'] }}
+                                        {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['apellido'] }}
                                     </td>
                                     <td class="align-middle">
-                                        Benjamin Condori Vasquez
+                                        {{ $pago['orden_de_trabajo']['cotizacion']['empleado']['nombre'] }}
+                                        {{ $pago['orden_de_trabajo']['cotizacion']['empleado']['apellido'] }}
                                     </td>
                                     <td class="align-middle">
-                                        Pago de Cotización
+                                        {{ $pago['concepto'] }}
                                     </td>
                                     <td class="align-middle">
-                                        05/10/2023 12:00:00
+                                        {{ formatearFecha($pago['fecha']) }}
                                     </td>
                                     <td class="align-middle">
-                                        180 Bs
+                                        {{ 'Bs. ' . formatearNumero($pago['monto']) }}
                                     </td>
                                     <td class="align-middle">
-                                        {{-- <span class="text-danger py-1 px-2 rounded-lg d-inline-block" style="background-color: #f8d7da; width: 90px">Sin pagar</span> --}}
-                                        <span class="text-warning py-1 px-2 rounded-lg d-inline-block"
-                                        style="background-color: #ffeeba; width: 90px">Pendiente</span>
+                                        @if ($pago['estado'])
+                                            <span class="text-success py-1 px-2 rounded-lg d-inline-block"
+                                            style="background-color: #d4edda; width: 90px">Pagado</span>
+                                        @else
+                                            <span class="text-warning py-1 px-2 rounded-lg d-inline-block"
+                                            style="background-color: #ffeeba; width: 90px">Pendiente</span>
+                                        @endif
                                     </td>
                                     <td class="align-middle text-nowrap" style="width: 200px">
-                                        <button type="button" title="Pagar"
-                                        class="btn btn-sm btn-outline-success"><i class="fas fa-dollar-sign"></i></button>
-                                        <button type="button" 
-                                        class="btn btn-sm btn-outline-danger"><i class="fas fa-file-pdf"></i></button>
+                                        <a href="{{ route('pagos.createPago', $pago['id']) }}" title="Pagar" class="btn btn-sm btn-outline-success">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </a>
+                                        <a href="" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </a>
                                     </td>
                                 </tr>
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle" style="width: 120px">
-                                        2
-                                    </th>
-                                    <td class="align-middle">
-                                        Pablo Alexis Lijeron Añez
-                                    </td>
-                                    <td class="align-middle">
-                                        Benjamin Condori Vasquez
-                                    </td>
-                                    <td class="align-middle">
-                                        Pago de Orden de trabajo
-                                    </td>
-                                    <td class="align-middle">
-                                        07/10/2023 15:45:00
-                                    </td>
-                                    <td class="align-middle">
-                                        350 Bs
-                                    </td>
-                                    <td class="align-middle">
-                                        <span class="text-success py-1 px-2 rounded-lg d-inline-block" style="background-color: #c3e6cb; width: 90px">Pagado</span>
-                                    </td>
-                                    <td class="align-middle text-nowrap" style="width: 200px">
-                                        <button type="button" title="Pagar"
-                                        class="btn btn-sm btn-outline-success"><i class="fas fa-dollar-sign"></i></button>
-                                        <button type="button" 
-                                        class="btn btn-sm btn-outline-danger"><i class="fas fa-file-pdf"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle" style="width: 120px">
-                                        3
-                                    </th>
-                                    <td class="align-middle">
-                                        Diego Iglesias Godoy
-                                    </td>
-                                    <td class="align-middle">
-                                        Cesar Alejandro Caballero
-                                    </td>
-                                    <td class="align-middle">
-                                        Pago de Orden de trabajo
-                                    </td>
-                                    <td class="align-middle">
-                                        05/11/2023 10:40:00
-                                    </td>
-                                    <td class="align-middle">
-                                        270 Bs
-                                    </td>
-                                    <td class="align-middle">
-                                        <span class="text-warning py-1 px-2 rounded-lg d-inline-block"
-                                        style="background-color: #ffeeba; width: 90px">Pendiente</span>
-                                    </td>
-                                    <td class="align-middle text-nowrap" style="width: 200px">
-                                        <button type="button" title="Pagar"
-                                        class="btn btn-sm btn-outline-success"><i class="fas fa-dollar-sign"></i></button>
-                                        <button type="button" 
-                                        class="btn btn-sm btn-outline-danger"><i class="fas fa-file-pdf"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="text-nowrap text-center">
-                                    <th scope="row" class="align-middle" style="width: 120px">
-                                        4
-                                    </th>
-                                    <td class="align-middle">
-                                        Mauricio Banegas Lopez
-                                    </td>
-                                    <td class="align-middle">
-                                        Benjamin Condori Vasquez
-                                    </td>
-                                    <td class="align-middle">
-                                        Pago de Cotización
-                                    </td>
-                                    <td class="align-middle">
-                                        05/11/2023 12:30:00
-                                    </td>
-                                    <td class="align-middle">
-                                        110 Bs
-                                    </td>
-                                    <td class="align-middle">
-                                        <span class="text-success py-1 px-2 rounded-lg d-inline-block" style="background-color: #c3e6cb; width: 90px">Pagado</span>
-                                    </td>
-                                    <td class="align-middle text-nowrap" style="width: 200px">
-                                        <button type="button" title="Pagar"
-                                        class="btn btn-sm btn-outline-success"><i class="fas fa-dollar-sign"></i></button>
-                                        <button type="button" 
-                                        class="btn btn-sm btn-outline-danger"><i class="fas fa-file-pdf"></i></button>
-                                    </td>
-                                </tr>
-                                {{-- @endforeach
-                                @else
-                                <tr class="text-nowrap text-center">
-                                    <td colspan="7" class="align-middle">No hay registros</td>
-                                </tr>
-                                @endif --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

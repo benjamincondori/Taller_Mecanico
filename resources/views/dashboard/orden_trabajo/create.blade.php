@@ -509,7 +509,7 @@
     <script src="{{ asset('assets/plugins/flatpickr/flatpickr.js') }}"></script>
     <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/dropzone/dropzone.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/libs/dropzone/dropzone.min.js') }}"></script> --}}
 
     <script>
         $(document).ready(function() {

@@ -69,7 +69,7 @@
                                         {{ formatearFecha($orden['fecha_creacion']) }}
                                     </td>
                                     <td class="align-middle">
-                                        @if ($orden['pago_id'] == null)
+                                        @if (!$orden['pago']['estado'])
                                             <span class="p-1 bg-danger text-white small"
                                             style="border-radius: 5px; text-transform: uppercase; font-weight: bold">Pendiente</span>
                                         @else

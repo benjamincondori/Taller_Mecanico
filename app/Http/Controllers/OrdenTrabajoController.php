@@ -28,7 +28,7 @@ class OrdenTrabajoController extends Controller
             return isset($empleado['usuario']['rol']['nombre']) && $empleado['usuario']['rol']['nombre'] === 'Mecánico';
         });
 
-        $response = Http::get($url . '/cotizaciones');
+        $response = Http::get($url . '/obtener-cotizaciones');
         $cotizaciones = $response->json();
         $cotizaciones = collect($cotizaciones)->sortBy('id')->all();
 
@@ -51,27 +51,41 @@ class OrdenTrabajoController extends Controller
         $fecha_fin = transformarFormatoFecha($request->input('fechaEgreso'));
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
-        $response = Http::post($url . '/orden-trabajos', [
-            'descripcion' => $request->input('descripcion'),
-            'empleado_id' => $request->input('mecanico_id'),
-            'cotizacion_id' => $request->input('cotizacion_id'),
-            'fecha_inicio' => $fecha_inicio,
-            'fecha_fin' => $fecha_fin,
-            'fecha_creacion' =>  $fecha,
-            'estado' => 'Ingresado',
-            'descuento' => $request->input('descuento'),
-            'costo_total' => $request->input('costo_total')
+        $pago = Http::post($url . '/pagos', [
+            'fecha' => $fecha,
+            'monto' => $request->input('costo_total'),
+            'concepto' => "Orden de trabajo",
+            'estado' => false,
         ]);
 
-        $result = $response->json();
+        $result = $pago->json();
 
         if ($result && $result['status']) {
+            $response = Http::post($url . '/orden-trabajos', [
+                'descripcion' => $request->input('descripcion'),
+                'mecanico_id' => $request->input('mecanico_id'),
+                'cotizacion_id' => $request->input('cotizacion_id'),
+                'fecha_inicio' => $fecha_inicio,
+                'fecha_fin' => $fecha_fin,
+                'fecha_creacion' =>  $fecha,
+                'estado' => 'Ingresado',
+                'descuento' => $request->input('descuento'),
+                'costo_total' => $request->input('costo_total'),
+                'pago_id' => $result['pago']['id']
+            ]);
 
-            $descripcion = 'Orden de trabajo creado con el ID: ' . $result['ordenDeTrabajo']['id'];
-            registrarBitacora($descripcion);
+            $result = $response->json();
 
-            session()->flash('guardado', 'La orden de trabajo ha sido guardado exitosamente.');
-            return redirect()->route('ordentrabajo.index');
+            if ($result && $result['status']) {
+                $descripcion = 'Orden de trabajo creado con el ID: ' . $result['ordenDeTrabajo']['id'];
+                registrarBitacora($descripcion);
+
+                session()->flash('guardado', 'La orden de trabajo ha sido guardado exitosamente.');
+                return redirect()->route('ordentrabajo.index');
+            } else {
+                session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+                return redirect()->back();
+            }
         } else {
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
             return redirect()->back();
@@ -84,10 +98,10 @@ class OrdenTrabajoController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/orden-trabajos/' . $id);
         $ordenTrabajo = $response->json();
-        
+
         $productos = $ordenTrabajo['cotizacion']['productos'];
         $servicios = $ordenTrabajo['cotizacion']['servicios'];
-        
+
         return view('dashboard.orden_trabajo.show', compact('ordenTrabajo', 'productos', 'servicios'));
     }
 

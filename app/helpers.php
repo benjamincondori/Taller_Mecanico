@@ -19,6 +19,10 @@ function registrarBitacora($descripcion)
     ]);
 }
 
+function getUsuario() {
+    return Session::get('usuario');
+}
+
 function verificarPermiso($permiso) {
     $usuario = Session::get('usuario');
 

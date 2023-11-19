@@ -14,7 +14,7 @@
                                     <strong>Orden de Trabajo #{{ $ordenTrabajo['id'] }}</strong>
                                 </h3>
                             </div>
-                            
+
                             <div class="d-flex flex-colum align-items-center">
                                 <div class="form-group">
                                     <label><strong>Estado Pago: </strong></label>
@@ -26,17 +26,17 @@
                                         style="border-radius: 5px; text-transform: uppercase; font-weight: bold">Pagado</span>
                                     @endif
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label><strong>Estado Orden: </strong></label>
                                     <span class="p-1 bg-success text-white small"
                                     style="border-radius: 5px; text-transform: uppercase; font-weight: bold">
                                     {{ $ordenTrabajo['estado'] }}</span>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div> --}}
-                    
+
                     <div class="form-group px-4 pt-2">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
@@ -147,7 +147,7 @@
                                                         <strong>Mecánico Asignado:</strong>
                                                     </label>
                                                     <div class="form-group w-100">
-                                                        <input type="text" class="form-control" id="mecanico" name="mecanico" value="{{ $ordenTrabajo['empleado']['nombre'] }} {{ $ordenTrabajo['empleado']['apellido'] }}"
+                                                        <input type="text" class="form-control" id="mecanico" name="mecanico" value="{{ $ordenTrabajo['mecanico']['nombre'] }} {{ $ordenTrabajo['mecanico']['apellido'] }}"
                                                             readonly>
                                                     </div>
                                                 </div>
@@ -161,7 +161,7 @@
                                                         readonly>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="d-flex align-items-center">
                                                     <label for="pago" class="control-label mr-2" style="width: 120px">
                                                         <strong>Estado del pago:</strong>
