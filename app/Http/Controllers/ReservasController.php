@@ -15,15 +15,41 @@ class ReservasController extends Controller
         $reservas = $responseReserva->json();
 
         $events = [];
-        foreach ($reservas as $reserva){
-            $events[] = [
-                'title' => $reserva['servicio']['nombre'].' - '.$reserva['cliente']['apellido'],
-                'start' => $reserva['fecha'].' '.$reserva['hora_inicio'],
-                'end' => $reserva['fecha'].' '.$reserva['hora_fin'],
-            ];
+        if($reservas){
+            foreach ($reservas as $reserva){
+                $events[] = [
+                    'title' => $reserva['servicio']['nombre'].' - '.$reserva['cliente']['apellido'],
+                    'start' => $reserva['fecha'].' '.$reserva['hora_inicio'],
+                    'end' => $reserva['fecha'].' '.$reserva['hora_fin'],
+                ];
+            }
         }
+        
         // si o si se tiene que llamar events para el calendario
+       
 
+        return view('dashboard.reserva.index', compact('events'));
+    }
+
+
+    public function create()
+    {
+        
+        
+        // por alguna razon se suma 4 horas a cualquiera de las 2 variables de tiempo convertidas a int. Pero al
+        // añadirle otra que es 00:00:00 se arregla   ???????
+
+        // $hora_inicio = strtotime('15:00:00');
+        // $duracion = strtotime('01:00:00');
+        // $hora_time= $hora_inicio + $duracion - strtotime('00:00:01');
+        // $hora_fin = date('H:i:s',$hora_time);
+
+        // dd($hora_fin);
+
+        //aaa tambien le estoy poniendo una variacion de un segundo por que el calendario acepta solo 
+        //hora mayores (>) que la hora que termina el evento 
+        
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $ResponseServicios = Http::get($url.'/servicios');
         $Servicios = $ResponseServicios->json();
 
@@ -34,31 +60,46 @@ class ReservasController extends Controller
         $ResponseClientes = Http::get($url.'/clientes');
         $Clientes = $ResponseClientes->json();
 
-        $hora = strtotime('15:00:00');
-        $duracion = strtotime('01:00:00');
-        // por alguna razon se suma 4 horas a cualquiera de las 2 variables de tiempo convertidas a int. Pero a la hora
-        // de añadirle otra que es 00:00:00 se arregla   ???????
-
-        //aaa tambien le estoy poniendo una variacion de un segundo por que el calendario acepta solo 
-        //hora mayores (>) que la hora que termina el evento 
-        $hora_time= $hora + $duracion - strtotime('00:00:01');
-        $hora_fin = date('H:i:s',$hora_time);
-
-        dd($hora_fin);
-
-        return view('dashboard.reserva.index', compact('events','Servicios','UsuarioEmpleado','Clientes','hora','hora_fin'));
-    }
-
-
-    public function create()
-    {
-        
+        return view('dashboard.reserva.create',compact('Servicios','UsuarioEmpleado','Clientes'));
     }
 
 
     public function store(Request $request)
     {
-       
+        $request->validate([
+            'fecha' => 'required|string',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
+            'estado' => 'required',
+            'servicio_id' => 'required',
+            'cliente_id' => 'required',
+            'empleado_id' => 'required'
+        ]);
+
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::post($url.'/servicios',[
+            'fecha' => $request->input('fecha'),
+            'hora_inicio' => $request->input('hora_inicio'),
+            'hora_fin' => $request->input('hora_fin'),
+            'estado' => $request->input('estado'),
+            'servicio_id' => $request->input('servicio_id'),
+            'cliente_id' => $request->input('cliente_id'),
+            'empleado_id' => $request->input('empleado_id')
+        ]);
+
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+
+            $descripcion = 'Reserva creado con el ID: ' . $result['reserva']['id'];
+            registrarBitacora($descripcion);
+
+            session()->flash('guardado', 'La reserva ha sido guardada exitosamente.');
+            return redirect()->route('reserva.index');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->back();
+        }
     }
 
 

@@ -1,150 +1,88 @@
 <x-layouts.app>
 
-    <x-layouts.content title="Reservaciones" subtitle="" name="Reservaciones">
+    <x-layouts.content title="Reservas" subtitle="" name="Reservas">
 
         <div class="row">
             <div class="col-12">
                 <div class="card-box">
 
                     <div class="form-group px-4 pt-2">
-                        <i class="fas fa-circle-plus fa-2x"></i>
-                        <h3 class="fs-1 d-inline-block ml-1">Registrar nuevo Reservacion</h3>
+                        <i class="fas fa-wrench fa-2x"></i>
+                        <h3 class="fs-1 d-inline-block ml-1">
+                            Crear nueva reserva - {{$UsuarioEmpleado['rol']['nombre']}}  {{$UsuarioEmpleado['empleado']['nombre']}} {{$UsuarioEmpleado['empleado']['apellido']}}
+                         </h3>
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="#"
-                        method="post">
+                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.store')}}" method="post">
                         @csrf
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nombre" class="control-label">Nombre del Cliente</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre"
-                                        placeholder="Liquido de freno" value="{{ old('nombre') }}">
-                                    @error('nombre')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
+                                    <div class="form-group mb-3">
+                                        <label for="fecha">Fecha</label>
+                                        <input class="form-control" id="fecha" type="date" name="fecha">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="stock_disponible" class="control-label">Stock disponible</label>
-                                    <input type="number" min="0" class="form-control" id="stock_disponible"
-                                        name="stock_disponible" placeholder="20" value="{{ old('stock_disponible') }}">
-                                    @error('stock_disponible')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label for="hora_inicio">Hora de Inicio</label>
+                                    <input class="form-control" id="hora_inicio" type="time" name="hora_inicio"
+                                     value="" oninput="actualizarHoraFin()">
                                 </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="stock_minimo" class="control-label">Stock mínimo</label>
-                                    <input type="number" min="0" class="form-control" id="stock_minimo"
-                                        name="stock_minimo" placeholder="3" value="{{ old('stock_minimo') }}">
-                                    @error('stock_minimo')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
+                            <div class="col-md-3">
+                                <div class="form-group mb-3">
+                                    <label for="hora_fin">Hora de Fin</label>
+                                    <input class="form-control" id="hora_fin" type="time" name="hora_fin"
+                                     disabled="" value="">
+                                     <span id="horaFinError" class="error text-danger">* Inserte Servicio y Hora</span>
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="proveedor_id" class="control-label">Proveedor</label>
-                                    <select class="form-control" name="proveedor_id" id="proveedor_id">
-                                        <option value="">Seleccionar</option>
-                                        @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor['id'] }}"
-                                        @if ($proveedor['id'] == old('proveedor_id')) selected @endif>
-                                            {{ $proveedor['nombre'] }}
-                                        </option>
+                                <div class="form-group mb-3">
+                                        <label for="servicio_id">Servicio</label>
+                                    <select class="form-control" id="servicio_id" name="servicio_id" oninput="actualizarHoraFin()">
+                                        <option value="">Selecciona un servicio</option>
+                                        @foreach ($Servicios as $servicio)
+                                        <option value="{{ $servicio['id'] }}" data-duracion={{$servicio['duracion']}}>{{ $servicio['nombre'] }}
+                                            | {{$servicio['precio']}}.Bs</option>
                                         @endforeach
                                     </select>
-                                    @error('proveedor_id')
-                                    <span class="error text-danger">* {{ $message }}</span>
+                                    @error('servicio_id')
+                                        <span class="error text-danger">* {{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Precio de venta</label>
-                                    <div class="input-group mt-0">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Bs</span>
-                                        </div>
-                                        <input type="number" class="form-control" placeholder="150,5"
-                                            aria-label="Amount (to the nearest dollar)" name="precio_venta"
-                                            id="precio_venta" value="{{ old('precio_venta') }}">
-                                    </div>
-                                    @error('precio_venta')
+                                <div class="form-group mb-3">
+                                    <label for="cliente_id">Cliente</label>
+                                <select class="form-control" id="cliente_id" name="cliente_id">
+                                    <option value="">Selecciona un cliente</option>
+                                    @foreach ($Clientes as $cliente)
+                                    <option value="{{ $cliente['id'] }}">{{ $cliente['ci'] }} | {{
+                                        $cliente['nombre'] }} {{ $cliente['apellido'] }}</option>
+                                    @endforeach
+                                </select>
+                                @error('cliente_id')
                                     <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Precio de compra</label>
-                                    <div class="input-group mt-0">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Bs</span>
-                                        </div>
-                                        <input type="number" class="form-control" placeholder="150,5"
-                                            aria-label="Amount (to the nearest dollar)" name="precio_compra"
-                                            id="precio_compra" value="{{ old('precio_compra') }}">
-                                    </div>
-                                    @error('precio_compra')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Subir imagen</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-
-                                            <input type="file" class="custom-file-input" name="imagen" id="imagen"
-                                                lang="es">
-                                            <label class="custom-file-label" for="imagen">Seleccionar imagen</label>
-                                        </div>
-                                    </div>
-                                    @error('imagen')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="descripcion" class="control-label">Descripción</label>
-                                    <textarea class="form-control" name="descripcion" id="descripcion" rows="5"
-                                        placeholder="">{{ old('descripcion') }}</textarea>
-                                    @error('descripcion')
-                                    <span class="error text-danger">* {{ $message }}</span>
-                                    @enderror
+                                @enderror
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group text-right m-b-0">
-                            <a href="{{ route('reservaciones.index') }}" class="btn btn-danger waves-effect m-l-5">
+                            <a href="{{ route('reserva.index') }}" class="btn btn-danger waves-effect m-l-5">
                                 Cancelar
                             </a>
                             <button class="btn btn-primary waves-effect waves-light" type="submit">
                                 Guardar
                             </button>
                         </div>
+
                     </form>
 
                 </div>
@@ -153,57 +91,53 @@
 
     </x-layouts.content>
 
-    @push('js')
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const productoForm = document.getElementById('productoForm');
+    
+    {{-- Script para que se actualice la hora_fin del formulario --}}
+    <script>
+        function actualizarHoraFin() {
+          // Obtén el valor de la hora de inicio
+          var horaInicio = document.getElementById('hora_inicio').value;
 
-            productoForm.addEventListener('submit', function (event) {
-                event.preventDefault();
+          // Obtén la opción seleccionada y su duración
+          var servicioSelect = document.getElementById('servicio_id');
+          var duracionServicio = servicioSelect.options[servicioSelect.selectedIndex].getAttribute('data-duracion');
+          console.log('Duración del servicio:', duracionServicio);
 
-                const nombre = productoForm.querySelector('[name="nombre"]').value;
-                const descripcion = productoForm.querySelector('[name="descripcion"]').value;
-                const precio_venta = productoForm.querySelector('[name="precio_venta"]').value;
-                const precio_compra = productoForm.querySelector('[name="precio_compra"]').value;
-                const categoria_id = productoForm.querySelector('[name="categoria_id"]').value;
-                const proveedor_id = productoForm.querySelector('[name="proveedor_id"]').value;
-                const stock_disponible = productoForm.querySelector('[name="stock_disponible"]').value;
-                const stock_minimo = productoForm.querySelector('[name="stock_minimo"]').value;
-                const imagen = productoForm.querySelector('[name="picture"]').value;
+          // Si la hora de inicio no está vacía y hay una duración seleccionada
+          if (horaInicio !== '' && duracionServicio) {
+              // Oculta el placeholder
+              document.getElementById('horaFinError').style.display = 'none';
 
-                // console.log(nombre, descripcion, precio_venta, precio_compra, categoria_id, proveedor_id, stock_disponible, stock_minimo);
+              // Muestra la entrada de tiempo de la hora de fin
+              document.getElementById('hora_fin').style.display = 'block';
 
-                // console.log(imagen);
+              // Suma la duración del servicio a la hora de inicio
+              var horaFin = sumarTiempo(horaInicio, duracionServicio);
 
-                const url = "{{ env('URL_SERVER_API') }}" + "/login";
-                const data = { nombre, descripcion, precio_venta, precio_compra, categoria_id, proveedor_id, stock_disponible, stock_minimo, imagen }; // Datos a enviar en la solicitud
+              // Actualiza el valor de la hora de fin
+              document.getElementById('hora_fin').value = horaFin;
+          } else {
+              // Si la hora de inicio está vacía o no hay duración seleccionada, muestra el placeholder y oculta la entrada de tiempo
+              document.getElementById('horaFinError').style.display = 'inline';
+          }
+      }
 
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error de autenticación');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const token = data.token;
-                    localStorage.setItem('token', token);
+      // Función para sumar tiempo a una hora dada (en formato HH:mm:ss)
+      function sumarTiempo(hora, tiempoASumar) {
+          var horaInicio = new Date('2020-01-01 ' + hora);
+          var tiempoSumar = new Date('2020-01-01 ' + tiempoASumar);
+          var Margen_segundo = new Date('2020-01-01 00:00:01');
+          //pasa aca tambien lo de que se suma las 4 horas de la nada ToT, pero sumando otra cosa mas se arregla wtf
 
-                    window.location.href = '/dashboard';
-                })
-                .catch(error => {
-                    console.error('Error de autenticación:', error);
-                });
-            });
-        });
-    </script> --}}
+          var nuevaHora = new Date(horaInicio.getTime() + tiempoSumar.getTime() - Margen_segundo.getTime());
 
-    @endpush
+          // Formatea la nueva hora
+          var horaNueva = nuevaHora.getHours().toString().padStart(2, '0');
+          var minutosNuevos = nuevaHora.getMinutes().toString().padStart(2, '0');
+          var segundosNuevos = nuevaHora.getSeconds().toString().padStart(2, '0');
+
+          return horaNueva + ':' + minutosNuevos + ':' + segundosNuevos;
+      }
+  </script>
 
 </x-layouts.app>
