@@ -176,10 +176,9 @@
                                             <strong>Descripción:</strong>
                                         </label>
                                         <textarea class="form-control" name="descripcion" id="descripcion" rows="5"
-                                            @if ($pago['estado'])
-                                                readonly
-                                            @endif>{{ ($pago['estado']) ? $pago['factura']['detalle'] : old('descripcion') }}
-                                        </textarea>
+                                            @if ($pago['estado']) 
+                                                readonly  
+                                            @endif>{{ ($pago['estado']) ? $pago['factura']['detalle'] : old('descripcion') }}</textarea>
                                         @error('descripcion')
                                         <span class="error text-danger">* {{ $message }}</span>
                                         @enderror

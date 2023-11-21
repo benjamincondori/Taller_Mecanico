@@ -237,7 +237,12 @@ Route::middleware(['auth.admin'])->group(function () {
         });
 
         Route::controller(ReporteController::class)->group(function() {
-            Route::get('/reportes', 'index')->name('reportes.index');
+            Route::get('/reportes-ordenes', 'reporteOrdenes')->name('reportes.ordenes');
+            Route::get('/reportes-cotizaciones', 'reporteCotizaciones')->name('reportes.cotizaciones');
+            Route::get('/reportes-pagos', 'reportePagos')->name('reportes.pagos');
+            // Route::post('/generar-reporte-ordenes', 'generarReporteOrdenes')->name('reportes.generarOrdenes');
+            // Route::post('/generar-reporte-cotizaciones', 'generarReporteCotizaciones')->name('reportes.generarCotizaciones');
+            // Route::post('/generar-reporte-pagos', 'generarReportePagos')->name('reportes.generarPagos');
         });
 
     });

@@ -197,12 +197,30 @@
             </li>
             
             <li>
-                <a href="{{ route('reportes.index') }}">
+                <a href="javascript: void(0);">
                     <i class="fas fa-file-alt"></i>
                     <span> Reportes </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    {{-- @if (verificarPermiso('')) --}}
+                        <li>
+                            <a href="{{ route('reportes.ordenes') }}">Reporte de Ordenes de Trabajo</a>
+                        </li>
+                    {{-- @endif --}}
+                    {{-- @if (verificarPermiso('')) --}}
+                        <li>
+                            <a href="{{route('reportes.cotizaciones')}}">Reporte de Cotizaciones</a>
+                        </li>
+                    {{-- @endif --}}
+                    {{-- @if (verificarPermiso('')) --}}
+                        <li>
+                            <a href="{{route('reportes.pagos')}}">Reporte de Pagos</a>
+                        </li>
+                    {{-- @endif --}}
+                </ul>
             </li>
-
+            
             @if (verificarPermiso('Lista_Bitacoras'))
                 <li>
                     <a href="{{route('bitacora.index')}}">
