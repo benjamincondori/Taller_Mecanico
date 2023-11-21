@@ -45,11 +45,16 @@
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             events: @json($events),
+            eventColor: '#f5ce22',
+            eventTextColor: '#000000',
             locale: 'es',
-            slotDuration: '00:15:00',
+            slotDuration: '00:10:00',
             allDaySlot: false,
             aspectRatio: 2.3,
             firstDay: 1,
+            slotMinTime: '07:00:00',
+            slotMaxTime: '21:00:00',
+            scrollTime: '12:00:00',
             headerToolbar:{
                 end: 'dayGridMonth,timeGridWeek,listWeek today prev,next'
             },

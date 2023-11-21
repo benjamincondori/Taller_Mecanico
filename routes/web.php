@@ -220,7 +220,7 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('/reserva','index')->name('reserva.index');
             Route::get('/reserva/create','create')->name('reserva.create');
             Route::post('/reserva','store')->name('reserva.store');
-            Route::get('reserva/edit/{reserva}','edit')->name('reserva.edit');
+            Route::get('reserva/edit/{id}','edit')->name('reserva.edit');
             Route::get('/reserva/show/{id}', 'show')->name('reserva.show');
             Route::post('/reserva/update/{id}', 'update')->name('reserva.update');
             Route::post('/reserva/delete/{id}', 'destroy')->name('reserva.delete');

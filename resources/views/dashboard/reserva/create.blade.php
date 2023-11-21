@@ -9,13 +9,32 @@
                     <div class="form-group px-4 pt-2">
                         <i class="fas fa-wrench fa-2x"></i>
                         <h3 class="fs-1 d-inline-block ml-1">
-                            Crear nueva reserva - {{$UsuarioEmpleado['rol']['nombre']}}  {{$UsuarioEmpleado['empleado']['nombre']}} {{$UsuarioEmpleado['empleado']['apellido']}}
-                         </h3>
+                            Crear nueva reserva
+                        </h3>
                     </div>
 
                     <form class="px-4 pt-2 pb-2" action="{{route('reserva.store')}}" method="post">
                         @csrf
-                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="empleado_id"> Empleado agendando</label>
+                                  <select class="form-control" name="empleado_id" id="empleado_id" >
+                                        <option selected value="{{$UsuarioEmpleado['empleado']['id']}}">{{$UsuarioEmpleado['empleado']['nombre'].' '.$UsuarioEmpleado['empleado']['apellido']}}</option>
+                                    </select>
+                                </div>   
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="estadod">Estado de la Reserva</label>
+                                  <select class="form-control" name="estado" id="estado">
+                                      <option selected value="Aprobado">Aprobado</option>
+                                        <option value="Pendiente"> Pendiente</option>
+                                        <option value="Realizado">Realizado</option>
+                                    </select>
+                                </div>   
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -36,7 +55,7 @@
                                 <div class="form-group mb-3">
                                     <label for="hora_fin">Hora de Fin</label>
                                     <input class="form-control" id="hora_fin" type="time" name="hora_fin"
-                                     disabled="" value="">
+                                     value="">
                                      <span id="horaFinError" class="error text-danger">* Inserte Servicio y Hora</span>
                                 </div>
                             </div>
@@ -126,7 +145,7 @@
       function sumarTiempo(hora, tiempoASumar) {
           var horaInicio = new Date('2020-01-01 ' + hora);
           var tiempoSumar = new Date('2020-01-01 ' + tiempoASumar);
-          var Margen_segundo = new Date('2020-01-01 00:00:01');
+          var Margen_segundo = new Date('2020-01-01 00:00:00');
           //pasa aca tambien lo de que se suma las 4 horas de la nada ToT, pero sumando otra cosa mas se arregla wtf
 
           var nuevaHora = new Date(horaInicio.getTime() + tiempoSumar.getTime() - Margen_segundo.getTime());
