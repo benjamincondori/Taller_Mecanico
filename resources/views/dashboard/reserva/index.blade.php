@@ -48,9 +48,10 @@
             eventColor: '#f5ce22',
             eventTextColor: '#000000',
             locale: 'es',
+            dayMaxEvents: true,
             slotDuration: '00:10:00',
             allDaySlot: false,
-            aspectRatio: 2.3,
+            aspectRatio: 1.5,
             firstDay: 1,
             slotMinTime: '07:00:00',
             slotMaxTime: '21:00:00',
@@ -70,7 +71,13 @@
                 minute: '2-digit',
                 omitZeroMinute: false,
                 meridiem: 'short'
-            }
+            },
+            eventClick: function(info) {
+                const confi = confirm('Quieres Editar/Eliminar ' + info.event.title);
+                if(confi){
+                    alert('holal');
+                }
+            } 
         });
         calendar.render();
         //fin de configs del calendario

@@ -18,6 +18,7 @@ class ReservasController extends Controller
         if($reservas){
             foreach ($reservas as $reserva){
                 $events[] = [
+                    'id' => $reserva['id'],
                     'title' => $reserva['servicio']['nombre'].' - '.$reserva['cliente']['apellido'],
                     'start' => $reserva['fecha'].' '.$reserva['hora_inicio'],
                     'end' => $reserva['fecha'].' '.$reserva['hora_fin'],
