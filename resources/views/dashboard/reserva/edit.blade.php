@@ -9,16 +9,16 @@
                     <div class="form-group px-4 pt-2">
                         <i class="fas fa-wrench fa-2x"></i>
                         <h3 class="fs-1 d-inline-block ml-1">
-                            Crear nueva reserva
+                            Editar reserva
                         </h3>
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.store')}}" method="post">
+                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.update')}}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                  <label for="empleado_id"> Empleado agendando</label>
+                                  <label for="empleado_id"> Empleado editando</label>
                                   <select class="form-control" name="empleado_id" id="empleado_id" >
                                         <option selected value="{{$UsuarioEmpleado['empleado']['id']}}">{{$UsuarioEmpleado['empleado']['nombre'].' '.$UsuarioEmpleado['empleado']['apellido']}}</option>
                                     </select>
@@ -28,7 +28,8 @@
                                 <div class="form-group">
                                   <label for="estadod">Estado de la Reserva</label>
                                   <select class="form-control" name="estado" id="estado">
-                                      <option selected value="Aprobado">Aprobado</option>
+                                      <option selected value="{{$reserva['estado']}}">{{$reserva['estado']}}</option>
+                                        <option value="Aprobado"> Aprobado</option>
                                         <option value="Pendiente"> Pendiente</option>
                                         <option value="Realizado">Realizado</option>
                                     </select>
@@ -40,7 +41,8 @@
                                 <div class="form-group">
                                     <div class="form-group mb-3">
                                         <label for="fecha">Fecha</label>
-                                        <input class="form-control" id="fecha" type="date" name="fecha">
+                                        <input class="form-control" id="fecha" type="date"
+                                        value="{{$reserva['fecha']}}" name="fecha">
                                     </div>
                                 </div>
                             </div>
@@ -48,14 +50,14 @@
                                 <div class="form-group mb-3">
                                     <label for="hora_inicio">Hora de Inicio</label>
                                     <input class="form-control" id="hora_inicio" type="time" name="hora_inicio"
-                                     value="" oninput="actualizarHoraFin()">
+                                     value="{{$reserva['hora_inicio']}}" oninput="actualizarHoraFin()">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="hora_fin">Hora de Fin</label>
                                     <input class="form-control" id="hora_fin" type="time" name="hora_fin"
-                                     value="">
+                                     value="{{$reserva['hora_fin']}}">
                                      <span id="horaFinError" class="error text-danger">* Inserte Servicio y Hora</span>
                                 </div>
                             </div>
@@ -65,7 +67,7 @@
                                 <div class="form-group mb-3">
                                         <label for="servicio_id">Servicio</label>
                                     <select class="form-control" id="servicio_id" name="servicio_id" oninput="actualizarHoraFin()">
-                                        <option value="">Selecciona un servicio</option>
+                                        <option selected value="{{$reserva['servicio_id']}}">{{$reserva['servicio']['nombre']}}</option>
                                         @foreach ($Servicios as $servicio)
                                         <option value="{{ $servicio['id'] }}" data-duracion={{$servicio['duracion']}}>{{ $servicio['nombre'] }}
                                             | {{$servicio['precio']}}.Bs</option>
@@ -80,7 +82,8 @@
                                 <div class="form-group mb-3">
                                     <label for="cliente_id">Cliente</label>
                                 <select class="form-control" id="cliente_id" name="cliente_id">
-                                    <option value="">Selecciona un cliente</option>
+                                    <option value="{{$reserva['cliente_id']}}">
+                                        {{$reserva['cliente']['nombre']}} {{$reserva['cliente']['apellido']}}</option>
                                     @foreach ($Clientes as $cliente)
                                     <option value="{{ $cliente['id'] }}">{{ $cliente['ci'] }} | {{
                                         $cliente['nombre'] }} {{ $cliente['apellido'] }}</option>

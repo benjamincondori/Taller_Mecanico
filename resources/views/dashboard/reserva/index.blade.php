@@ -73,9 +73,10 @@
                 meridiem: 'short'
             },
             eventClick: function(info) {
+                var evento = info.event;
                 const confi = confirm('Quieres Editar/Eliminar ' + info.event.title);
                 if(confi){
-                    alert('holal');
+                    window.location.href = "/dashboard/reserva/edit/" + evento.id;
                 }
             } 
         });

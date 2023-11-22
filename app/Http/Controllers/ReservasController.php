@@ -35,9 +35,6 @@ class ReservasController extends Controller
 
     public function create()
     {
-        
-        
-        
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $ResponseServicios = Http::get($url.'/servicios');
         $Servicios = $ResponseServicios->json();
@@ -112,7 +109,21 @@ class ReservasController extends Controller
 
     public function edit(string $id)
     {
-       
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        
+        $responseReserva1 = Http::get($url.'/reservas/'.$id);
+        $reserva = $responseReserva1->json();
+        $ResponseServicios = Http::get($url.'/servicios');
+        $Servicios = $ResponseServicios->json();
+
+        $idUsuario = Session::get('usuario.id');
+        $ResponseEmpleado = Http::get($url.'/usuarios/'.$idUsuario);
+        $UsuarioEmpleado = $ResponseEmpleado->json();
+
+        $ResponseClientes = Http::get($url.'/clientes');
+        $Clientes = $ResponseClientes->json();
+
+        return view('dashboard.reserva.create',compact('reserva','Servicios','UsuarioEmpleado','Clientes'));
     }
 
 
