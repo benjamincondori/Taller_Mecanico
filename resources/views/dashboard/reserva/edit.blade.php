@@ -13,7 +13,7 @@
                         </h3>
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.update')}}" method="post">
+                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.update',)}}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">

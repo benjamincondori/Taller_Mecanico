@@ -113,6 +113,7 @@ class ReservasController extends Controller
         
         $responseReserva1 = Http::get($url.'/reservas/'.$id);
         $reserva = $responseReserva1->json();
+
         $ResponseServicios = Http::get($url.'/servicios');
         $Servicios = $ResponseServicios->json();
 
@@ -123,7 +124,7 @@ class ReservasController extends Controller
         $ResponseClientes = Http::get($url.'/clientes');
         $Clientes = $ResponseClientes->json();
 
-        return view('dashboard.reserva.create',compact('reserva','Servicios','UsuarioEmpleado','Clientes'));
+        return view('dashboard.reserva.edit',compact('reserva','Servicios','UsuarioEmpleado','Clientes'));
     }
 
 
