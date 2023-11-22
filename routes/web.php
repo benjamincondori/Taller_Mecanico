@@ -22,6 +22,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ServiciosController;
 use App\Http\Controllers\estadoVehiculoController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrdenTrabajoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ReporteController;
@@ -240,10 +241,15 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('/reportes-ordenes', 'reporteOrdenes')->name('reportes.ordenes');
             Route::get('/reportes-cotizaciones', 'reporteCotizaciones')->name('reportes.cotizaciones');
             Route::get('/reportes-pagos', 'reportePagos')->name('reportes.pagos');
-            // Route::post('/generar-reporte-ordenes', 'generarReporteOrdenes')->name('reportes.generarOrdenes');
-            // Route::post('/generar-reporte-cotizaciones', 'generarReporteCotizaciones')->name('reportes.generarCotizaciones');
-            // Route::post('/generar-reporte-pagos', 'generarReportePagos')->name('reportes.generarPagos');
+
+            // RUTAS PARA GENERAR PDF
+            Route::get('/generar-reporte-ordenes/pdf/{admin}/{cliente}/{mecanico}/{estado}/{servicio}/{producto}/{f1}/{f2}', 'generarReporteOrdenes');
+            Route::get('/generar-reporte-cotizaciones/pdf/{admin}/{cliente}/{marca}/{modelo}/{tipoVehiculo}/{servicio}/{producto}/{f1}/{f2}', 'generarReporteCotizaciones');
+            Route::get('/generar-reporte-pagos/pdf/{admin}/{cliente}/{estado}/{concepto}/{f1}/{f2}', 'generarReportePagos');
         });
+
+        // RUTAS PARA GENERAR EXCEL
+        Route::get('/generar-excel', [ExcelController::class, 'generarExcel'])->name('generar.excel');
 
     });
 });

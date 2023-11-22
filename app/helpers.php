@@ -41,12 +41,8 @@ function verificarPermiso($permiso) {
 
 function formatearFecha($fecha)
 {
-    // Convierte la fecha a un objeto Carbon
     $carbonFecha = Carbon::parse($fecha);
-
-    // Formatea la fecha en el formato deseado
     $fechaFormateada = $carbonFecha->format('d/m/Y - H:i:s A');
-
     return $fechaFormateada;
 }
 
@@ -62,6 +58,13 @@ function transformarFormatoFecha($fecha)
     $fecha = DateTime::createFromFormat('d/m/Y', $fecha);
     return $fecha->format('Y-m-d');
 }
+
+function formatoFechaTexto($fecha) 
+{
+    $fechaFormateada = Carbon::parse($fecha)->locale('es')->isoFormat('DD [de] MMMM [del] YYYY');
+    return $fechaFormateada;
+}
+
 
 function sumaPrecioTotalProductos($productos) {
     $sumaPrecios = 0;

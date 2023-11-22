@@ -162,13 +162,22 @@
 
                             <div class="col-md-3 px-1 pt-2">
                                 <div class="form-group mb-1">
-                                    <a href=""
-                                        target="_blank"  class="btn btn-dark waves-effect m-l-5 w-100 d-flex align-items-center justify-content-center py-2">
+                                    <button type="submit" id="btnPdf" class="btn btn-dark waves-effect m-l-5 w-100 d-flex align-items-center justify-content-center py-2" disabled>
                                         <i class="fas fa-file-pdf mr-2 font-20"></i>
                                         Generar PDF
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
+
+                            {{-- <div class="col-md-3 px-1 pt-2">
+                                <div class="form-group mb-1">
+                                    <a href="{{ route('generar.excel') }}" class="btn btn-dark waves-effect m-l-5 w-100 d-flex align-items-center justify-content-center py-2">
+                                        <i class="fas fa-file-pdf mr-2 font-20"></i>
+                                        Generar Excel
+                                    </a>
+                                </div>
+                            </div> --}}
+
                         </div>
 
                         <hr id="dividerDatos" style="display: none; background: rgb(237, 237, 237); height: 1.2px">
@@ -337,6 +346,7 @@
                     if (success) {
                         $("#datos").hide();
                         $("#dividerDatos").hide();
+                        $("#btnPdf").prop("disabled", true);
                         $("#loadingIndicator").show();
 
                         let data = {
@@ -370,6 +380,7 @@
                             $("#dividerDatos").show();
                             $("#datos").show();
                             $("#loadingIndicator").hide();
+                            verificarCampos();
 
                             // Limpiar la tabla antes de agregar nuevos datos
                             console.log(data);
@@ -403,10 +414,65 @@
                             console.error('Error en la petición fetch', error);
                         });
                     }
-
                 });
+
+                // Manejar el clic en el botón "Generar PDF"
+                $('#btnPdf').on('click', function (event) {
+                    event.preventDefault();
+                    generarPDF();
+                })
+
+                function generarPDF() {
+                    // Obtener valores de los campos o variables necesarios
+                    const admin = $('#id_empleado').val();
+                    const cliente = $('#id_cliente').val();
+                    const mecanico = $('#id_mecanico').val();
+                    const estado = $('#estado').val();
+                    const servicio = $('#id_servicio').val();
+                    const producto = $('#id_producto').val();
+                    const f1 = ($('#fechaDesde').val()) ? convertirFecha($('#fechaDesde').val()) : null;
+                    const f2 = ($('#fechaHasta').val()) ? convertirFecha($('#fechaHasta').val()) : null;
+
+                    // Construir la URL con los parámetros
+                    const url = `/dashboard/generar-reporte-ordenes/pdf/${admin}/${cliente}/${mecanico}/${estado}/${servicio}/${producto}/${f1}/${f2}`;
+
+                    // Redireccionar a la URL construida
+                    // window.location.href = url;
+                    window.open(url, '_blank');
+                }
+
             });
         </script>
+
+        {{-- <script>
+            function generarPdf() {
+
+                let datos = {
+                    "id_empleado": $('#id_empleado').val(),
+                    "id_cliente": $('#id_cliente').val(),
+                    "id_mecanico": $('#id_mecanico').val(),
+                    "id_servicio": $('#id_servicio').val(),
+                    "id_producto": $('#id_producto').val(),
+                    "estado": $('#estado').val(),
+                    "fechaDesde": ($('#fechaDesde').val()) ? convertirFecha($('#fechaDesde').val()) : null,
+                    "fechaHasta": ($('#fechaHasta').val()) ? convertirFecha($('#fechaHasta').val()) : null,
+                };
+
+                $.ajax({
+                    url: "{{ route('reportes.generarOrdenes') }}",
+                    type: 'POST',
+                    contentType: 'application/json', // Indica que estás enviando datos en formato JSON
+                    data: JSON.stringify(datos), // Convierte los datos a formato JSON
+                    // success: function (data) {
+                    //     // Manejar la respuesta
+                    //     console.log(data);
+                    // },
+                    // error: function (error) {
+                    //     console.error('Error en la petición AJAX:', error);
+                    // }
+                });
+            }
+        </script> --}}
 
         <script>
             function validarDatos() {
@@ -463,6 +529,26 @@
                     return false;
                 }
                 return true;
+            }
+        </script>
+
+        <script>
+            function verificarCampos() {
+                let fechaDesde = $('#fechaDesde');
+                let fechaHasta = $('#fechaHasta');
+                let administrativo = $('#id_empleado');
+                let cliente = $('#id_cliente');
+                let mecanico = $('#id_mecanico');
+                let servicio = $('#id_servicio');
+                let producto = $('#id_producto');
+
+                if (fechaDesde.val() && fechaHasta.val() && administrativo.val() && cliente.val() && mecanico.val() && servicio.val() && producto.val()) {
+                    console.log('Todos los campos tienen valor');
+                    $("#btnPdf").prop("disabled", false);
+                } else {
+                    $("#btnPdf").prop("disabled", true);
+                    console.log('Falta completar campos');
+                }
             }
         </script>
 
