@@ -6,14 +6,26 @@
             <div class="col-12">
                 <div class="card-box">
 
-                    <div class="form-group px-4 pt-2">
-                        <i class="fas fa-wrench fa-2x"></i>
-                        <h3 class="fs-1 d-inline-block ml-1">
-                            Editar reserva
-                        </h3>
+                    
+                    <div class="form-group d-flex px-4 pt-2 justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-wrench fa-2x"></i>
+                            <h3 class="fs-1 d-inline-block ml-1">
+                                Editar reserva
+                            </h3>
+                        </div>
+                        
+                        <form id="formDeleteReserva_{{ $reserva['id'] }}" action="{{ route('reserva.delete', $reserva['id']) }}" method="post">
+                            @csrf
+                            <button type="button" title="Eliminar Reserva"
+                                onclick="confirmDelete({{ $reserva['id'] }})" title="Eliminar" class="btn btn-danger waves-effect m-l-5">
+                               Eliminar Reserva
+                            </button>
+                        </form>
+
                     </div>
 
-                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.update',)}}" method="post">
+                    <form class="px-4 pt-2 pb-2" action="{{route('reserva.update', $reserva['id'])}}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
@@ -57,7 +69,7 @@
                                 <div class="form-group mb-3">
                                     <label for="hora_fin">Hora de Fin</label>
                                     <input class="form-control" id="hora_fin" type="time" name="hora_fin"
-                                     value="{{$reserva['hora_fin']}}">
+                                     value="">
                                      <span id="horaFinError" class="error text-danger">* Inserte Servicio y Hora</span>
                                 </div>
                             </div>
@@ -67,7 +79,9 @@
                                 <div class="form-group mb-3">
                                         <label for="servicio_id">Servicio</label>
                                     <select class="form-control" id="servicio_id" name="servicio_id" oninput="actualizarHoraFin()">
-                                        <option selected value="{{$reserva['servicio_id']}}">{{$reserva['servicio']['nombre']}}</option>
+                                        <option selected value="{{$reserva['servicio_id']}}" data-duracion={{$reserva['servicio']['duracion']}}>
+                                            {{$reserva['servicio']['nombre']}} | {{$reserva['servicio']['precio']}} </option>
+                                        <option value="">Selecciona un servicio</option>
                                         @foreach ($Servicios as $servicio)
                                         <option value="{{ $servicio['id'] }}" data-duracion={{$servicio['duracion']}}>{{ $servicio['nombre'] }}
                                             | {{$servicio['precio']}}.Bs</option>
@@ -83,7 +97,7 @@
                                     <label for="cliente_id">Cliente</label>
                                 <select class="form-control" id="cliente_id" name="cliente_id">
                                     <option value="{{$reserva['cliente_id']}}">
-                                        {{$reserva['cliente']['nombre']}} {{$reserva['cliente']['apellido']}}</option>
+                                        {{$reserva['cliente']['nombre']}} {{$reserva['cliente']['apellido']}} </option>
                                     @foreach ($Clientes as $cliente)
                                     <option value="{{ $cliente['id'] }}">{{ $cliente['ci'] }} | {{
                                         $cliente['nombre'] }} {{ $cliente['apellido'] }}</option>
@@ -96,15 +110,19 @@
                             </div>
                         </div>
 
+                        
                         <div class="form-group text-right m-b-0">
-                            <a href="{{ route('reserva.index') }}" class="btn btn-danger waves-effect m-l-5">
-                                Cancelar
-                            </a>
-                            <button class="btn btn-primary waves-effect waves-light" type="submit">
-                                Guardar
-                            </button>
-                        </div>
+                           
 
+                            <div>
+                                <a href="{{ route('reserva.index') }}" class="btn btn-danger waves-effect m-l-5">
+                                    Cancelar
+                                </a>
+                                <button class="btn btn-primary waves-effect waves-light m-l-5" type="submit">
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
                     </form>
 
                 </div>
@@ -116,6 +134,12 @@
     
     {{-- Script para que se actualice la hora_fin del formulario --}}
     <script>
+         
+        // todo lo estoy haciendo con un cdn sorry no le entendi como descargar los paquetes  
+        document.addEventListener('DOMContentLoaded', function() {
+            actualizarHoraFin();
+        });
+
         function actualizarHoraFin() {
           // Obtén el valor de la hora de inicio
           var horaInicio = document.getElementById('hora_inicio').value;
@@ -131,7 +155,9 @@
               document.getElementById('horaFinError').style.display = 'none';
 
               // Muestra la entrada de tiempo de la hora de fin
+              
               document.getElementById('hora_fin').style.display = 'block';
+              
 
               // Suma la duración del servicio a la hora de inicio
               var horaFin = sumarTiempo(horaInicio, duracionServicio);
@@ -141,25 +167,51 @@
           } else {
               // Si la hora de inicio está vacía o no hay duración seleccionada, muestra el placeholder y oculta la entrada de tiempo
               document.getElementById('horaFinError').style.display = 'inline';
+              document.getElementById('hora_fin').value = "";
           }
-      }
+        }
 
       // Función para sumar tiempo a una hora dada (en formato HH:mm:ss)
-      function sumarTiempo(hora, tiempoASumar) {
-          var horaInicio = new Date('2020-01-01 ' + hora);
-          var tiempoSumar = new Date('2020-01-01 ' + tiempoASumar);
-          var Margen_segundo = new Date('2020-01-01 00:00:00');
-          //pasa aca tambien lo de que se suma las 4 horas de la nada ToT, pero sumando otra cosa mas se arregla wtf
+        function sumarTiempo(hora, tiempoASumar) {
+            var horaInicio = new Date('2020-01-01 ' + hora);
+            var tiempoSumar = new Date('2020-01-01 ' + tiempoASumar);
+            var Margen_segundo = new Date('2020-01-01 00:00:00');
+            //pasa aca tambien lo de que se suma las 4 horas de la nada ToT, pero sumando otra cosa mas se arregla wtf
 
-          var nuevaHora = new Date(horaInicio.getTime() + tiempoSumar.getTime() - Margen_segundo.getTime());
+            var nuevaHora = new Date(horaInicio.getTime() + tiempoSumar.getTime() - Margen_segundo.getTime());
 
-          // Formatea la nueva hora
-          var horaNueva = nuevaHora.getHours().toString().padStart(2, '0');
-          var minutosNuevos = nuevaHora.getMinutes().toString().padStart(2, '0');
-          var segundosNuevos = nuevaHora.getSeconds().toString().padStart(2, '0');
+            // Formatea la nueva hora
+            var horaNueva = nuevaHora.getHours().toString().padStart(2, '0');
+            var minutosNuevos = nuevaHora.getMinutes().toString().padStart(2, '0');
+            var segundosNuevos = nuevaHora.getSeconds().toString().padStart(2, '0');
 
-          return horaNueva + ':' + minutosNuevos + ':' + segundosNuevos;
-      }
+            return horaNueva + ':' + minutosNuevos + ':' + segundosNuevos;
+        }
+
   </script>
+
+    @push('js')
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#556ee6',
+                cancelButtonColor: '#f46a6a',
+                confirmButtonText: 'Sí, eliminarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var formId = 'formDeleteReserva_' + id;
+                    var form = document.getElementById(formId);
+                    form.submit(); // Envía el formulario si el usuario confirma
+                    
+                }
+            });
+        }
+    </script>
+    @endpush
 
 </x-layouts.app>

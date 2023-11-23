@@ -47,6 +47,7 @@
             events: @json($events),
             eventColor: '#f5ce22',
             eventTextColor: '#000000',
+            itemSelector: '.fc-event',
             locale: 'es',
             dayMaxEvents: true,
             slotDuration: '00:10:00',

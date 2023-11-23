@@ -130,12 +130,73 @@ class ReservasController extends Controller
 
     public function update(Request $request, string $id)
     {
-        
+
+        $request->validate([
+            'fecha' => 'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
+            'estado' => 'required',
+            'servicio_id' => 'required',
+            'cliente_id' => 'required',
+            'empleado_id' => 'required'
+        ]);
+
+       
+        // por alguna razon se suma 4 horas a cualquiera de las 2 variables de tiempo convertidas a int. Pero al
+        // añadirle otra que es 00:00:00 se arregla   ???????
+
+        //aaa tambien le estoy poniendo una variacion de un segundo por que el calendario acepta solo 
+        //hora mayores (>) que la hora que termina el evento 
+        $hora_fin = strtotime($request->input('hora_fin'));
+        $segundo_margen = strtotime('00:00:01');
+        $hora_time= $hora_fin - $segundo_margen + strtotime('00:00:00');
+        $nueva_hora_fin = date('H:i:s',$hora_time);
+   
+
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::put($url.'/reservas/'.$id,[
+            'fecha' => $request->input('fecha'),
+            'hora_inicio' => $request->input('hora_inicio'),
+            'hora_fin' => $nueva_hora_fin,
+            'estado' => $request->input('estado'),
+            'servicio_id' => $request->input('servicio_id'),
+            'cliente_id' => $request->input('cliente_id'),
+            'empleado_id' => $request->input('empleado_id')
+        ]);
+
+        $result = $response->json();
+
+
+        if ($result && $result['status']) {
+
+            $descripcion = 'Se modificó la reserva con Id: ' . $result['reserva']['id'];
+            registrarBitacora($descripcion);
+
+            session()->flash('guardado', 'La reserva se actualizó exitosamente.');
+            return redirect()->route('reserva.index');
+        } else {
+            session()->flash('error', $result['error']);
+            return redirect()->back();
+        }
     }
 
 
     public function destroy(string $id)
     {
-    
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::delete($url.'/reservas/'.$id);
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+
+            $descripcion = 'Reserva eliminada con el ID: ' . $id;
+            registrarBitacora($descripcion);
+
+            session()->flash('eliminado', 'La reserva ha sido eliminada exitosamente.');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+        }
+
+        return redirect()->route('reserva.index');
     }
 }

@@ -138,6 +138,7 @@
           } else {
               // Si la hora de inicio está vacía o no hay duración seleccionada, muestra el placeholder y oculta la entrada de tiempo
               document.getElementById('horaFinError').style.display = 'inline';
+              document.getElementById('hora_fin').value = "";   
           }
       }
 
