@@ -89,7 +89,7 @@ class ReservasController extends Controller
 
         if ($result && $result['status']) {
 
-            $descripcion = 'Reserva creado con el ID: ' . $result['reserva']['id'];
+            $descripcion = 'Reserva creado una reserva con el ID: ' . $result['reserva']['id'];
             registrarBitacora($descripcion);
 
             session()->flash('guardado', 'La reserva ha sido guardada exitosamente.');
