@@ -26,6 +26,7 @@ use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrdenTrabajoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ReservasController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -251,5 +252,15 @@ Route::middleware(['auth.admin'])->group(function () {
         // RUTAS PARA GENERAR EXCEL
         Route::get('/generar-excel', [ExcelController::class, 'generarExcel'])->name('generar.excel');
 
+
+        Route::controller(ReservasController::class)->group(function (){
+            Route::get('/reserva','index')->name('reserva.index');
+            Route::get('/reserva/create','create')->name('reserva.create');
+            Route::post('/reserva','store')->name('reserva.store');
+            Route::get('reserva/edit/{id}','edit')->name('reserva.edit');
+            Route::get('/reserva/show/{id}', 'show')->name('reserva.show');
+            Route::post('/reserva/update/{id}', 'update')->name('reserva.update');
+            Route::post('/reserva/delete/{id}', 'destroy')->name('reserva.delete');
+        });
     });
 });

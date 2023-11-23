@@ -176,7 +176,7 @@
             @endif
 
             <li>
-                <a href="#">
+                <a href="{{route('reserva.index')}}">
                     <i class="far fa-calendar-alt"></i>
                     <span> Reservas </span>
                 </a>

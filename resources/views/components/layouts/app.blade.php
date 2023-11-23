@@ -27,11 +27,12 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/fullcalendar/fullcalendar.min.css')}}"  type="text/css" />
 
 </head>
 
 <body class="antialiased">
-
+    <!-- Scripts -->
     {{ $slot }}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -40,7 +41,8 @@
 
     <!-- Modal-Effect -->
     <script src="{{ asset('assets/libs/custombox/custombox.min.js') }}"></script>
-
+   
+   
     @stack('js')
 
     <script src="{{ asset('assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
@@ -101,6 +103,8 @@
             })
         </script>
     @endif
+    
+    {{-- para recibir la exportacion del calendario  --}}
 
 </body>
 
