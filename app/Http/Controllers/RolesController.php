@@ -23,7 +23,7 @@ class RolesController extends Controller
             return redirect()->back();
         }
 
-        return view('dashboard.Roles.create');
+        return view('dashboard.roles.create');
     }
 
 
@@ -76,7 +76,7 @@ class RolesController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url . '/roles/' . $id);
         $rol = $response->json();
-        return view('dashboard.Roles.edit', compact('rol'));
+        return view('dashboard.roles.edit', compact('rol'));
     }
 
 

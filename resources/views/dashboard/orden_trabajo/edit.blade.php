@@ -65,7 +65,7 @@
                                             <option value="">Seleccionar</option>
                                             @foreach ($mecanicos as $mecanico)
                                             <option value="{{ $mecanico['id'] }}"
-                                            @if ($mecanico['id'] == old('mecanico_id', $ordenTrabajo['empleado_id'])) selected @endif>{{
+                                            @if ($mecanico['id'] == old('mecanico_id', $ordenTrabajo['mecanico_id'])) selected @endif>{{
                                                 $mecanico['nombre'] }} {{ $mecanico['apellido'] }}</option>
                                             @endforeach
                                         </select>
@@ -279,7 +279,7 @@
                                 <tbody>
                                 </tbody>
                             </table>
-                            <input type="hidden" id="descuentoInicial" name="descuentoInicial" 
+                            <input type="hidden" id="descuentoInicial" name="descuentoInicial"
                             value="{{ old('descuento', $ordenTrabajo['descuento']) }}">
                         </div>
 
@@ -641,7 +641,7 @@
             const subtotal = parseFloat(sumaPreciosProductos + sumaPreciosServicios);
             let descuento = $("#descuentoInicial").val();
             let total = calcularMontoTotal(subtotal, descuento);
-            
+
             $("#costo_total").val(total);
 
             console.log(sumaPreciosProductos);
