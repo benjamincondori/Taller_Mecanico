@@ -1,0 +1,7 @@
+en php.ini
+
+extension=gd
+extension=zip
+
+esas 2 nomas para el 3er sprint
+
