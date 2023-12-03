@@ -16,7 +16,7 @@
                                 <div class="form-group">
                                     <label for="producto-id" class="control-label">Producto</label>
                                     @if (!empty($productos))
-                                    <select class="form-control" id="producto" name="producto">
+                                    <select class="form-control" id="producto" name="producto" oninput="actualizarPrecioUnitario(), actualizarPrecioCantidad()">
                                         <option value="">Selecciona un producto</option>
                                         @foreach ($productos as $producto)
                                         <option value="{{ $producto['id'] }}"
@@ -31,13 +31,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-1">
-                                <div class="form-group">
-                                    <label for="cantidadProducto" class="control-label">Cantidad</label>
-                                    <input type="number" class="form-control" id="cantidadProducto"
-                                        name="cantidadProducto" value="">
-                                </div>
-                            </div>
+                          
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="precioUnitarioProducto" class="control-label">Precio Unitario</label>
@@ -45,17 +39,27 @@
                                         name="precioUnitarioProducto" readonly>
                                 </div>
                             </div>
+
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label for="cantidadProducto" class="control-label">Cantidad</label>
+                                    <input type="number" class="form-control" id="cantidadProducto"
+                                        oninput="actualizarPrecioCantidad()" name="cantidadProducto" value="">
+                                </div>
+                            </div>
+
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="precioPorCantidadProducto" class="control-label">Precio por
                                         Cantidad</label>
                                     <input type="number" class="form-control" id="precioPorCantidadProducto"
-                                        name="precioPorCantidadProducto" readonly>
+                                     value="" name="precioPorCantidadProducto" readonly>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="d-flex flex-column">
-                                    <label for="precioPorCantidadProducto" class="control-label">&nbsp;</label>
+                                    {{-- este label nomas es para alinear el boton con los demas elementos sksksksk --}}
+                                    <label for="agregarProducto" class="control-label">&nbsp;</label>
                                     <button type="submit" class="btn btn-primary" id="agregarProducto"
                                         style="white-space: nowrap;">Agregar Producto
                                     </button>
@@ -85,15 +89,14 @@
                                     @else
                                         @foreach ($venta['productos'] as $ventaProducto)
                                             <tr class="text-nowrap text-center">
-                                                <th scope="row" class="align-middle">{{ $ventaProducto['producto_nombre'] }}
+                                                <th scope="row" class="align-middle">{{ $ventaProducto['nombre'] }}
                                                 </th>
                                                 <td class="align-middle">{{ $ventaProducto['pivot']['producto_cantidad'] }}</td>
                                                 <td class="align-middle">{{ $ventaProducto['pivot']['producto_preciototal'] }}</td>
-                                                <td class="align-middle">Producto</td>
                                                 <td class="align-middle text-nowrap" style="width: 200px">
                                                     <div class="d-flex justify-content-center">
                                                         <form id="formDeleteventaProducto_{{ $ventaProducto['id'] }}"
-                                                            action="{{ route('venta.deleteProducto', ['id' => $ventaProducto['id'], 'cotizacion_id' => $id]) }}"
+                                                            action="{{ route('ventas.deleteProducto', ['id' => $venta['id'], 'ventaproducto_id' => $ventaProducto['pivot']['producto_id']]) }}"
                                                             method="post">
                                                             @csrf
                                                             <button type="submit" title="Eliminar"
@@ -110,39 +113,66 @@
                             </table>
                         </div>
 
-                        <form id="ActualizarVenta" action="{{ route('ventas.update',$venta['id'])}}" method="post">
-                            @csrf
-                            <div class="col-md-6">
-                                <div class="form-group text-right">
-                                    <label for="precioTotal" class="control-label" style="text-align: left;">
-                                        <h3>TOTAL:</h3>
-                                    </label>
-                                    <input type="number" class="form-control" id="precioTotal" name="precioTotal"
-                                        readonly style="text-align: left" value="0">
-                                </div>
-                            </div>
-                            <div class="form-group text-right m-b-0">
-                                <button class="btn btn-primary waves-effect waves-light" type="submit">
-                                    Registrar
-                                </button>
-                            </div>
-                        </form>
-                        <form id="formDeleteVenta_{{ $venta['id'] }}"
-                            action="{{route('ventas.delete', $venta['id']) }}" method="post">
+                        <div class="form-group text-left">
+                            <label for="precioTotal" class="control-label" style="text-align: left;">
+                                <h3>TOTAL:</h3>
+                            </label>
+                            <input type="number" class="form-control" id="precioTotal" name="precioTotal"
+                                readonly style="text-align: left" value="{{$venta['monto']}}">
+                        </div>
+
+                        <br>
+                        <a href="{{ route('ventas.index') }}" class="btn btn-primary waves-effect waves-light mx-1 float-right">
+                            Guardar
+                        </a>
+
+                        <div >
+                            <form id="formDeleteVenta_{{ $venta['id'] }}"
+                            action="{{ route('ventas.delete', $venta['id']) }}"method="post">
                                 @csrf
-                                <div class="form-group text-right m-b-0">
+                                <div class="mx-1">
                                     <button type="button" title="Eliminar"
-                                     onclick="confirmDelete({{ $venta['id'] }})" title="Eliminar" class="btn btn-danger waves-effect m-l-5">
-                                    Cancelar
+                                     onclick="confirmDelete({{ $venta['id'] }})" class="btn btn-danger waves-effect m-l-5 float-right">
+                                        Cancelar
                                     </button>
                                 </div>
-                        </form>
-
+                            </form>
+                        </div>
+                    
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
     </x-layouts.content>
+
+    <script>
+        function actualizarPrecioUnitario() {
+            var productoSelect = document.getElementById('producto');
+            var precioUnitarioInput = document.getElementById('precioUnitarioProducto');
+    
+            // Obtén el precio del atributo data-precio del elemento seleccionado
+            var precioUnitario = parseFloat(productoSelect.options[productoSelect.selectedIndex].getAttribute('data-precio'));
+    
+            // Actualiza el valor del campo Precio Unitario
+            precioUnitarioInput.value = isNaN(precioUnitario) ? '' : precioUnitario.toFixed(2);
+        }
+
+        function actualizarPrecioCantidad() {
+        var cantidadInput = document.getElementById('cantidadProducto');
+        var precioUnitarioInput = document.getElementById('precioUnitarioProducto');
+        var precioPorCantidadInput = document.getElementById('precioPorCantidadProducto');
+
+        // Obtén los valores de cantidad y precio unitario
+        var cantidad = parseFloat(cantidadInput.value);
+        var precioUnitario = parseFloat(precioUnitarioInput.value);
+
+        // Calcula el precio por cantidad y actualiza el campo correspondiente
+        var precioPorCantidad = isNaN(cantidad) || isNaN(precioUnitario) ? 0 : cantidad * precioUnitario;
+        precioPorCantidadInput.value = precioPorCantidad.toFixed(2);
+        }
+    </script>
+
     @push('js')
     <script>
         function confirmDelete(id) {
@@ -165,7 +195,9 @@
             }
     </script>
     @endpush
+
 </x-layouts.app>
+
 {{-- 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

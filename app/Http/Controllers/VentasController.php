@@ -76,6 +76,48 @@ class VentasController extends Controller
         }   
     }
 
+    //Esta funcion recibe el id de la venta y guarda un registro en la tabla VentaProducto con el producto
+    // a agregar a la venta
+
+    public function storeProducto(string $id,Request $request)
+    {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+
+        $request->validate([
+            'producto' => 'required|string',
+            'cantidadProducto' => 'required',
+            'precioPorCantidadProducto' => 'required'
+        ]);
+        $response = Http::post($url.'/ventas/'.$id.'/productos',[
+            'venta_id' => $id,
+            'producto_id' => $request->input('producto'),
+            'producto_cantidad' => $request->input('cantidadProducto'),
+            'producto_preciototal' => $request->input('precioPorCantidadProducto')
+        ]);
+
+        $result = $response->json();
+
+        $responseActualizarMonto = Http::get($url.'/ventas/'.$id.'/actualizartotal');
+        $resultActualizarMonto = $responseActualizarMonto->json();
+        
+
+        if ($result && $result['status'] && $resultActualizarMonto && $resultActualizarMonto['status']) {
+          
+            $descripcion = 'Registro VentaProducto creada con el id: ' . $result['ventaproducto']['id'];
+            registrarBitacora($descripcion);
+
+            $descripcion1 = 'Monto de Venta con id '.$resultActualizarMonto['venta']['id'].' actualizada a : ' . $resultActualizarMonto['venta']['monto'];
+            registrarBitacora($descripcion1);
+            session()->flash('guardado', 'Producto insertado.');
+
+            return redirect()->route('ventas.create',$id);
+            // return redirect()->route('ventas.index');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+            return redirect()->route('ventas.create',$id);
+        }   
+    }
+
     /**
      * Display the specified resource.
      */
