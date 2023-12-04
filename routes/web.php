@@ -27,6 +27,7 @@ use App\Http\Controllers\OrdenTrabajoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ReservasController;
+use App\Http\Controllers\VentasController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -261,6 +262,19 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('/reserva/show/{id}', 'show')->name('reserva.show');
             Route::post('/reserva/update/{id}', 'update')->name('reserva.update');
             Route::post('/reserva/delete/{id}', 'destroy')->name('reserva.delete');
+        });
+
+        Route::controller(VentasController::class)->group(function(){
+            Route::get('/ventas','index')->name('ventas.index');
+            Route::get('/ventas/new','new')->name('ventas.new');
+            Route::post('/ventas/store','store')->name('ventas.store');
+            Route::get('/ventas/{id}/create','create')->name('ventas.create');
+            Route::get('/ventas/{id}/show','show')->name('ventas.show');
+
+            Route::post('/ventas/{id}/update','update')->name('ventas.update');
+            Route::post('/ventas/{id}/delete','destroy')->name('ventas.delete');
+            Route::post('/ventas/{id}/producto','storeProducto')->name('ventas.storeProducto');
+            Route::post('/ventas/{id}/producto/{producto_id}/delete','destroyProducto')->name('ventas.deleteProducto');
         });
     });
 });

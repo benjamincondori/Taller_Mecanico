@@ -188,6 +188,13 @@
                     <span> Ordenes de Trabajo </span>
                 </a>
             </li>
+            
+            <li>
+                <a href="{{route('ventas.index')}}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span> Ventas </span>
+                </a>
+            </li>
 
             <li>
                 <a href="{{ route('pagos.index') }}">
