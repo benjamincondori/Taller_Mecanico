@@ -274,7 +274,7 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/ventas/{id}/update','update')->name('ventas.update');
             Route::post('/ventas/{id}/delete','destroy')->name('ventas.delete');
             Route::post('/ventas/{id}/producto','storeProducto')->name('ventas.storeProducto');
-            Route::post('/ventas/{id}/producto/{ventaproducto_id}/delete','destroyProducto')->name('ventas.deleteProducto');
+            Route::post('/ventas/{id}/producto/{producto_id}/delete','destroyProducto')->name('ventas.deleteProducto');
         });
     });
 });

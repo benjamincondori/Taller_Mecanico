@@ -38,7 +38,7 @@
                                     <td class="align-middle">{{ $venta['monto'] }}</td>
                                     <td class="align-middle">{{ formatearFecha($venta['fecha']) }}</td>
                                     <td class="align-middle">
-                                        @if ($venta['pago'])
+                                        @if ($venta['pago'] && $venta['pago']['estado'])
                                             <span class="text-success py-1 px-2 rounded-lg d-inline-block"
                                             style="background-color: #d4edda; width: 90px">Pagado</span>
                                         @else

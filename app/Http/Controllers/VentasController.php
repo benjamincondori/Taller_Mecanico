@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -57,6 +58,7 @@ class VentasController extends Controller
 
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
+
         $response = Http::post($url . '/ventas', [
             'monto' => '0',
             'cliente_id' => $request->input('cliente_id'),
@@ -79,7 +81,7 @@ class VentasController extends Controller
     //Esta funcion recibe el id de la venta y guarda un registro en la tabla VentaProducto con el producto
     // a agregar a la venta
 
-    public function storeProducto(string $id,Request $request)
+    public function storeProducto(string $id, Request $request)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
 
@@ -97,16 +99,12 @@ class VentasController extends Controller
 
         $result = $response->json();
 
-        $responseActualizarMonto = Http::get($url.'/ventas/'.$id.'/actualizartotal');
-        $resultActualizarMonto = $responseActualizarMonto->json();
-        
-
-        if ($result && $result['status'] && $resultActualizarMonto && $resultActualizarMonto['status']) {
+        if ($result && $result['status'] ) {
           
             $descripcion = 'Registro VentaProducto creada con el id: ' . $result['ventaproducto']['id'];
             registrarBitacora($descripcion);
 
-            $descripcion1 = 'Monto de Venta con id '.$resultActualizarMonto['venta']['id'].' actualizada a : ' . $resultActualizarMonto['venta']['monto'];
+            $descripcion1 = 'Monto de Venta con id '.$id.' actualizado';
             registrarBitacora($descripcion1);
             session()->flash('guardado', 'Producto insertado.');
 
@@ -123,24 +121,13 @@ class VentasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $responseVenta = Http::get($url.'/ventas/'.$id);
+        $venta = $responseVenta->json();
+
+        return view('dashboard.ventas.show',compact('venta'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -158,5 +145,20 @@ class VentasController extends Controller
             session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
         }
         return redirect()->route('ventas.index');
+    }
+
+
+    public function destroyProducto(string $id, string $producto_id)
+    {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::delete($url.'/ventas/'.$id.'/productos/'.$producto_id);
+        $result = $response->json();
+        
+        if ($result && $result['status']) {
+            session()->flash('eliminado', 'producto eliminado exitosamente.');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+        }
+        return redirect()->route('ventas.create',$id);
     }
 }
