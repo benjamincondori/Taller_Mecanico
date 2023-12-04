@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuxilioController;
 use App\Http\Controllers\bitacoraController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\ClientesController;
@@ -275,6 +276,14 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/ventas/{id}/delete','destroy')->name('ventas.delete');
             Route::post('/ventas/{id}/producto','storeProducto')->name('ventas.storeProducto');
             Route::post('/ventas/{id}/producto/{producto_id}/delete','destroyProducto')->name('ventas.deleteProducto');
+        });
+
+        Route::controller(AuxilioController::class)->group(function() {
+            Route::get('/asistencia-tecnica', 'index')->name('auxilio.index');
+            Route::get('/asistencia-tecnica/show/{id}', 'show')->name('auxilio.show');
+            Route::get('/asistencia-tecnica/edit/{id}', 'edit')->name('auxilio.edit');
+            Route::post('/asistencia-tecnica/update/{id}', 'update')->name('auxilio.update');
+            Route::post('/asistencia-tecnica/delete/{id}', 'destroy')->name('auxilio.delete');
         });
     });
 });
