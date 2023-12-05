@@ -65,7 +65,15 @@
                                         <a href="{{ route('pagos.createPago', $pago['id']) }}" title="Pagar" class="btn btn-sm btn-outline-success">
                                             <i class="fas fa-dollar-sign"></i>
                                         </a>
-                                        <a href="{{ route('pagos.createFactura' ,$pago['id'])}}" title="Factura" class="btn btn-sm btn-outline-danger">
+
+                                        <a href="{{ route('pagos.createFactura' ,$pago['id'])}}" class="btn btn-sm btn-outline-danger"
+                                        @if (!$pago['estado'])
+                                            title="No tiene factura"
+                                            onclick="return false;"
+                                        @else
+                                            title="Factura"
+                                        @endif
+                                        >
                                             <i class="fas fa-file-pdf"></i>
                                         </a>
                                     </td>
