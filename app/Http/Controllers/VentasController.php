@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class VentasController extends Controller
 {
@@ -61,6 +62,7 @@ class VentasController extends Controller
 
         $response = Http::post($url . '/ventas', [
             'monto' => '0',
+            'empleado_id' => Session::get('usuario.id'),
             'cliente_id' => $request->input('cliente_id'),
         ]);
 
@@ -126,6 +128,20 @@ class VentasController extends Controller
         $venta = $responseVenta->json();
 
         return view('dashboard.ventas.show',compact('venta'));
+    }
+
+    public function generarPago(string $id)
+    {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url.'/ventas/'.$id.'/generarpago'); 
+        $result = $response->json();
+
+        if ($result && $result['status']) {
+            session()->flash('guardado', 'Pago generado exitosamente.');
+        } else {
+            session()->flash('error', 'Ha ocurrido un error. Por favor, intenta nuevamente.');
+        }
+        return redirect()->route('ventas.index');
     }
 
 

@@ -24,11 +24,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mt-3">
-                                                <p><b>Bienvenido/a,
-                                                        {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['nombre']
-                                                        }} {{
-                                                        $pago['orden_de_trabajo']['cotizacion']['cliente']['apellido']
-                                                        }}" </b></p>
+                                                <p><b>Bienvenido/a, {{$nombre}} </b></p>
                                                 <p class="text-muted">Valoramos tu confianza en nosotros <br>
                                                     y nos comprometemos a proporcionarte <br>
                                                     un servicio personalizado a tu vehiculo.
@@ -77,10 +73,8 @@
                                         <div class="col-md-6">
                                             <address>
                                                 <strong>Cliente</strong><br>
-                                                NIT - C.I.: {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['ci']
-                                                }} <br>
-                                                {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['nombre'] }}
-                                                {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['apellido'] }}
+                                                NIT - C.I.: {{$ci}} <br>
+                                                {{$nombre}}
                                             </address>
                                         </div>
                                     </div>
@@ -189,10 +183,12 @@
                                 <td>SUMA TOTAL DE PRODUCTOS</td>
                                 <td>{{ 'Bs. ' .formatearNumero(sumaPrecioTotalProductos($productos))}}</td>
                             </tr>
-                            <tr>
-                                <td>SUMA TOTAL DE SERVICIOS</td>
-                                <td>{{ 'Bs. ' .formatearNumero(sumaPrecioTotalServicios($servicios))}}</td>
-                            </tr>
+                            @if (count($servicios) > 0)
+                                <tr>
+                                    <td>SUMA TOTAL DE SERVICIOS</td>
+                                    <td>{{ 'Bs. ' .formatearNumero(sumaPrecioTotalServicios($servicios))}}</td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td>MONTO TOTAL A PAGAR</td>
                                 <td>{{ 'Bs. ' .$factura['monto_total']}}</td>

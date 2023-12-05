@@ -5,15 +5,6 @@
         <div class="row">
             <div class="col-12">
 
-                {{-- <div class="mb-2 d-flex justify-content-between">
-                    <div class="form-group">
-                        <a href="{{ route('pagos.create') }}" class="btn btn-primary waves-effect waves-light">
-                            <i class="fas fa-plus-circle"></i>&nbsp;
-                            Nuevo Pago
-                        </a>
-                    </div>
-                </div> --}}
-
                 <div class="card-box">
                     <div class="table-responsive">
                         <table id="table-ordenes" class="table table-hover mb-0 dts">
@@ -36,12 +27,24 @@
                                         {{ $pago['id'] }}
                                     </th>
                                     <td class="align-middle">
-                                        {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['nombre'] }}
-                                        {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['apellido'] }}
+                                        @if ($pago['orden_de_trabajo'])
+                                            {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['nombre'] }}
+                                            {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['apellido'] }}
+                                        @else
+                                            {{ $pago['venta']['cliente']['nombre'] }}
+                                            {{ $pago['venta']['cliente']['apellido'] }}
+                                        @endif
+
                                     </td>
                                     <td class="align-middle">
-                                        {{ $pago['orden_de_trabajo']['cotizacion']['empleado']['nombre'] }}
-                                        {{ $pago['orden_de_trabajo']['cotizacion']['empleado']['apellido'] }}
+                                        @if ($pago['orden_de_trabajo'])
+                                            {{ $pago['orden_de_trabajo']['cotizacion']['empleado']['nombre'] }}
+                                            {{ $pago['orden_de_trabajo']['cotizacion']['empleado']['apellido'] }} 
+                                        @else
+                                            {{ $pago['venta']['empleado']['nombre'] }}
+                                            {{ $pago['venta']['empleado']['apellido'] }}                                 
+                                        @endif
+
                                     </td>
                                     <td class="align-middle">
                                         {{ $pago['concepto'] }}

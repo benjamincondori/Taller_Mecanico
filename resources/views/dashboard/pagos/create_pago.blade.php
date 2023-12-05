@@ -13,13 +13,16 @@
 
                     <form class="px-4 pt-2 pb-2" action="{{route('pagos.update', $pago['id'])}}" method="post">
                         @csrf
+                        {{-- para que en el update se sepa si era venta o orden de trabajo --}}
+                        <input type="hidden" id="concepto" name="concepto" value="{{$pago['concepto']}}">
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="nombre" class="control-label"><strong>Nombre del cliente:</strong></label>
                                         <input type="text" class="form-control" id="nombre" name="nombre"
-                                           value="{{ $pago['orden_de_trabajo']['cotizacion']['cliente']['nombre'] }} {{ $pago['orden_de_trabajo']['cotizacion']['cliente']['apellido'] }}" readonly>
+                                           value="{{$nombre}}" readonly>
                                     </div>
                                 </div>
 
@@ -108,8 +111,14 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">%</span>
                                             </div>
-                                            <input type="text" class="form-control"
-                                            name="descuento" id="descuento" value="{{ $pago['orden_de_trabajo']['descuento'] }}" readonly>
+                                            @if ($pago['orden_de_trabajo'])
+                                                <input type="text" class="form-control"
+                                                name="descuento" id="descuento" value="{{ $pago['orden_de_trabajo']['descuento'] }}" readonly>
+                                            @else
+                                                <input type="text" class="form-control"
+                                                name="descuento" id="descuento" value="0" readonly>
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +177,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div class="col-md-12">
                                     <div class="form-group">

@@ -48,11 +48,17 @@
                                     </td>
                                     <td class="align-middle text-nowrap" style="width: 200px">
                                         <div class="d-flex justify-content-center">
+                                            @if (!$venta['pago'])
+                                            <a href="{{route('ventas.generarPago', $venta['id'])}}" tittle="GenerarPago" class="btn btn-sm btn-outline-success mx-1">
+                                                <i class="fas fa-dollar-sign"></i>
+                                            </a>
+                                            @endif
                                             <a href="{{ route('ventas.show', $venta['id']) }}" title="Ver detalles" class="btn btn-sm btn-warning mx-1" >
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
                                             @if (!$venta['pago'])
+                                           
                                             <a href="{{ route('ventas.create', $venta['id']) }}" title="Editar" class="btn btn-sm btn-primary mx-1">
                                                 <i class="fas fa-edit"></i>
                                             </a>

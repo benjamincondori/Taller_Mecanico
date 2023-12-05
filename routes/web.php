@@ -277,6 +277,7 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::post('/ventas/{id}/delete','destroy')->name('ventas.delete');
             Route::post('/ventas/{id}/producto','storeProducto')->name('ventas.storeProducto');
             Route::post('/ventas/{id}/producto/{producto_id}/delete','destroyProducto')->name('ventas.deleteProducto');
+            Route::get('/ventas/{id}/generarpago','generarPago')->name('ventas.generarPago');
         });
 
         Route::controller(AuxilioController::class)->group(function() {

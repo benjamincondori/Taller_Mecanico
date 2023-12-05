@@ -42,15 +42,29 @@ class PagoController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/pagos/'.$id);
         $pago = $response->json();
+        
+        
+        if($pago['orden_de_trabajo']){
+            $ordenId = $pago['orden_de_trabajo']['id'];
+            $response = Http::get($url . '/orden-trabajos/' . $ordenId);
+            $ordenTrabajo = $response->json();
 
-        $pagoId = $pago['id'];
-        $response = Http::get($url . '/orden-trabajos/' . $pagoId);
-        $ordenTrabajo = $response->json();
+            $nombre = $ordenTrabajo['cotizacion']['cliente']['nombre'].' '.$ordenTrabajo['cotizacion']['cliente']['apellido'];
+            $productos = $ordenTrabajo['cotizacion']['productos'];
+            $servicios = $ordenTrabajo['cotizacion']['servicios'];
 
-        $productos = $ordenTrabajo['cotizacion']['productos'];
-        $servicios = $ordenTrabajo['cotizacion']['servicios'];
+        } else {
+            $ventaId = $pago['venta']['id'];
+            $response = Http::get($url . '/ventas/' . $ventaId);
+            $venta = $response->json();
 
-        return view('dashboard.pagos.create_pago', compact('pago', 'productos', 'servicios'));
+            $nombre = $venta['cliente']['nombre'].' '.$venta['cliente']['apellido'];
+            $productos = $venta['productos'];
+            $servicios = [];
+        }
+
+
+        return view('dashboard.pagos.create_pago', compact('nombre','pago', 'productos', 'servicios'));
     }
 
     public function createFactura(string $id)
@@ -58,25 +72,30 @@ class PagoController extends Controller
         $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
         $response = Http::get($url.'/pagos/'.$id);
         $pago = $response->json();
+        
+        if($pago['orden_de_trabajo']){
+            $ordenId = $pago['orden_de_trabajo']['id'];
+            $response = Http::get($url . '/orden-trabajos/' . $ordenId);
+            $ordenTrabajo = $response->json();
 
-        $pagoId = $pago['id'];
-        $response = Http::get($url . '/orden-trabajos/' . $pagoId);
-        $ordenTrabajo = $response->json();
-
-
-        if($ordenTrabajo != ""){
+            $nombre = $ordenTrabajo['cotizacion']['cliente']['nombre'].' '.$ordenTrabajo['cotizacion']['cliente']['apellido'];
+            $ci = $ordenTrabajo['cotizacion']['cliente']['ci'];
             $productos = $ordenTrabajo['cotizacion']['productos'];
             $servicios = $ordenTrabajo['cotizacion']['servicios'];
-        }else{
-            $pagoId = $pago['id'];
-            $response = Http::get($url . '/ventas/' . $pagoId);
-            $ventas = $response->json();
-            $productos = $ventas['productos'];
-            $servicios = 0;
+        } else {
+            $ventaid = $pago['venta']['id'];
+            $response = Http::get($url.'/ventas/'.$ventaid);
+            $venta = $response->json();
+
+            $nombre = $venta['cliente']['nombre'].' '.$venta['cliente']['apellido'];
+            $ci = $venta['cliente']['ci'];
+            $productos = $venta['productos'];
+            $servicios = [];
         }
+
         $factura = $pago['factura'];
 
-        return view('dashboard.pagos.factura', compact('pago','factura', 'productos', 'servicios'));
+        return view('dashboard.pagos.factura', compact('nombre','ci','pago','factura', 'productos', 'servicios'));
 
         // $pdf = Pdf::loadView('dashboard.pagos.factura', compact('pago','factura', 'productos', 'servicios'));
 
@@ -140,7 +159,7 @@ class PagoController extends Controller
             $response = Http::put($url . '/pagos/' . $id, [
                 'fecha' => $fecha,
                 'monto' => $request->montoTotal,
-                'concepto' => "Orden de trabajo",
+                'concepto' => $request->concepto,
                 'estado' => true,
                 'factura_id' => $result['factura']['id'],
             ]);
