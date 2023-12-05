@@ -190,12 +190,26 @@
             </li>
 
             <li>
+                <a href="{{route('auxilio.index')}}">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span> Asistencia Técnica </span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{route('ventas.index')}}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span> Ventas </span>
+                </a>
+            </li>
+
+            <li>
                 <a href="{{ route('pagos.index') }}">
                     <i class="fas fa-donate"></i>
                     <span> Pagos </span>
                 </a>
             </li>
-            
+
             <li>
                 <a href="javascript: void(0);">
                     <i class="fas fa-file-alt"></i>
@@ -220,7 +234,7 @@
                     {{-- @endif --}}
                 </ul>
             </li>
-            
+
             @if (verificarPermiso('Lista_Bitacoras'))
                 <li>
                     <a href="{{route('bitacora.index')}}">
