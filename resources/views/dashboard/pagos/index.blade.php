@@ -65,7 +65,7 @@
                                         <a href="{{ route('pagos.createPago', $pago['id']) }}" title="Pagar" class="btn btn-sm btn-outline-success">
                                             <i class="fas fa-dollar-sign"></i>
                                         </a>
-                                        <a href="" class="btn btn-sm btn-outline-danger">
+                                        <a href="{{ route('pagos.createFactura' ,$pago['id'])}}" title="Factura" class="btn btn-sm btn-outline-danger">
                                             <i class="fas fa-file-pdf"></i>
                                         </a>
                                     </td>

@@ -234,6 +234,7 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('/pagos', 'index')->name('pagos.index');
             Route::get('/pagos/create', 'create')->name('pagos.create');
             Route::get('/pagos/create/{id}', 'createPago')->name('pagos.createPago');
+            Route::get('/pagos/createfactura/{id}', 'createFactura')->name('pagos.createFactura');
             Route::post('/pagos/store', 'store')->name('pagos.store');
             Route::post('/pagos/update/{id}', 'update')->name('pagos.update');
         });

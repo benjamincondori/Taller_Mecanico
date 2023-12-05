@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PagoController extends Controller
 {
@@ -50,6 +51,40 @@ class PagoController extends Controller
         $servicios = $ordenTrabajo['cotizacion']['servicios'];
 
         return view('dashboard.pagos.create_pago', compact('pago', 'productos', 'servicios'));
+    }
+
+    public function createFactura(string $id)
+    {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1:8000');
+        $response = Http::get($url.'/pagos/'.$id);
+        $pago = $response->json();
+
+        $pagoId = $pago['id'];
+        $response = Http::get($url . '/orden-trabajos/' . $pagoId);
+        $ordenTrabajo = $response->json();
+
+
+        if($ordenTrabajo != ""){
+            $productos = $ordenTrabajo['cotizacion']['productos'];
+            $servicios = $ordenTrabajo['cotizacion']['servicios'];
+        }else{
+            $pagoId = $pago['id'];
+            $response = Http::get($url . '/ventas/' . $pagoId);
+            $ventas = $response->json();
+            $productos = $ventas['productos'];
+            $servicios = 0;
+        }
+        $factura = $pago['factura'];
+
+        return view('dashboard.pagos.factura', compact('pago','factura', 'productos', 'servicios'));
+
+        // $pdf = Pdf::loadView('dashboard.pagos.factura', compact('pago','factura', 'productos', 'servicios'));
+
+        // $pdf->setPaper('a4', 'landscape'); // Opcional: Configurar el tamaño y orientación del papel
+        // dd($pdf);
+
+        // return $pdf->stream('factura.pdf', ['Attachment' => false]);
+
     }
 
     /**

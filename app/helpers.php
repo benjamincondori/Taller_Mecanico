@@ -59,7 +59,7 @@ function transformarFormatoFecha($fecha)
     return $fecha->format('Y-m-d');
 }
 
-function formatoFechaTexto($fecha) 
+function formatoFechaTexto($fecha)
 {
     $fechaFormateada = Carbon::parse($fecha)->locale('es')->isoFormat('DD [de] MMMM [del] YYYY');
     return $fechaFormateada;
